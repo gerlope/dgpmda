@@ -23,9 +23,6 @@
 					<input type="password" id="password-login" name="password-login" required>
 					<p id="password-login-incorrecto" style="display:none;">La contrase&ntilde;a no tiene un formato v&aacute;lido</p>
 					<br>
-					<input type="text" id="tipo-login" name="tipo-login" value="-login" style="display:none;">
-					<input type="text" id="location-login" name="location-login" value="../profesores/modificacion_profesores.php" style="display:none;">
-					<input type="text" id="location2-login" name="location2-login" value="../index.php" style="display:none;">
 					<input type="submit" value="Iniciar sesi&oacute;n">
 				</form>
 				<p id="-login-incorrecto" style="display:none;">La contrase&ntilde;a o el correo electr&oacute;nico son incorrectos. Int&eacute;ntalo de nuevo.</p>
@@ -44,11 +41,23 @@
 					$ruta_foto = $_SESSION['ruta_foto'];
 
 					// Creamos en html la zona arriba a la derecha de un usuario que ha iniciado sesión
-					echo "<article id='perfil-login'>
-					<a href='profesores/modificacion_profesores.php'>
-					<img src='imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
-					<h2>$username</h2></a>
-					<a href='php/logout.php'>&#10149; Cerrar sesión</a></article>";
+					// Si la sesión activa es la de el administrador añadimos una linea para ir al panel de administrador
+					if(isset($_SESSION['admin'])){
+						echo "<article id='perfil-login'>
+						<a href='profesores/modificacion_profesores.php'>
+						<img src='multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
+						<h2>$username</h2></a>
+						<a href='admin/admin.php'>
+						<h2>Ir a panel de administrador</h2></a>
+						<a href='php/logout.php'>&#10149; Cerrar sesión</a></article>";
+					}
+					else{
+						echo "<article id='perfil-login'>
+						<a href='profesores/modificacion_profesores.php'>
+						<img src='multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
+						<h2>$username</h2></a>
+						<a href='php/logout.php'>&#10149; Cerrar sesión</a></article>";
+					}
 				}
 				else if(isset($_SESSION['formularioEnviado-login']) && $_SESSION['formularioEnviado-login'] == true){	// Si no hay ninguna sesión activa
 					// Mostramos un mensaje de error
@@ -63,11 +72,11 @@
 			<section class="alumnos">
 				<h2>Alumnos</h2>
 				<?php
-					require_once('php/alumno.class.inc');
+					require_once('php/alumnos.class.inc');
 
-					$tmp = new Alumno();
+					$tmp = new Alumnos();
 					$alumnos = $tmp->obtenerAlumnos();
-					$_SESSION['alumno'] = array(); 			// Inicializa $_SESSION['alumnos'] como una matriz vacía
+					$_SESSION['alumno'] = array(); 			// Inicializa $_SESSION['alumno'] como una matriz vacía
 					$i = 0;
 
 					if($alumnos){
@@ -80,7 +89,7 @@
 							// Creamos todos los articles de los alumnos
 							echo "<article class='alumno'>
 								<a href='alumnos/inicio_sesion.php?indice=$i'>
-									<img src='imagenes/" . $alumno['ruta_foto'] . "' alt='Foto de perfil del alumno'>
+									<img src='multimedia/imagenes/" . $alumno['ruta_foto'] . "' alt='Foto de perfil del alumno'>
 									<h3>{$alumnosNombre[$i]}</h3>
 								</a>
 							</article>";

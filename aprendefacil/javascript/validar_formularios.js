@@ -6,6 +6,7 @@ function validarFormularioRegistroProfesor(event, tipo) {
     var nombreNombre = 'nombre' + tipo;
     var nombreApellidos = 'apellidos' + tipo;
     var nombreRutaFoto = 'ruta_foto' + tipo;
+    var nombreAula = 'aula' + tipo;
     var nombreUsuario = 'usuario' + tipo;
     var nombrePassword = 'password' + tipo;
     var nombreConfirmarPassword = 'password-confirm' + tipo;
@@ -14,6 +15,7 @@ function validarFormularioRegistroProfesor(event, tipo) {
     var nombre = document.getElementById(nombreNombre).value;
     var apellidos = document.getElementById(nombreApellidos).value;
     var rutaFoto = document.getElementById(nombreRutaFoto).value;
+    var aula = document.getElementById(nombreAula).value;
     var usuario = document.getElementById(nombreUsuario).value;
     var password = document.getElementById(nombrePassword).value;
     var confirmarPassword = document.getElementById(nombreConfirmarPassword).value;
@@ -21,13 +23,14 @@ function validarFormularioRegistroProfesor(event, tipo) {
     // Hacemos estas asignaciones para que se ejecuten enteramente cada funcion validar
     var nombreValido = validarNombreYApellidos(nombre, nombreNombre, tipo);		            // Validamos el nombre
     var apellidosValido = validarNombreYApellidos(apellidos, nombreApellidos, tipo);		// Validamos los apellidos
-    var rutaFotoValido = validarRutaFoto(rutaFoto, nombreRutaFoto, tipo);		            // Validamos la ruta de la foto
+    var rutaFotoValido = validarRutaFoto(rutaFoto, nombreRutaFoto, tipo);		            // Validamos la ruta de la imagen
+    var aulaValido = validarAula(aula, nombreAula, tipo);		                            // Validamos el aula
     var usuarioValido = validarUsuario(usuario, nombreUsuario, tipo);		                // Validamos el nombre de usuario
     var passwordValido = validarPassword(password, nombrePassword, tipo);	                // Validamos la contraseña
     var confirmarPasswordValido = validarConfirmacionPassword(confirmarPassword, nombreConfirmarPassword, password, tipo);	                // Validamos la confirmación de la contraseña
 
     // Comprobamos si es valido todo el formulario, si no lo es no se envían los datos
-    if(nombreValido && apellidosValido && rutaFotoValido && usuarioValido && passwordValido && confirmarPasswordValido){
+    if(nombreValido && apellidosValido && rutaFotoValido && aulaValido && usuarioValido && passwordValido && confirmarPasswordValido){
         return true;
     }
     else{
@@ -45,15 +48,16 @@ function validarFormularioRegistroAlumno(event, tipo) {
     // Obtenemos los nombres de cada campo del formulario
     var nombreNombre = 'nombre' + tipo;
     var nombreApellidos = 'apellidos' + tipo;
-    var nombreCurso = 'curso' + tipo;
+    var nombreAula = 'aula' + tipo;
     var nombreRutaFoto = 'ruta_foto' + tipo;
     var nombrePassword = 'password' + tipo;
     var nombreConfirmarPassword = 'password-confirm' + tipo;
+    var fieldsetPerfil = 'fieldset-perfil_visualizacion' + tipo;
 
     // Obtenemos los valores de los campos del formulario
     var nombre = document.getElementById(nombreNombre).value;
     var apellidos = document.getElementById(nombreApellidos).value;
-    var curso = document.getElementById(nombreCurso).value;
+    var aula = document.getElementById(nombreAula).value;
     var rutaFoto = document.getElementById(nombreRutaFoto).value;
     var password = document.getElementById(nombrePassword).value;
     var confirmarPassword = document.getElementById(nombreConfirmarPassword).value;
@@ -61,13 +65,75 @@ function validarFormularioRegistroAlumno(event, tipo) {
     // Hacemos estas asignaciones para que se ejecuten enteramente cada funcion validar
     var nombreValido = validarNombreYApellidos(nombre, nombreNombre, tipo);		            // Validamos el nombre
     var apellidosValido = validarNombreYApellidos(apellidos, nombreApellidos, tipo);		// Validamos los apellidos
-    var cursoValido = validarCurso(curso, nombreCurso, tipo);		                        // Validamos el curso
-    var rutaFotoValido = validarRutaFoto(rutaFoto, nombreRutaFoto, tipo);		            // Validamos la ruta de la foto
+    var aulaValido = validarAula(aula, nombreAula, tipo);		                            // Validamos el aula
+    var rutaFotoValido = validarRutaFoto(rutaFoto, nombreRutaFoto, tipo);		            // Validamos la ruta de la imagen
     var passwordValido = validarPassword(password, nombrePassword, tipo);	                // Validamos la contraseña
     var confirmarPasswordValido = validarConfirmacionPassword(confirmarPassword, nombreConfirmarPassword, password, tipo);	                // Validamos la confirmación de la contraseña
+    var fieldsetPerfilValido = validarFieldset(fieldsetPerfil);	                            // Validamos el perfil de visualizacion
 
     // Comprobamos si es valido todo el formulario, si no lo es no se envían los datos
-    if(nombreValido && apellidosValido && cursoValido && rutaFotoValido && passwordValido && confirmarPasswordValido){
+    if(nombreValido && apellidosValido && rutaFotoValido && aulaValido && passwordValido && confirmarPasswordValido && fieldsetPerfilValido){
+        return true;
+    }
+    else{
+        // Evitamos que los datos se envíen
+        event.preventDefault();
+        return false;
+    }
+}
+//*****************************************************************************************************//
+
+//*****************************************************************************************************//
+//*****************************************************************************************************//
+function validarFormularioRegistroTarea(event, tipo) {
+    // Obtenemos los nombres de cada campo del formulario
+    var nombreTitulo = 'titulo' + tipo;
+    var nombreRutaDocumento = 'ruta_documento' + tipo;
+
+    // Obtenemos los valores de los campos del formulario
+    var titulo = document.getElementById(nombreTitulo).value;
+    var rutaDocumento = document.getElementById(nombreRutaDocumento).value;
+
+    // Hacemos estas asignaciones para que se ejecuten enteramente cada funcion validar
+    var tituloValido = validarTexto(titulo, nombreTitulo, tipo);		                        // Validamos el titulo
+    var rutaDocumentoValido = validarRutaDoc(rutaDocumento, nombreRutaDocumento, tipo);		    // Validamos la ruta del documento
+
+    var numPasos = parseInt(document.getElementById("numero_pasos").value);
+
+    var descripcionValido = new Array(numPasos);
+    var videoValido = new Array(numPasos);
+    var fotoValido = new Array(numPasos);
+    var audioValido = new Array(numPasos);
+   
+    // Valida cada paso
+    for (var i = 1; i <= numPasos; i++) {
+        // Comprobamos que el paso existe
+        if(document.getElementById("paso_descripcion_" + i)){
+            // Obtenemos los nombres de cada campo del paso
+            var nombreDescripcion = "paso_descripcion_" + i;
+            var nombreVideo = "paso_video_" + i;
+            var nombreFoto = "paso_foto_" + i;
+            var nombreAudio = "paso_audio_" + i;
+
+            // Obtenemos los valores de los campos del paso
+            var descripcion = document.getElementById(nombreDescripcion).value;
+            var video = document.getElementById(nombreVideo).value;   
+            var foto = document.getElementById(nombreFoto).value;   
+            var audio = document.getElementById(nombreAudio).value;   
+
+            // Hacemos estas asignaciones para que se ejecuten enteramente cada funcion validar
+            descripcionValido[i] = validarTexto(descripcion, nombreDescripcion, tipo);	            // Validamos la descripcion
+            videoValido[i] = validarRutaVideo(video, nombreVideo, tipo);	                        // Validamos la ruta del video
+            fotoValido[i] = validarRutaFoto(foto, nombreFoto, tipo);	                            // Validamos la ruta de la foto
+            audioValido[i] = validarRutaAudio(audio, nombreAudio, tipo);	                        // Validamos la ruta del audio
+            }
+    }
+
+    // Comprobamos si es valido todo el formulario, si no lo es no se envían los datos
+    if(tituloValido && rutaDocumentoValido && descripcionValido.every(function(valor) { return valor === true; }) &&
+                                              videoValido.every(function(valor) { return valor === true; }) &&
+                                              fotoValido.every(function(valor) { return valor === true; }) &&
+                                              audioValido.every(function(valor) { return valor === true; })){
         return true;
     }
     else{
@@ -137,33 +203,6 @@ function validarNombreYApellidos(nombreApellidos, nombreNombreApellidos, tipo) {
 
 //*****************************************************************************************************//
 //*****************************************************************************************************//
-function validarRutaFoto(rutaFoto, nombreRutaFoto, tipo) {
-    // Usamos la expresión regular /^[^\n\r\s]{1,100}(\.jpg|\.jpeg|\.png|\.gif|\.bmp)$/i para
-    // verificar si la cadena de entrada termina con una de las extensiones de archivo de imagen comunes
-    // (sin distinción entre mayúsculas y minúsculas). Además, verifica que tenga menos de 100 caracteres.
-    if(/^[^\n\r\s]{1,100}(\.jpg|\.jpeg|\.png|\.gif|\.bmp)$/i.test(rutaFoto)){
-        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
-        document.getElementById(nombreRutaFoto).style.borderColor= "rgba(173, 255, 47, 0.7)";
-        eliminarElemento(nombreRutaFoto + "-incorrecto");
-
-        return true;
-    }
-    else{
-        // Eliminamos el mensaje de error tras haber mandado datos
-        eliminarElemento(tipo + '-incorrecto');
-
-        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
-        document.getElementById(nombreRutaFoto).style.borderColor= "rgba(255, 0, 0, 0.7)";
-        recuperarElemento(nombreRutaFoto + "-incorrecto");
-
-        return false;
-    }
-}
-//*****************************************************************************************************//
-
-
-//*****************************************************************************************************//
-//*****************************************************************************************************//
 function validarUsuario(usuario, nombreUsuario, tipo) {
     // Usamos la expresión regular /^[\w\-]+$/ para verificar que el nombre de usuario solo
     // contenga letras, números, guiones y guiones bajos. Además verificamos que tenga entre 4 y 30 caracteres
@@ -190,15 +229,15 @@ function validarUsuario(usuario, nombreUsuario, tipo) {
 
 //*****************************************************************************************************//
 //*****************************************************************************************************//
-function validarCurso(curso, nombreCurso, tipo) {
-    // Usamos la expresión regular /^[a-zA-Z0-9áéíóúüÁÉÍÓÚÜñÑ]{1,30}$/ para verificar que el curso solo
+function validarAula(aula, nombreAula, tipo) {
+    // Usamos la expresión regular /^[a-zA-Z0-9áéíóúüÁÉÍÓÚÜñÑ]{1,30}$/ para verificar que la aula solo
     // contiene caracteres alfanuméricos incluyendo letras (tanto minúsculas como mayúsculas) con acentos,
     // la letra "ñ", números, espacios en blanco y el caracter "º". Además, nos aseguramos de que
     // haya entre 1 y 30 caracteres.
-    if(/^[a-zA-Z0-9áéíóúüÁÉÍÓÚÜñÑº\s]{1,30}$/.test(curso)){
+    if(/^[a-zA-Z0-9áéíóúüÁÉÍÓÚÜñÑº\s]{1,30}$/.test(aula)){
         // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
-        document.getElementById(nombreCurso).style.borderColor= "rgba(173, 255, 47, 0.7)";
-        eliminarElemento(nombreCurso + "-incorrecto");
+        document.getElementById(nombreAula).style.borderColor= "rgba(173, 255, 47, 0.7)";
+        eliminarElemento(nombreAula + "-incorrecto");
 
         return true;
     }
@@ -207,8 +246,8 @@ function validarCurso(curso, nombreCurso, tipo) {
         eliminarElemento(tipo + '-incorrecto');
 
         // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
-        document.getElementById(nombreCurso).style.borderColor= "rgba(255, 0, 0, 0.7)";
-        recuperarElemento(nombreCurso + "-incorrecto");
+        document.getElementById(nombreAula).style.borderColor= "rgba(255, 0, 0, 0.7)";
+        recuperarElemento(nombreAula + "-incorrecto");
 
         return false;
     }
@@ -271,22 +310,195 @@ function validarConfirmacionPassword(confirmarPassword, nombreConfirmarPassword,
 
 //*****************************************************************************************************//
 //*****************************************************************************************************//
+function validarFieldset(nombreFieldset) {
+    var fieldset = document.getElementById(nombreFieldset);
+    var checkboxes = fieldset.querySelectorAll('input[type="checkbox"]');
+
+    // Recorremos todos los checkboxes
+    for (var i = 0; i < checkboxes.length; i++) {
+        // Comprobamos que al menos un checkbox esté seleccionado
+        if (checkboxes[i].checked) {
+             // Cambiamos el color del borde del campo rellenado
+            document.getElementById(nombreFieldset).style.borderColor= "rgba(173, 255, 47, 0.7)";
+            eliminarElemento(nombreFieldset + "-incorrecto");
+            return true;
+        }
+    }
+
+    // Cambiamos el color del borde del campo rellenado
+    document.getElementById(nombreFieldset).style.borderColor = "rgba(255, 0, 0, 0.7)";
+    recuperarElemento(nombreFieldset + "-incorrecto");
+
+    // Ningún checkbox está seleccionado
+    return false;
+}
+//*****************************************************************************************************//
+
+
+//*****************************************************************************************************//
+//*****************************************************************************************************//
+function validarTexto(texto, nombreTexto, tipo, max=200) {
+    // Usamos la expresión regular /^[a-zA-ZáéíóúüÁÉÍÓÚÜ0-9_-]+$/ para verificar que el texto correspondiente
+    // solo contenga letras (tildes y dieresis incluida), números, guiones y signos de puntuación.
+    // Además, verificamos que tenga minimo 1 caracter y como máximo 200
+    var regex = new RegExp("^[a-zA-ZåïáéíóúüÁÉÍÓÚÜñÑ&0-9 _'\".,;:…!()¿?¡<>\\[\\]{}\\-]{1," + max + "}$");
+
+    if(regex.test(texto)){
+        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        document.getElementById(nombreTexto).style.borderColor= "rgba(173, 255, 47, 0.7)";
+        eliminarElemento(nombreTexto + "-incorrecto");
+
+        return true;
+    }
+    else{
+        // Eliminamos el mensaje de error tras haber mandado datos
+        eliminarElemento(tipo + '-incorrecto');
+
+        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        document.getElementById(nombreTexto).style.borderColor= "rgba(255, 0, 0, 0.7)";
+        recuperarElemento(nombreTexto + "-incorrecto");
+
+        return false;
+    }
+}
+//*****************************************************************************************************//
+
+
+//*****************************************************************************************************//
+//*****************************************************************************************************//
+function validarRutaFoto(rutaFoto, nombreRutaFoto, tipo) {
+    // Usamos la expresión regular /^[^\n\r\s]{1,100}(\.jpg|\.jpeg|\.png|\.gif|\.bmp)$/i para
+    // verificar si la cadena de entrada termina con una de las extensiones de archivo de imagen comunes
+    // (sin distinción entre mayúsculas y minúsculas). Además, verifica que tenga menos de 100 caracteres.
+    if(/^[^\n\r\s]{1,100}(\.jpg|\.jpeg|\.png|\.gif|\.bmp)$|^$/i.test(rutaFoto)){
+        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        document.getElementById(nombreRutaFoto).style.borderColor= "rgba(173, 255, 47, 0.7)";
+        eliminarElemento(nombreRutaFoto + "-incorrecto");
+
+        return true;
+    }
+    else{
+        // Eliminamos el mensaje de error tras haber mandado datos
+        eliminarElemento(tipo + '-incorrecto');
+
+        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        document.getElementById(nombreRutaFoto).style.borderColor= "rgba(255, 0, 0, 0.7)";
+        recuperarElemento(nombreRutaFoto + "-incorrecto");
+
+        return false;
+    }
+}
+//*****************************************************************************************************//
+
+
+//*****************************************************************************************************//
+//*****************************************************************************************************//
+function validarRutaVideo(rutaVideo, nombreRutaVideo, tipo) {
+    // Usamos la expresión regular /^[^\n\r\s]{1,100}(\.mp4|\.avi|\.mov|\.mkv|\.flv)$/i para
+    // verificar si la cadena de entrada termina con una de las extensiones de archivo de video comunes
+    // (sin distinción entre mayúsculas y minúsculas). Además, verifica que tenga menos de 100 caracteres.
+    if(/^[^\n\r\s]{1,100}(\.mp4|\.avi|\.mov|\.mkv|\.flv)$|^$/i.test(rutaVideo)){
+        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        document.getElementById(nombreRutaVideo).style.borderColor = "rgba(173, 255, 47, 0.7)";
+        eliminarElemento(nombreRutaVideo + "-incorrecto");
+
+        return true;
+    }
+    else{
+        // Eliminamos el mensaje de error tras haber mandado datos
+        eliminarElemento(tipo + '-incorrecto');
+
+        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        document.getElementById(nombreRutaVideo).style.borderColor = "rgba(255, 0, 0, 0.7)";
+        recuperarElemento(nombreRutaVideo + "-incorrecto");
+
+        return false;
+    }
+}
+//*****************************************************************************************************//
+
+
+//*****************************************************************************************************//
+//*****************************************************************************************************//
+function validarRutaAudio(rutaAudio, nombreRutaAudio, tipo) {
+    // Usamos la expresión regular /^[^\n\r\s]{1,100}(\.mp3|\.wav|\.ogg|\.flac|\.aac)$/i para
+    // verificar si la cadena de entrada termina con una de las extensiones de archivo de audio comunes
+    // (sin distinción entre mayúsculas y minúsculas). Además, verifica que tenga menos de 100 caracteres.
+    if(/^[^\n\r\s]{1,100}(\.mp3|\.wav|\.ogg|\.flac|\.aac)$|^$/i.test(rutaAudio)){
+        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        document.getElementById(nombreRutaAudio).style.borderColor = "rgba(173, 255, 47, 0.7)";
+        eliminarElemento(nombreRutaAudio + "-incorrecto");
+
+        return true;
+    }
+    else{
+        // Eliminamos el mensaje de error tras haber mandado datos
+        eliminarElemento(tipo + '-incorrecto');
+
+        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        document.getElementById(nombreRutaAudio).style.borderColor = "rgba(255, 0, 0, 0.7)";
+        recuperarElemento(nombreRutaAudio + "-incorrecto");
+
+        return false;
+    }
+}
+//*****************************************************************************************************//
+
+
+//*****************************************************************************************************//
+//*****************************************************************************************************//
+function validarRutaDoc(rutaDoc, nombreRutaDoc, tipo) {
+    // Usamos la expresión regular /^[^\n\r\s]{0,100}(\.(pdf|docx?|xlsx?|pptx?|rtf|txt|od[tps]|md|indd|ai|psd|dwg|tex|qxp))?$/i
+    // para comprobar que esté vacío o contenga un nombre de archivo con una extensión específica propia
+    // de un documento. Además, verifica que el nombre del archivo tenga menos de 100 caracteres.
+    if(/^[^\n\r\s]{0,100}(\.(pdf|docx?|xlsx?|pptx?|rtf|txt|od[tps]|md|indd|ai|psd|dwg|tex|qxp))?$|^$/i.test(rutaDoc)){
+        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        document.getElementById(nombreRutaDoc).style.borderColor= "rgba(173, 255, 47, 0.7)";
+        eliminarElemento(nombreRutaDoc + "-incorrecto");
+
+        return true;
+    }
+    else{
+        // Eliminamos el mensaje de error tras hsaber mandado datos
+        eliminarElemento(tipo + '-incorrecto');
+
+        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        document.getElementById(nombreRutaDoc).style.borderColor= "rgba(255, 0, 0, 0.7)";
+        recuperarElemento(nombreRutaDoc + "-incorrecto");
+
+        return false;
+    }
+}
+//*****************************************************************************************************//
+
+
+//*****************************************************************************************************//
+//*****************************************************************************************************//
 function habilitarEdicion() {
-    var inputs = document.querySelectorAll('input[name="nombre"], input[name="apellidos"], input[name="ruta_foto"],' +
+    var inputs = document.querySelectorAll('input[name="nombre"], input[name="apellidos"], input[name="aula"], input[name="ruta_foto"],' +
                                            'input[name="usuario"], input[name="password"], input[name="password-confirm"],' +
-                                           'input[name="curso"], select[name="perfil_visualizacion"], input[type="submit"]');
+                                           'input[name="curso"], input[name="perfil_visualizacion"], input[type="submit"],' +
+                                           'input[name="titulo"], input[name="ruta_documento"]');
 
     // Permitimos que se puedan editar
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].removeAttribute('disabled');
     }
 
+    // Habilitamos las casillas de verificación dentro del fieldset
+    habilitarFieldset('fieldset-perfil_visualizacion');
+
+    // Habilitamos los pasos
+    habilitarPasos('numero_pasos', 'paso');
+
     // Eliminamos el botón para editar los datos
     eliminarElemento('boton-editar');
 
-    // Recuperamos el botón para cerrar la edición
+    // Recuperamos el botón para cerrar la edición, el de añadir pasos
     // y el necesario para enviar los datos
     recuperarElemento('boton-cerrarEdicion');
+    recuperarElemento('añadir_paso');
+    recuperarElementoPaso('eliminar_paso_', 'numero_pasos');
     recuperarElemento('boton-enviar', 'inline-block');
 
     // Iluminamos con un box shadow el formulario
@@ -298,18 +510,27 @@ function habilitarEdicion() {
 //*****************************************************************************************************//
 //*****************************************************************************************************//
 function deshabilitarEdicion() {
-    var inputs = document.querySelectorAll('input[name="nombre"], input[name="apellidos"], input[name="ruta_foto"],' +
+    var inputs = document.querySelectorAll('input[name="nombre"], input[name="apellidos"], input[name="aula"], input[name="ruta_foto"],' +
                                            'input[name="usuario"], input[name="password"], input[name="password-confirm"],' +
-                                           'input[name="curso"], select[name="perfil_visualizacion"], input[type="submit"]');
+                                           'input[name="curso"], input[name="perfil_visualizacion"], input[type="submit"],' +
+                                           'input[name="titulo"], input[name="ruta_documento"]');
   
     // Evitamos que se puedan editar
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].setAttribute('disabled', 'disabled');
     }
 
-    // Eliminamos el botón para cerrar la edicion
+    // Deshabilitamos las casillas de verificación dentro del fieldset
+    deshabilitarFieldset('fieldset-perfil_visualizacion');
+
+    // Deshabilitamos los pasos
+    deshabilitarPasos('numero_pasos', 'paso');
+
+    // Eliminamos el botón para cerrar la edicion, el de añadir pasos
     // y el necesario para enviar los datos
     eliminarElemento('boton-cerrarEdicion');
+    eliminarElemento('añadir_paso');
+    eliminarElementoPaso('eliminar_paso_', 'numero_pasos');
     eliminarElemento('boton-enviar');
 
     // Recuperamos el botón para editar los datos

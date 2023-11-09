@@ -23,7 +23,7 @@
 					// Creamos en html la zona arriba a la derecha de un usuario que ha iniciado sesión
 					echo "<article id='perfil-login'>
 					<a href='../profesores/modificacion_profesores.php'>
-					<img src='../imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
+					<img src='../multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
 					<h2>$username</h2></a>
 					<a href='../php/logout.php'>&#10149; Cerrar sesión</a></article>";
 				}
@@ -46,14 +46,20 @@
 				<a href="alta_alumnos.php"><button>Dar de Alta Alumnos</button></a>
 			</section>
 
+			<section>
+				<h2>Crear Tareas</h2>
+				<p>Utiliza este botón para crear una nueva tarea.</p>
+				<a href="crear_tareas.php"><button>Crear Tareas</button></a>
+			</section>
+
 			<section class="alumnos">
 				<h2>Alumnos</h2>
 				<?php
-					require_once('../php/alumno.class.inc');
+					require_once('../php/alumnos.class.inc');
 
-					$tmp = new Alumno();
+					$tmp = new Alumnos();
 					$alumnos = $tmp->obtenerAlumnos();
-					$_SESSION['alumno'] = array(); 			// Inicializa $_SESSION['alumnos'] como una matriz vacía
+					$_SESSION['alumno'] = array(); 			// Inicializa $_SESSION['alumno'] como una matriz vacía
 					$i = 0;
 
 					if($alumnos){
@@ -66,8 +72,41 @@
 							// Creamos todos los articles de los alumnos
 							echo "<article class='alumno'>
 								<a href='../admin/modificacion_alumnos.php?indice=$i'>
-									<img src='../imagenes/" . $alumno['ruta_foto'] . "' alt='Foto de perfil del alumno'>
+									<img src='../multimedia/imagenes/" . $alumno['ruta_foto'] . "' alt='Foto de perfil del alumno'>
 									<h3>{$alumnosNombre[$i]}</h3>
+								</a>
+							</article>";
+
+							$i++;
+						}
+					}	
+					else{
+						echo "<article class='alumno'><h2>No hay ning&uacute; alumno registrado</h2></article>";
+					}
+				?>
+			</section>
+
+			<section class="tareas">
+				<h2>Tareas</h2>
+				<?php
+					require_once('../php/tareas.class.inc');
+
+					$tmp = new Tareas();
+					$tareas = $tmp->obtenerTareas();
+					$_SESSION['tarea'] = array(); 			// Inicializa $_SESSION['tarea'] como una matriz vacía
+					$i = 0;
+
+					if($tareas){
+						foreach ($tareas as $tarea) {
+							$tareasTitulo[$i] = $tarea['titulo'];
+
+							// Guardamos en una variable de sesion de la tarea correspondiente
+							$_SESSION['tarea'][$i] = serialize($tarea);
+							
+							// Creamos todos los articles de las tareas
+							echo "<article class='alumno'>
+								<a href='../admin/asignar_tareas.php?indice=$i'>
+									<h3>{$tareasTitulo[$i]}</h3>
 								</a>
 							</article>";
 

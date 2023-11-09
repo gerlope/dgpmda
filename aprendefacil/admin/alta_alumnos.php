@@ -23,7 +23,7 @@
 					// Creamos en html la zona arriba a la derecha de un usuario que ha iniciado sesión
 					echo "<article id='perfil-login'>
 					<a href='../profesores/modificacion_profesores.php'>
-					<img src='../imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
+					<img src='../multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
 					<h2>$username</h2></a>
 					<a href='../php/logout.php'>&#10149; Cerrar sesión</a></article>";
 				}
@@ -34,7 +34,7 @@
 		</header>
 
 		<main>
-        	<h1>Registro de Alumnos</h1>
+        	<h1 id='tituloPrincipal'>Registro de Alumnos</h1>
 			<form onsubmit="return validarFormularioRegistroAlumno(event, '')" action="../php/registrar_alumno.php" method="POST" class="formulario">
 				<article class="campo">
 					<label for="nombre" class="titulo-campo">Nombre:</label>
@@ -49,24 +49,30 @@
 				</article>
 
 				<article class="campo">
-					<label for="curso" class="titulo-campo">Curso:</label>
-					<input type="text" id="curso" name="curso" required>
-					<p id="curso-incorrecto" style="display:none;">El curso debe contener &uacute;nicamente caracteres alfan&uacute;mericos</p>
+					<label for="aula" class="titulo-campo">Aula:</label>
+					<input type="text" id="aula" name="aula" required>
+					<p id="aula-incorrecto" style="display:none;">El aula debe contener &uacute;nicamente caracteres alfan&uacute;mericos</p>
 				</article>
 
                 <article class="campo">
 					<label for="ruta_foto" class="titulo-campo">Fotograf&iacute;a personal:</label>
-					<input type="file" id="ruta_foto" name="ruta_foto" required>
+					<input type="file" id="ruta_foto" name="ruta_foto" accept="image/*" required>
 				</article>
 
 				<article class="campo">
-					<label for="perfil_visualizacion" class="titulo-campo">Perfil preferente de visualizaci&oacute;n:</label>
-					<select id="perfil_visualizacion" name="perfil_visualizacion" required>
-						<option value="">Seleccione una opci&oacute;n</option>
-						<option value="audio">Audio</option>
-						<option value="visual">V&iacute;deos y fotos</option>
-						<option value="texto">Texto</option>
-					</select>
+					<fieldset id="fieldset-perfil_visualizacion" name="fieldset-perfil_visualizacion">
+						<legend class="titulo-campo">Perfil preferente de visualizaci&oacute;n:</legend>
+
+						<label>
+						<input type="checkbox" name="perfil[]" value="audio">Audio</label>
+
+						<label>
+						<input type="checkbox" name="perfil[]" value="visual">V&iacute;deos y fotos</label>
+
+						<label>
+						<input type="checkbox" name="perfil[]" value="texto">Texto</label>
+					</fieldset>
+					<p id="fieldset-perfil_visualizacion-incorrecto" style="display:none;">Se debe seleccionar al menos una opci&oacute;n de visualizaci&oacute;n</p>
 				</article>
       
 				<article class="campo">

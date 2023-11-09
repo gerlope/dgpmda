@@ -23,7 +23,7 @@
 					// Creamos en html la zona arriba a la derecha de un usuario que ha iniciado sesión
 					echo "<article id='perfil-login'>
 					<a href='../profesores/modificacion_profesores.php'>
-					<img src='../imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
+					<img src='../multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
 					<h2>$username</h2></a>
 					<a href='../php/logout.php'>&#10149; Cerrar sesión</a></article>";
 				}
@@ -34,7 +34,7 @@
 		</header>
 
 		<main>
-        	<h1>Registro de Profesores</h1>
+        	<h1 id='tituloPrincipal'>Registro de Profesores</h1>
 			<form onsubmit="return validarFormularioRegistroProfesor(event, '')" action="../php/registrar_profesor.php" method="POST" class="formulario">
 				<article class="campo">
 					<label for="nombre" class="titulo-campo">Nombre:</label>
@@ -50,7 +50,13 @@
 
                 <article class="campo">
 					<label for="ruta_foto" class="titulo-campo">Fotograf&iacute;a personal:</label>
-					<input type="file" id="ruta_foto" name="ruta_foto" required>
+					<input type="file" id="ruta_foto" name="ruta_foto" accept="image/*" required>
+				</article>
+
+				<article class="campo">
+					<label for="aula" class="titulo-campo">Aula:</label>
+					<input type="text" id="aula" name="aula" required>
+					<p id="aula-incorrecto" style="display:none;">El aula debe contener &uacute;nicamente caracteres alfan&uacute;mericos</p>
 				</article>
 
 				<article class="campo">

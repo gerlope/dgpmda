@@ -3,7 +3,7 @@
 <html lang="es">
 	<head>
 		<meta charset="UTF-8">
-		<title>Perfil de usuario</title>
+		<title>Perfil de alumno</title>
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
 	</head>
@@ -12,15 +12,6 @@
 		<?php
 				// Iniciar la sesión
 				session_start();
-
-				// Si no podemos acceder al indice del alumno o el indice no corresponde
-				// con ningún alumno nos redirigmos al index
-				if($_GET['indice'] == null || $_SESSION['alumno'][$_GET['indice']] == null){
-					header('Location: ../index.php');
-					exit;
-				}
-
-				$indice = $_GET['indice'];
 
 				// Si hay una sesión activa de administrador, mostrar el nombre de usuario y la posibilidad de cerrar sesión
 				if (isset($_SESSION['admin'])) {
@@ -32,7 +23,7 @@
 					// Creamos en html la zona arriba a la derecha de un usuario que ha iniciado sesión
 					echo "<article id='perfil-login'>
 					<a href='../profesores/modificacion_profesores.php'>
-					<img src='../imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
+					<img src='../multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
 					<h2>$username</h2></a>
 					<a href='../php/logout.php'>&#10149; Cerrar sesión</a></article>";
 				}
@@ -51,14 +42,14 @@
 
 				$nombre = $alumno['nombre'];
 				$apellidos = $alumno['apellidos'];
-				$curso = $alumno['curso'];
+				$aula = $alumno['aula'];
 				$ruta_foto = $alumno['ruta_foto'];
 				$perfil_visualizacion = $alumno['perfil_visualizacion'];
 				$password = $alumno['password'];
 				$_SESSION['id_alumno'] = $alumno['id'];
 			?>
 
-			<h1 id='titulo'><?php echo $nombre . ' ' . $apellidos; ?></h1>
+			<h1 id='tituloPrincipal'><?php echo $nombre . ' ' . $apellidos; ?></h1>
 			<form onsubmit="return validarFormularioRegistroAlumno(event, '')" action="../php/modificar_alumno.php" method="POST" class="formulario" id="formulario-modificar">
 				<button type="button" onclick="habilitarEdicion()" id="boton-editar">Editar perfil</button>
 				<button type="button" onclick="deshabilitarEdicion()" id="boton-cerrarEdicion" style="display: none;">Cerrar X</button>
@@ -76,24 +67,30 @@
 				</article>
 
 				<article class="campo">
-					<label for="curso" class="titulo-campo">Curso:</label>
-					<input type="text" id="curso" name="curso" value="<?php echo $curso?>" required disabled>
-					<p id="curso-incorrecto" style="display:none;">El curso debe contener &uacute;nicamente caracteres alfan&uacute;mericos</p>
+					<label for="aula" class="titulo-campo">Aula:</label>
+					<input type="text" id="aula" name="aula" value="<?php echo $aula?>" required disabled>
+					<p id="aula-incorrecto" style="display:none;">El aula debe contener &uacute;nicamente caracteres alfan&uacute;mericos</p>
 				</article>
 
                 <article class="campo">
 					<label for="ruta_foto" class="titulo-campo">Fotograf&iacute;a personal:</label>
 					<input type="text" id="ruta_foto" name="ruta_foto" value="<?php echo $ruta_foto?>" required disabled>
+					<p id="ruta_foto-incorrecto" style="display:none;">La fotograf&iacute;a debe corresponder a un archivo v&aacute;lido de imagen</p>
 				</article>
 
 				<article class="campo">
-					<label for="perfil_visualizacion" class="titulo-campo">Perfil preferente de visualizaci&oacute;n:</label>
-					<select id="perfil_visualizacion" name="perfil_visualizacion" required disabled>
-						<option value="">Seleccione una opci&oacute;n</option>
-						<option value="audio">Audio</option>
-						<option value="visual">V&iacute;deos y fotos</option>
-						<option value="texto">Texto</option>
-					</select>
+					<fieldset id="fieldset-perfil_visualizacion" name="fieldset-perfil_visualizacion">
+						<legend class="titulo-campo">Perfil preferente de visualizaci&oacute;n:</legend>
+
+						<label>
+						<input type="checkbox" name="perfil[]" value="audio" disabled >Audio</label>
+
+						<label>
+						<input type="checkbox" name="perfil[]" value="visual" disabled >V&iacute;deos y fotos</label>
+
+						<label>
+						<input type="checkbox" name="perfil[]" value="texto" disabled>Texto</label>
+					</fieldset>
 				</article>
       
 				<article class="campo">
@@ -114,7 +111,7 @@
 			</form>
 
 			<?php 
-				echo "<script>rellenarSelect('perfil_visualizacion', '$perfil_visualizacion');</script>";
+				echo "<script>rellenarFieldset('fieldset-perfil_visualizacion', '$perfil_visualizacion');</script>";
 			?>
 		</main>
 

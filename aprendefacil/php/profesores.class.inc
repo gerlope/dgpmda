@@ -1,8 +1,8 @@
 <?php
     require_once ('datos_object.class.inc');
 
-    // Cada instancia de la clase Profesor se corresponde con una fila/registro de la tabla del mismo nombre
-    class Profesor extends DataObject {
+    // Cada instancia de la clase Profesores se corresponde con una fila/registro de la tabla del mismo nombre
+    class Profesores extends DataObject {
 
         /****************************************************************************************/
         /****************************************************************************************/
@@ -13,6 +13,7 @@
             "usuario"=>"",
             "password"=>"",
             "es_administrador"=>"",
+            "aula"=>"",
             "ruta_foto"=>""
         );
         /****************************************************************************************/
@@ -141,19 +142,19 @@
         /****************************************************************************************/
         /****************************************************************************************/
         /* Funcion que inserta en la tabla profesores un profesor con los datos correspondientes */
-        public static function insertarProfesor($nombre, $apellidos, $usuario, $password, $ruta_foto) {
+        public static function insertarProfesor($nombre, $apellidos, $usuario, $password, $aula, $ruta_foto) {
             $conexion = parent::conectar();
 
-            $profesores = new Profesor();
+            $profesores = new Profesores();
 
             // Comprobamos que el profesor a insertar no es un profesor existente, es decir que el usuario no exista ya en la tabla
             if(!$profesores->existeProfesor($usuario)){
 
-                $sql="INSERT INTO " . TABLA_PROFESORES . "(nombre, apellidos, usuario, password, es_administrador, ruta_foto) VALUES (?, ?, ?, ?, ?, ?)";
+                $sql="INSERT INTO " . TABLA_PROFESORES . "(nombre, apellidos, usuario, password, es_administrador, aula, ruta_foto) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
                 try {
                     $st = $conexion->prepare( $sql );
-                    $st->execute([$nombre, $apellidos, $usuario, $password, false, $ruta_foto]);
+                    $st->execute([$nombre, $apellidos, $usuario, $password, false, $aula, $ruta_foto]);
                     $fila = $st->fetch();
                     parent::desconectar( $conexion );
 
@@ -181,37 +182,57 @@
         /****************************************************************************************/
         /****************************************************************************************/
         /* Funcion que modifica en la tabla profesores un profesor con los datos correspondientes */
-        public static function modificarProfesor($nombre, $apellidos, $usuario, $password, $ruta_foto, $usuario_anterior) {
+        public static function modificarProfesor($nombre, $apellidos, $usuario, $password, $aula, $ruta_foto, $usuario_anterior) {
             $conexion = parent::conectar();
             $conexion->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
 
-            $sql="UPDATE " . TABLA_PROFESORES . " SET nombre = :nombre, apellidos = :apellidos, usuario = :usuario, password = :password, ruta_foto = :ruta_foto WHERE usuario = :usuario_anterior";
+            $profesores = new Profesores();
 
-            try {
-                $st = $conexion->prepare( $sql );
-                $st->bindValue( ":nombre", $nombre, PDO::PARAM_STR );
-                $st->bindValue( ":apellidos", $apellidos, PDO::PARAM_STR );
-                $st->bindValue( ":usuario", $usuario, PDO::PARAM_STR );
-                $st->bindValue( ":password", $password, PDO::PARAM_STR );
-                $st->bindValue( ":ruta_foto", $ruta_foto, PDO::PARAM_STR );
-                $st->bindValue(":usuario_anterior", $usuario_anterior, PDO::PARAM_STR);
-                $st->execute();
-                $fila = $st->fetch();
+            // Comprobamos que el profesor a insertar no es un profesor existente, es decir que el usuario no exista ya en la tabla
+            if(!$profesores->existeProfesor($usuario)){
+
+                $sql="UPDATE " . TABLA_PROFESORES . " SET nombre = :nombre, apellidos = :apellidos, usuario = :usuario, password = :password, aula = :aula, ruta_foto = :ruta_foto WHERE usuario = :usuario_anterior";
+
+                try {
+                    $st = $conexion->prepare( $sql );
+                    $st->bindValue( ":nombre", $nombre, PDO::PARAM_STR );
+                    $st->bindValue( ":apellidos", $apellidos, PDO::PARAM_STR );
+                    $st->bindValue( ":usuario", $usuario, PDO::PARAM_STR );
+                    $st->bindValue( ":password", $password, PDO::PARAM_STR );
+                    $st->bindValue( ":aula", $aula, PDO::PARAM_STR );
+                    $st->bindValue( ":ruta_foto", $ruta_foto, PDO::PARAM_STR );
+                    $st->bindValue(":usuario_anterior", $usuario_anterior, PDO::PARAM_STR);
+                    $st->execute();
+                    $fila = $st->fetch();
+                    parent::desconectar( $conexion );
+
+                    $profesores = new Profesores( );
+                    $profesorActivo = $profesores->obtenerProfesor( $usuario );
+
+                    // Almacenamos los datos modificados del profesor en variables de sesión
+                    $_SESSION['nombre'] = $profesorActivo['nombre'];
+                    $_SESSION['apellidos'] = $profesorActivo['apellidos'];
+                    $_SESSION['aula'] = $profesorActivo['aula'];
+                    $_SESSION['ruta_foto'] = $profesorActivo['ruta_foto'];
+                    $_SESSION['usuario'] = $profesorActivo['usuario'];
+                    $_SESSION['password'] = $profesorActivo['password'];
+
+                    header('Location: ../profesores/modificacion_profesores.php');
+                } catch ( PDOException $e ) {
+                    parent::desconectar( $conexion );
+                    header('Location: ../profesores/modificacion_profesores.php');
+                }
+            }
+            else{
+                // Iniciar la sesión
+                session_start();
+
+                // Almacenamos una variable de sesión para informar que el usuario ya está en nuestra base de datos
+                $_SESSION['usuarioRepetidoBD'] = true;
+
                 parent::desconectar( $conexion );
-
-                $profesores = new Profesor( );
-                $profesorActivo = $profesores->obtenerProfesor( $usuario );
-
-                // Almacenamos los datos modificados del profesor en variables de sesión
-                $_SESSION['nombre'] = $profesorActivo['nombre'];
-                $_SESSION['apellidos'] = $profesorActivo['apellidos'];
-                $_SESSION['usuario'] = $profesorActivo['usuario'];
-                $_SESSION['password'] = $profesorActivo['password'];
-
+                    
                 header('Location: ../profesores/modificacion_profesores.php');
-            } catch ( PDOException $e ) {
-                parent::desconectar( $conexion );
-                die( "Consulta fallada: " . $e->getMessage() );
             }
         }
         /****************************************************************************************/

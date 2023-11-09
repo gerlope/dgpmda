@@ -1,8 +1,8 @@
 <?php
     require_once ('datos_object.class.inc');
 
-    // Cada instancia de la clase Alumno se corresponde con una fila/registro de la tabla del mismo nombre
-    class Alumno extends DataObject {
+    // Cada instancia de la clase Alumnos se corresponde con una fila/registro de la tabla del mismo nombre
+    class Alumnos extends DataObject {
 
         /****************************************************************************************/
         /****************************************************************************************/
@@ -11,7 +11,7 @@
             "nombre" => "",
             "apellidos" => "",
             "password"=>"",
-            "curso"=>"",
+            "aula"=>"",
             "perfil_visualizacion"=>"",
             "ruta_foto"=>""
         );
@@ -64,16 +64,14 @@
         /****************************************************************************************/
         /****************************************************************************************/
         /* Funcion que inserta en la tabla alumnos un alumno con los datos correspondientes */
-        public static function insertarAlumno($nombre, $apellidos, $password, $curso, $perfil_visualizacion, $ruta_foto) {
+        public static function insertarAlumno($nombre, $apellidos, $password, $aula, $perfil_visualizacion, $ruta_foto) {
             $conexion = parent::conectar();
 
-            $alumnos = new Alumno();
-
-            $sql="INSERT INTO " . TABLA_ALUMNOS . "(nombre, apellidos, password, curso, perfil_visualizacion, ruta_foto) VALUES (?, ?, ?, ?, ?, ?)";
+            $sql="INSERT INTO " . TABLA_ALUMNOS . "(nombre, apellidos, password, aula, perfil_visualizacion, ruta_foto) VALUES (?, ?, ?, ?, ?, ?)";
 
             try {
                 $st = $conexion->prepare( $sql );
-                $st->execute([$nombre, $apellidos, $password, $curso, $perfil_visualizacion, $ruta_foto]);
+                $st->execute([$nombre, $apellidos, $password, $aula, $perfil_visualizacion, $ruta_foto]);
                 $fila = $st->fetch();
                 parent::desconectar( $conexion );
 
@@ -89,17 +87,17 @@
         /****************************************************************************************/
         /****************************************************************************************/
         /* Funcion que modifica en la tabla alumnos un alumno con los datos correspondientes */
-        public static function modificarAlumno($nombre, $apellidos, $curso, $perfil_visualizacion, $password, $ruta_foto, $id_alumno) {
+        public static function modificarAlumno($nombre, $apellidos, $aula, $perfil_visualizacion, $password, $ruta_foto, $id_alumno) {
             $conexion = parent::conectar();
             $conexion->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
 
-            $sql="UPDATE " . TABLA_ALUMNOS . " SET nombre = :nombre, apellidos = :apellidos, curso = :curso, perfil_visualizacion = :perfil_visualizacion, password = :password, ruta_foto = :ruta_foto WHERE id = :id_alumno";
+            $sql="UPDATE " . TABLA_ALUMNOS . " SET nombre = :nombre, apellidos = :apellidos, aula = :aula, perfil_visualizacion = :perfil_visualizacion, password = :password, ruta_foto = :ruta_foto WHERE id = :id_alumno";
 
             try {
                 $st = $conexion->prepare( $sql );
                 $st->bindValue( ":nombre", $nombre, PDO::PARAM_STR );
                 $st->bindValue( ":apellidos", $apellidos, PDO::PARAM_STR );
-                $st->bindValue( ":curso", $curso, PDO::PARAM_STR );
+                $st->bindValue( ":aula", $aula, PDO::PARAM_STR );
                 $st->bindValue( ":perfil_visualizacion", $perfil_visualizacion, PDO::PARAM_STR );
                 $st->bindValue( ":password", $password, PDO::PARAM_STR );
                 $st->bindValue( ":ruta_foto", $ruta_foto, PDO::PARAM_STR );

@@ -1,16 +1,18 @@
 <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        require_once('alumno.class.inc');
+        require_once('alumnos.class.inc');
 
-        $alumnos = new Alumno();
+        $alumnos = new Alumnos();
         $nombre = $_POST['nombre'];
         $apellidos = $_POST['apellidos'];
         $password = $_POST['password'];
-        $curso = $_POST['curso'];
-        $perfil_visualizacion = $_POST['perfil_visualizacion'];
+        $aula = $_POST['aula'];
         $ruta_foto = $_POST['ruta_foto'];
 
+        // Convierte el array de valores del perfil de visualizacion en una cadena separada por comas
+        $perfil_visualizacion = implode(', ', $_POST['perfil']);
+
         // Insertamos los datos en la base de datos
-        $alumnos->insertarAlumno($nombre, $apellidos, $password, $curso, $perfil_visualizacion, $ruta_foto);
+        $alumnos->insertarAlumno($nombre, $apellidos, $password, $aula, $perfil_visualizacion, $ruta_foto);
     }
 ?>
