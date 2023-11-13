@@ -189,7 +189,7 @@
             $profesores = new Profesores();
 
             // Comprobamos que el profesor a insertar no es un profesor existente, es decir que el usuario no exista ya en la tabla
-            if(!$profesores->existeProfesor($usuario)){
+            if($usuario == $usuario_anterior || !$profesores->existeProfesor($usuario)){
 
                 $sql="UPDATE " . TABLA_PROFESORES . " SET nombre = :nombre, apellidos = :apellidos, usuario = :usuario, password = :password, aula = :aula, ruta_foto = :ruta_foto WHERE usuario = :usuario_anterior";
 
