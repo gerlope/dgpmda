@@ -63,7 +63,7 @@
 							require_once('../php/alumnos.class.inc');
 
 							$tmp = new Alumnos();
-							$alumnos = $tmp->obtenerAlumnos();		//$_GET["filtro"]
+							$alumnos = $tmp->obtenerAlumnos();
 							$_SESSION['alumno'] = array(); 			// Inicializa $_SESSION['alumno'] como una matriz vacía
 							$i = 0;
 

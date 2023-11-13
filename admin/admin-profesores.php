@@ -63,7 +63,7 @@
 							require_once('../php/profesores.class.inc');
 
 							$tmp = new Profesores();
-							$profesores = $tmp->obtenerProfesores();		//$_GET["filtro"]
+							$profesores = $tmp->obtenerProfesores();		
 							$_SESSION['profesor'] = array(); 			// Inicializa $_SESSION['profesor'] como una matriz vacía
 							$i = 0;
 
@@ -84,7 +84,7 @@
 										// Creamos todos los articles de los profesores
 										echo "
 										<article>
-											<a href='../profesores/modificacion_profesores.php?indice=$i' style='color:inherit'>
+											<a href='../admin/modificacion_profesores.php?indice=$i' style='color:inherit'>
 											<div style='border-style: solid;padding:2px 2px; margin:5px; width:130px; height:165px; display:flex; flex-direction: column'>
 												<img src='../multimedia/imagenes/" . $profesor['ruta_foto'] . "' width='70' height='70' alt='Foto de perfil del profesor' style='margin: auto'>
 												<h3 align='center' style='margin-bottom:10px; margin-top:5px'>$profesoresNombre[$i]</h3>

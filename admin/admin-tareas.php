@@ -59,22 +59,15 @@
 						<a href="crear_tareas.php"><button>Nueva Tarea</button></a>
 					</div>
 					<table style="border: 3px solid black; border-collapse: collapse; table-layout: auto; width:450px; margin: 20px">
-						<colgroup>
-							<col style="width:250px">
-							<col style="width:100px">
-							<col style="width:100px">
-						</colgroup>
 						<tbody>
 							<tr>
 								<th style='border: 2px solid black; border-collapse'><b>Nombre</b></th>
-								<th style='border: 2px solid black; border-collapse'><b>Fecha inicio</b></th>
-								<th style='border: 2px solid black; border-collapse'><b>Fecha limite</b></th>
 							</tr>
 							<?php
 								require_once('../php/tareas.class.inc');
 
 								$tmp = new Tareas();
-								$tareas = $tmp->obtenerTareas();	//$_GET["filtro"]
+								$tareas = $tmp->obtenerTareas();
 								$_SESSION['tarea'] = array(); 			// Inicializa $_SESSION['tarea'] como una matriz vacía
 								$i = 0;
 
@@ -95,8 +88,6 @@
 											// Creamos todos los articles de las tareas
 											echo "<tr>
 												<td align='left' style='border: 1px solid black; border-collapse'><a href='../admin/asignar_tareas.php?indice=$i' style='color: inherit'><h3 style='margin: 3px'>{$tareasTitulo[$i]}</h3></a></td>
-												<td align='center' style='border: 1px solid black; border-collapse'>placeholder</td>
-												<td align='center' style='border: 1px solid black; border-collapse'>placeholder</td>
 											</tr>";
 										}
 										$i++;
