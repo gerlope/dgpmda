@@ -74,7 +74,7 @@
                 $fila = $st->fetch();
                 parent::desconectar( $conexion );
 
-                header('Location: ../admin/admin-tareas.php');
+                header('Location: ../admin/admin_tareas.php');
             } catch ( PDOException $e ) {
                 parent::desconectar( $conexion );
                 
@@ -105,7 +105,7 @@
                 $fila = $st->fetch();
                 parent::desconectar( $conexion );
 
-                header('Location: ../admin/admin-tareas.php');
+                header('Location: ../admin/admin_tareas.php');
             } catch ( PDOException $e ) {
                 parent::desconectar( $conexion );
                 die( "Consulta fallada: " . $e->getMessage() );

@@ -3,74 +3,59 @@
 <html lang="es">
 	<head>
 		<meta charset="utf-8">
-		<title>Aprendefacil</title>
+		<title>Inicio</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="viewport" content="width=device-width">
 		<script src="javascript/funciones_basicas.js"></script>
 		<script src="javascript/validar_formularios.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/header.css">
+		<link rel="stylesheet" type="text/css" href="css/index.css">
 	</head>
 
 	<body>
 		<header>
-			<article id="form-login">
-				<h2>¿Eres profesor? Inicia sesi&oacute;n</h2>
-				<form onsubmit="return validarFormularioLogin(event, '-login')" action="php/login_profesores.php" method="POST" class="formulario">
-					<label for="usuario-login">Usuario/Correo:</label>
-					<input type="text" id="usuario-login" name="usuario-login" required>
-					<p id="usuario-login-incorrecto" style="display:none;">El usuario no tiene un formato v&aacute;lido</p>
-					<br>
-					<label for="password-login">Contrase&ntilde;a:</label>
-					<input type="password" id="password-login" name="password-login" required>
-					<p id="password-login-incorrecto" style="display:none;">La contrase&ntilde;a no tiene un formato v&aacute;lido</p>
-					<br>
-					<input type="submit" value="Iniciar sesi&oacute;n">
-				</form>
-				<p id="-login-incorrecto" style="display:none;">La contrase&ntilde;a o el correo electr&oacute;nico son incorrectos. Int&eacute;ntalo de nuevo.</p>
-			</article>
+			<div>
+				<?php
+					// Iniciar la sesión
+					session_start();
 
-			<?php
-				// Iniciar la sesión
-				session_start();
+					// Si hay una sesión activa, mostrar el nombre de usuario y la posibilidad de cerrar sesión
+					if (isset($_SESSION['usuario'])) {
+						// Acceder al nombre de usuario almacenado en la variable de sesión
+						$username = $_SESSION['usuario'];
+						$ruta_foto = $_SESSION['ruta_foto'];
 
-				// Si hay una sesión activa, mostrar el nombre de usuario y la posibilidad de cerrar sesión
-				if (isset($_SESSION['usuario'])) {
-					echo "<script>eliminarElemento('form-login');</script>";
-
-					// Acceder al nombre de usuario almacenado en la variable de sesión
-					$username = $_SESSION['usuario'];
-					$ruta_foto = $_SESSION['ruta_foto'];
-
-					// Creamos en html la zona arriba a la derecha de un usuario que ha iniciado sesión
-					// Si la sesión activa es la de el administrador añadimos una linea para ir al panel de administrador
-					if(isset($_SESSION['admin'])){
-						echo "<article id='perfil-login'>
-						<a href='profesores/modificacion_profesores.php'>
-						<img src='multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
-						<h2>$username</h2></a>
-						<a href='admin/admin-tareas.php'>
-						<h2>Ir a panel de administrador</h2></a>
-						<a href='php/logout.php'>&#10149; Cerrar sesión</a></article>";
+						// Creamos en html la zona arriba a la derecha de un usuario que ha iniciado sesión
+						// Si la sesión activa es la de el administrador añadimos una linea para ir al panel de administrador
+						if(isset($_SESSION['admin'])){
+							echo "<div id='perfil-login'>
+							<a href='profesores/modificacion_profesores.php'>
+							<img src='multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
+							<h2>$username</h2></a></div>
+							<div><h1 id='titulo'>Inicio</h1></div>
+							<a href='php/logout.php'><button><h3>Cerrar Sesion</h3></button></a>";
+						}
+						else{
+							echo "<div id='perfil-login'>
+							<a href='profesores/modificacion_profesores.php'>
+							<img src='multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
+							<h2>$username</h2></a></div>
+							<div><h1 id='titulo'>Inicio</h1></div>
+							<a href='php/logout.php'><button><h3>Cerrar Sesion</h3></button></a>";
+						}
 					}
 					else{
-						echo "<article id='perfil-login'>
-						<a href='profesores/modificacion_profesores.php'>
-						<img src='multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
-						<h2>$username</h2></a>
-						<a href='php/logout.php'>&#10149; Cerrar sesión</a></article>";
+						echo "<div id='perfil-login'></div>
+							<div><h1 id='titulo'>Inicio</h1></div>
+							<a href='profesores/acceso_profesores.php'><button><h3>Acceso de Profesores</h3></button></a>";
 					}
-				}
-				else if(isset($_SESSION['formularioEnviado-login']) && $_SESSION['formularioEnviado-login'] == true){	// Si no hay ninguna sesión activa
-					// Mostramos un mensaje de error
-					echo "<script>recuperarElemento('-login-incorrecto');</script>";
-
-					$_SESSION['formularioEnviado-login'] = false;
-				}
-			?>
+				?>
+			</div>
 		</header>
 
 		<main>
+			<h2>Selecciona tu nombre y foto</h2>
 			<section class="alumnos">
-				<h2>Alumnos</h2>
 				<?php
 					require_once('php/alumnos.class.inc');
 
@@ -88,7 +73,7 @@
 							
 							// Creamos todos los articles de los alumnos
 							echo "<article class='alumno'>
-								<a href='alumnos/inicio_sesion.php?indice=$i'>
+								<a href='alumnos/acceso_alumnos.php?indice=$i'>
 									<img src='multimedia/imagenes/" . $alumno['ruta_foto'] . "' width='60' height='60' alt='Foto de perfil del alumno' >
 									<h3>{$alumnosNombre[$i]}</h3>
 								</a>
@@ -98,10 +83,55 @@
 						}
 					}	
 					else{
-						echo "<article class='alumno'><h2>No hay ning&uacute; alumno registrado</h2></article>";
+						echo "<article class='alumno'><h2>No hay ning&uacute;n alumno registrado</h2></article>";
 					}
+
+					echo "<div class='botones-pantalla'><button class='boton-pantalla' id='toggleAlumnos'>M&aacute;s</button>
+					<button class='boton-pantalla' id='prevAlumnos' style='display: none;'>Anteriores</button></div>";
 				?>
 			</section>
+
+			<script>
+				document.addEventListener("DOMContentLoaded", function () {
+					var alumnosContainer = document.querySelector(".alumnos");
+					var alumnos = document.querySelectorAll(".alumno");
+					var toggleButton = document.getElementById("toggleAlumnos");
+					var prevButton = document.getElementById("prevAlumnos");
+
+					// Establece el número máximo de alumnos por pantalla
+					var alumnosPorPantalla = 9;
+
+					// Inicializa el estado de la pantalla
+					var pantallaActual = 0;
+					actualizarPantalla();
+
+					// Escucha el evento del botón para avanzar de pantalla
+					toggleButton.addEventListener("click", function () {
+						pantallaActual++;
+						actualizarPantalla();
+					});
+
+					// Escucha el evento del botón para retroceder de pantalla
+					prevButton.addEventListener("click", function () {
+						pantallaActual--;
+						actualizarPantalla();
+					});
+
+					function actualizarPantalla() {
+						var startIndex = pantallaActual * alumnosPorPantalla;
+						var endIndex = startIndex + alumnosPorPantalla;
+
+						// Muestra u oculta los alumnos según la pantalla actual
+						alumnos.forEach(function (alumno, index) {
+							alumno.style.display = index >= startIndex && index < endIndex ? "block" : "none";
+						});
+
+						// Muestra u oculta los botones dependiendo de si hay más pantallas
+						toggleButton.style.display = endIndex < alumnos.length ? "block" : "none";
+						prevButton.style.display = pantallaActual > 0 ? "block" : "none";
+					}
+				});
+			</script>
 		</main>
 
 		<footer>

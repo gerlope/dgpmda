@@ -1,0 +1,45 @@
+    #media-container {
+        margin: auto;
+        max-width: 800px;
+    }
+
+    #botones-multimedia{
+        display: flex;
+        justify-content: center;
+    }
+
+    .media-section {
+        display: none;
+    }
+
+    .media-section img {
+        width: 200px;
+        height: 200px;
+        margin: 30px 10px;
+    }
+
+    .media-section video, .media-section audio {
+        max-width: 100%;
+        height: auto;
+        margin: 30px 10px;
+    }
+
+    .media-section img:hover, .media-section video:hover, .media-section audio:hover {
+        cursor: pointer;
+        border: solid;
+    }
+
+    #documentos{
+        margin: 50px 0px;
+    }
+
+    #documentos a{
+        padding: 30px;
+    }
+
+    .pagination {
+        margin-top: 20px;
+        align-items: center;
+        justify-content: space-around;
+        display: flex;
+    }

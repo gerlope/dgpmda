@@ -6,10 +6,11 @@
 		<title>Perfil de profesor</title>
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/header.css">
 	</head>
 	<body>
-	    <header>
-			<div style='display: flex; align-content: center; justify-content: space-between'>
+		<header>
+			<div>
 				<?php
 					// Iniciar la sesión
 					session_start();
@@ -22,10 +23,10 @@
 						$ruta_foto = $_SESSION['ruta_foto'];
 
 						// Creamos en html la zona arriba a la derecha de un usuario que ha iniciado sesión
-						echo "<div id='perfil-login' style='display: flex; align-content: center; margin:15px'>
-							<a href='../profesores/modificacion_profesores.php' style='display: flex; justify-content: flex-start'>
+						echo "<div id='perfil-login'>
+							<a href='../profesores/modificacion_profesores.php'>
 								<div><img src='../multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'></div>
-								<div style='margin-left: 5px'><h2>$username</h2></div>
+								<div><h2>$username</h2></div>
 							</a>
 						</div>";
 					}
@@ -33,7 +34,8 @@
 						header("Location: ../index.php");
 					}
 				?>
-				<a href='../php/logout.php' style='margin: 15px'><button><h3>Cerrar Sesion</h3></button></a>
+				<div><h1 id='titulo'>Modificaci&oacute;n Profesores</h1></div>
+				<a href='../php/logout.php'><button><h3>Cerrar Sesion</h3></button></a>
 			</div>
 		</header>
 
@@ -51,11 +53,11 @@
 				$aula = $profesor['aula'];
 				$es_administrador = $profesor['es_administrador'];
 				$password = $profesor['password'];
-				$_SESSION['id_profesor'] = $profesor['id'];
+				$_SESSION['usuario_profesor'] = $profesor['usuario'];
 			?>
 
-			<h1 id='tituloPrincipal'><?php echo $nombre . ' ' . $apellidos; ?></h1>
-			<form onsubmit="return validarFormularioRegistroProfesor(event, '')" action="../php/modificar_profesor.php" method="POST" class="formulario" id="formulario-modificar">
+			<h1 id='tituloSecundario'><?php echo $nombre . ' ' . $apellidos; ?></h1>
+			<form onsubmit="return validarFormularioRegistroProfesor(event, '')" action="../php/modificar_profesor_admin.php" method="POST" class="formulario" id="formulario-modificar">
 				<button type="button" onclick="habilitarEdicion()" id="boton-editar">Editar perfil</button>
 				<button type="button" onclick="deshabilitarEdicion()" id="boton-cerrarEdicion" style="display: none;">Cerrar X</button>
 
@@ -72,13 +74,7 @@
 				</article>
 
 				<article class="campo">
-					<label for="usuario" class="titulo-campo">Usuario:</label>
-					<input type="text" id="usuario" name="usuario" value="<?php echo $usuario?>" required disabled>
-					<p id="usuario-incorrecto" style="display:none;">El usuario debe contener &uacute;nicamente caracteres alfab&eacute;ticos</p>
-				</article>
-
-				<article class="campo">
-					<label for="ruta_foto" class="titulo-campo">Fotograf&iacute;a personal:</label>
+					<label for="ruta_foto" class="titulo-campo">Fotograf&iacute;a:</label>
 					<input type="text" id="ruta_foto" name="ruta_foto" value="<?php echo $ruta_foto?>" required disabled>
 					<p id="ruta_foto-incorrecto" style="display:none;">La fotograf&iacute;a debe corresponder a un archivo v&aacute;lido de imagen</p>
 				</article>
@@ -90,8 +86,9 @@
 				</article>
 
 				<article class="campo">
-					<label for="es_administrador" class="titulo-campo">Es administrador:</label>
-					<input type="checkbox" id="es_administrador" name="es_administrador" value="<?php echo $es_administrador?>" >
+					<label for="usuario" class="titulo-campo">Nombre de usuario:</label>
+					<input type="text" id="usuario" name="usuario" value="<?php echo $usuario?>" required disabled>
+					<p id="usuario-incorrecto" style="display:none;">El usuario debe contener &uacute;nicamente caracteres alfab&eacute;ticos</p>
 				</article>
       
 				<article class="campo">
@@ -110,10 +107,6 @@
 					<input type="submit" id="boton-enviar" value="Guardar cambios" style="display:none;" disabled>
 				</article>
 			</form>
-
-			<?php 
-				echo "<script>rellenarFieldset('fieldset-perfil_visualizacion', '$es_administrador');</script>";
-			?>
 		</main>
 
 		<footer>

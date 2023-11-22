@@ -1,0 +1,49 @@
+
+    /* Estilo para el cuerpo de la página */
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    /* Estilo para el div donde se encuentran todos los elementos del header */
+    header div{
+        display: flex;
+        align-content: center;
+        justify-content: space-between;
+    }
+
+    /* Estilo para el título principal de todas las pantallas */
+    /* Accesible */
+    header h1 {
+        font-family: "Verdana", sans-serif;
+        font-size: 40px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        line-height: 1.5;
+        margin-bottom: 0.5em;
+        color: #333;
+    }
+
+    /* Estilo para el div que contiene el perfil del usuario que ha iniciado sesion */
+    #perfil-login{
+        display: flex;
+        align-content: center;
+        margin: 15px
+    }
+
+    /* Estilo para el enlace del perfil del usuario que ha iniciado sesion */
+    #perfil-login a{
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    /* Estilo para el h2 del enlace del perfil del usuario que ha iniciado sesion */
+    #perfil-login a h2{
+        margin-left: 5px;
+        font-size: 20px;
+    }
+
+    /* Estilo para los botones del header */
+    header button{
+        margin: 15px;
+    }

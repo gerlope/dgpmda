@@ -158,7 +158,7 @@
                     $fila = $st->fetch();
                     parent::desconectar( $conexion );
 
-                    header('Location: ../admin/admin-tareas.php');
+                    header('Location: ../admin/admin_tareas.php');
                 } catch ( PDOException $e ) {
                     parent::desconectar( $conexion );
                     
@@ -182,7 +182,7 @@
         /****************************************************************************************/
         /****************************************************************************************/
         /* Funcion que modifica en la tabla profesores un profesor con los datos correspondientes */
-        public static function modificarProfesor($nombre, $apellidos, $usuario, $password, $aula, $ruta_foto, $usuario_anterior) {
+        public static function modificarProfesor($nombre, $apellidos, $usuario, $password, $aula, $ruta_foto, $usuario_anterior, $cambio_admin) {
             $conexion = parent::conectar();
             $conexion->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
 
@@ -206,18 +206,24 @@
                     $fila = $st->fetch();
                     parent::desconectar( $conexion );
 
-                    $profesores = new Profesores( );
-                    $profesorActivo = $profesores->obtenerProfesor( $usuario );
+                    // Si el cambio ha sido desde el perfil de un profesor
+                    if($cambio_admin == false){
+                        $profesores = new Profesores( );
+                        $profesorActivo = $profesores->obtenerProfesor( $usuario );
 
-                    // Almacenamos los datos modificados del profesor en variables de sesión
-                    $_SESSION['nombre'] = $profesorActivo['nombre'];
-                    $_SESSION['apellidos'] = $profesorActivo['apellidos'];
-                    $_SESSION['aula'] = $profesorActivo['aula'];
-                    $_SESSION['ruta_foto'] = $profesorActivo['ruta_foto'];
-                    $_SESSION['usuario'] = $profesorActivo['usuario'];
-                    $_SESSION['password'] = $profesorActivo['password'];
+                        // Almacenamos los datos modificados del profesor en variables de sesión
+                        $_SESSION['nombre'] = $profesorActivo['nombre'];
+                        $_SESSION['apellidos'] = $profesorActivo['apellidos'];
+                        $_SESSION['aula'] = $profesorActivo['aula'];
+                        $_SESSION['ruta_foto'] = $profesorActivo['ruta_foto'];
+                        $_SESSION['usuario'] = $profesorActivo['usuario'];
+                        $_SESSION['password'] = $profesorActivo['password'];
 
-                    header('Location: ../profesores/modificacion_profesores.php');
+                        header('Location: ../profesores/modificacion_profesores.php');
+                    }
+                    else{       // Si por el contrario ha sido un cambio de un admin
+                        header('Location: ../admin/admin_profesores.php');
+                    }
                 } catch ( PDOException $e ) {
                     parent::desconectar( $conexion );
                     header('Location: ../profesores/modificacion_profesores.php');

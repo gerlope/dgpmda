@@ -33,16 +33,16 @@
                 // Inicio de sesión exitoso, se crea una sesión para el administrador
                 $_SESSION["admin"] = true;
 
-                header("Location: ../admin/admin-tareas.php");
+                header("Location: ../admin/admin_tareas.php");
             }
             else{
                 // Redirigimos al profesor a la página correspondiente
-                header("Location: ../profesores/profesor-tareas.php");
+                header("Location: ../profesores/profesor_tareas.php");
             }
         }
         else{
             // Si se falla el login redirigimos al usuario a la página principal
-            header("Location: ../index.php");
+            header("Location: ../profesores/acceso_profesores.php");
         }
     }
 ?>

@@ -1,0 +1,108 @@
+
+    /* Estilo para el main */
+    main {
+        padding: 20px;
+    }
+
+    /* Estilo para todos los enlaces, los botones y el input que confirma una busqueda */
+    a, button, #boton-buscar {
+        text-decoration: none;
+        cursor: pointer; 
+    }
+
+    /* Estilo para los enlace al pasar el ratón por encima */
+    a:hover {
+        text-decoration: underline;
+    }
+
+    /* Estilo para la seccion que contiene todos los alumnos */
+    .alumnos {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    /* Estilo para todos los h2 del main */
+    /* Accesible */
+    main h2 {
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+        margin: 30px;
+    }
+
+    /* Estilo para todos los h3 del main */
+    /* Accesible */
+    main h3{
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        line-height: 1.5;
+    }
+
+    /* Estilo para el article que muestra el alumno correspondiente */
+    .alumno {
+        display: inline-block;
+        width: 200px;
+        margin: 10px;
+        text-align: center;
+        background-color: white;
+        padding: 10px;
+        border-radius: 30px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo para las imagenes del article que muestra el alumno correspondiente */
+    .alumno img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 50%;
+    }
+
+    /* Estilo para el article que muestra el alumno correspondiente al pasar el ratón por encima */
+    .alumno:hover{
+        cursor: pointer;
+        border: solid;
+    }
+
+    /* Estilo para el div que contiene a los botones que muestran más o menos alumnos por pantalla */
+    .botones-pantalla{
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: column;
+    }
+
+    /* Estilo para los botones que muestran más o menos alumnos por pantalla */
+    .boton-pantalla{
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        border-radius: 50px;
+        background-color: rgb(52, 152, 219);
+        color: rgb(255, 255, 255);
+        transition: background-color 0.3s ease 0s;
+        height: 50px;
+    }
+
+    /* Estilo para los botones que muestran más o menos alumnos por pantalla al pasar el ratón por encima */
+    .boton-pantalla:hover{
+        background-color: #2980b9;
+    }
+
+    /* Estilo para todos los enlaces de la página */
+    a {
+        text-decoration: none;
+        color: #333; 
+    }
+
+    /* Estilo para todos los enlaces de la página al pasar el ratón por encima */
+    a:hover {
+        color: #555; 
+    }

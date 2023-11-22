@@ -1,0 +1,87 @@
+    
+    /* Estilo para el contenedor del formulario login */
+    #form-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        margin-top: 80px;
+    }
+
+    /* Estilo para el article donde está el formulario login */
+    #form-login {
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    /* Estilo para el botón de volver a la página principal */
+    .boton-volver {
+        display: inline-block;
+        padding: 15px 25px;
+        border: 2px solid black; 
+        margin: 0px 0px 20px 10px;
+        font-size: 24px;
+        text-decoration: none;
+        color: black;
+        background-color: white;
+        border-radius: 100px; 
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Estilo para el botón de volver a la página principal al pasar el ratón por encima */
+    .boton-volver:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Estilo para el formulario login */
+    .formulario {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: left;
+    }
+
+    /* Estilo para los h2 y el texto del botón submit en el acceso alumnos */
+    h2, .submit{
+        text-transform: uppercase;
+        letter-spacing: 1.8px;
+        font-weight: bold;
+    }
+
+    /* Estilo para los label del formulario */
+    label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    /* Estilo para los input del formulario */
+    input {
+        font-family: "Verdana", sans-serif;
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+    }
+
+    /* Estilo para el botón de iniciar sesión */
+    input[type="submit"] {
+        font-size: 16px;
+        border-radius: 20px;
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+    }
+
+    /* Estilo para el botón de iniciar sesión al pasar el ratón por encima */
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    /* Estilo para los mensajes de error al iniciar sesión */
+    p, #-login-incorrecto {
+        color: red;
+    }

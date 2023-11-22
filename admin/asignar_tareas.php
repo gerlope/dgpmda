@@ -6,10 +6,11 @@
 		<title>Asignar tarea</title>
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/header.css">
 	</head>
 	<body>
-	    <header>
-			<div style='display: flex; align-content: center; justify-content: space-between'>
+		<header>
+			<div>
 				<?php
 					// Iniciar la sesión
 					session_start();
@@ -22,10 +23,10 @@
 						$ruta_foto = $_SESSION['ruta_foto'];
 
 						// Creamos en html la zona arriba a la derecha de un usuario que ha iniciado sesión
-						echo "<div id='perfil-login' style='display: flex; align-content: center; margin:15px'>
-							<a href='../profesores/modificacion_profesores.php' style='display: flex; justify-content: flex-start'>
+						echo "<div id='perfil-login'>
+							<a href='../profesores/modificacion_profesores.php'>
 								<div><img src='../multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'></div>
-								<div style='margin-left: 5px'><h2>$username</h2></div>
+								<div><h2>$username</h2></div>
 							</a>
 						</div>";
 					}
@@ -33,7 +34,8 @@
 						header("Location: ../index.php");
 					}
 				?>
-				<a href='../php/logout.php' style='margin: 15px'><button><h3>Cerrar Sesion</h3></button></a>
+				<div><h1 id='titulo'>Asignar Tarea</h1></div>
+				<a href='../php/logout.php'><button><h3>Cerrar Sesion</h3></button></a>
 			</div>
 		</header>
 
@@ -54,7 +56,7 @@
 				$tareas = new Tareas();
 			?>
 
-			<h1 id='tituloPrincipal'><?php echo $titulo;?></h1>
+			<h1 id='tituloSecundario'><?php echo $titulo;?></h1>
 			<article>
 				<a href='../admin/modificacion_tareas.php?indice=<?php echo $indice;?>'>
 					<h3>Modificar tarea</h3>

@@ -23,6 +23,6 @@
             }
         }
 
-        header('Location: ../admin/admin-tareas.php');
+        header('Location: ../admin/admin_tareas.php');
     }
 ?>

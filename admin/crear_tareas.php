@@ -6,10 +6,11 @@
 		<title>Crear Tareas</title>
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/header.css">
 	</head>
 	<body>
 		<header>
-			<div style='display: flex; align-content: center; justify-content: space-between'>
+			<div>
 				<?php
 					// Iniciar la sesión
 					session_start();
@@ -22,10 +23,10 @@
 						$ruta_foto = $_SESSION['ruta_foto'];
 
 						// Creamos en html la zona arriba a la derecha de un usuario que ha iniciado sesión
-						echo "<div id='perfil-login' style='display: flex; align-content: center; margin:15px'>
-							<a href='../profesores/modificacion_profesores.php' style='display: flex; justify-content: flex-start'>
+						echo "<div id='perfil-login'>
+							<a href='../profesores/modificacion_profesores.php'>
 								<div><img src='../multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'></div>
-								<div style='margin-left: 5px'><h2>$username</h2></div>
+								<div><h2>$username</h2></div>
 							</a>
 						</div>";
 					}
@@ -33,12 +34,12 @@
 						header("Location: ../index.php");
 					}
 				?>
-				<a href='../php/logout.php' style='margin: 15px'><button><h3>Cerrar Sesion</h3></button></a>
+				<div><h1 id='titulo'>Registro Tareas</h1></div>
+				<a href='../php/logout.php'><button><h3>Cerrar Sesion</h3></button></a>
 			</div>
 		</header>
 
 		<main>
-			<h1 id='tituloPrincipal'>Registro de Tareas</h1>
 			<form onsubmit="return validarFormularioRegistroTarea(event, '')" action="../php/registrar_tarea.php" method="POST" class="formulario">
 				<article class="campo">
 					<label for="titulo" class="titulo-campo">T&iacute;tulo:</label>

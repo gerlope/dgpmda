@@ -6,14 +6,16 @@
 		<title>Perfil de profesor</title>
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/header.css">
 	</head>
 	<body>
-	<div style='display: flex; align-content: center; justify-content: space-between'>
+		<header>
+			<div>
 				<?php
 					// Iniciar la sesión
 					session_start();
 
-					// Si hay una sesión activa de administrador, mostrar el nombre de usuario y la posibilidad de cerrar sesión
+					// Si hay una sesión activa de usuario, mostrar el nombre de usuario y la posibilidad de cerrar sesión
 					if (isset($_SESSION['usuario'])) {
 
 						// Acceder al nombre de usuario almacenado en la variable de sesión
@@ -21,19 +23,21 @@
 						$ruta_foto = $_SESSION['ruta_foto'];
 
 						// Creamos en html la zona arriba a la derecha de un usuario que ha iniciado sesión
-						echo "<div id='perfil-login' style='display: flex; align-content: center; margin:15px'>
-							<a href='../profesores/modificacion_profesores.php' style='display: flex; justify-content: flex-start'>
+						echo "<div id='perfil-login'>
+							<a href='../profesores/modificacion_profesores.php'>
 								<div><img src='../multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'></div>
-								<div style='margin-left: 5px'><h2>$username</h2></div>
+								<div><h2>$username</h2></div>
 							</a>
 						</div>";
 					}
-					else{		// Si no hay ninguna sesión de administrador activa
+					else{		// Si no hay ninguna sesión de usuario activa
 						header("Location: ../index.php");
 					}
 				?>
-				<a href='../php/logout.php' style='margin: 15px'><button><h3>Cerrar Sesion</h3></button></a>
+				<div><h1 id='titulo'>Perfil de usuario</h1></div>
+				<a href='../php/logout.php'><button><h3>Cerrar Sesion</h3></button></a>
 			</div>
+		</header>
 
 		<main>
 			<?php 
