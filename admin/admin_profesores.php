@@ -35,8 +35,9 @@
 						header("Location: ../index.php");
 					}
 				?>
-				<div><h1 id='titulo'>Gesti&oacute;n de Profesores</h1></div>
-				<a href='../php/logout.php'><button><h3>Cerrar Sesion</h3></button></a>
+				<div id="div-titulo"><h1 id='titulo'>Gesti&oacute;n de Profesores</h1>
+				<img src='../multimedia/imagenes/icono_admin.png' width='60' height='60' alt='Icono administrador'></div>
+				<a href='../php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
 			</div>
 		</header>
 
@@ -56,7 +57,7 @@
 					<div class="barra-busqueda">
 						<form action="admin_profesores.php" method="get">
 							<input type="text" id="filtro" name="filtro" placeholder="Busqueda"><br><br>
-							<input type="submit" value="Submit">
+							<input type="submit" id="boton-buscar" value="Buscar">
 						</form>
 						<a href="alta_profesores.php"><button>Nuevo Profesor</button></a>
 					</div>
@@ -77,7 +78,7 @@
 							}
 
 							if($profesores){
-								$perPage = 12;
+								$perPage = 14;
 								$startIndex = ($page - 1) * $perPage;
 								$endIndex = $startIndex + $perPage - 1;
 
@@ -118,8 +119,8 @@
 									if($page!=1) {
 										echo "<button type='submit' name='page' value='$pagem' action='admin_profesores.php'><<</button>";
 									} else {echo "<div></div>";}
-									echo "<t>Page $page</t>";
-									if(sizeof($profesores)>=$page*$perPage) {
+									echo "<span>Page $page</span>";
+									if(sizeof($profesores)>$page*$perPage) {
 										echo "<button type='submit' name='page' value='$pagep' action='admin_profesores.php'>>></button>";
 									} else {echo "<div></div>";}
 								echo "</form>";

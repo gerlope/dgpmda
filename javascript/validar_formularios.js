@@ -147,7 +147,7 @@ function validarFormularioRegistroTarea(event, tipo) {
 
 //*****************************************************************************************************//
 //*****************************************************************************************************//
-function validarFormularioLogin(event, tipo) {
+function validarFormularioLoginProfesor(event, tipo) {
     // Obtenemos los nombres de cada campo del formulario
     var nombreUsuario = 'usuario' + tipo;
     var nombrePassword = 'password' + tipo;
@@ -157,11 +157,36 @@ function validarFormularioLogin(event, tipo) {
     var password = document.getElementById(nombrePassword).value;
 
     // Hacemos estas asignaciones para que se ejecuten enteramente cada funcion validar
-    var usuarioValido = validarUsuario(usuario, nombreUsuario, tipo);		    // Validamos el nombre como nombre de usuario o como correo
+    var usuarioValido = validarUsuario(usuario, nombreUsuario, tipo);		    // Validamos el nombre como nombre de usuario
     var passwordValido = validarPassword(password, nombrePassword, tipo);		// Validamos la contraseña
 
     // Comprobamos si es valido todo el formulario, si no lo es no se envían los datos
     if(usuarioValido && passwordValido){
+        return true;
+    }
+    else{
+        // Evitamos que los datos se envíen
+        event.preventDefault();
+        return false;
+    }
+}
+//*****************************************************************************************************//
+
+
+//*****************************************************************************************************//
+//*****************************************************************************************************//
+function validarFormularioLoginAlumno(event, tipo) {
+    // Obtenemos los nombres de cada campo del formulario
+    var nombrePassword = 'password' + tipo;
+
+    // Obtenemos los valores de los campos del formulario
+    var password = document.getElementById(nombrePassword).value;
+
+    // Hacemos estas asignaciones para que se ejecuten enteramente cada funcion validar
+    var passwordValido = validarPasswordAlumno(password, nombrePassword, tipo);		// Validamos la contraseña
+
+    // Comprobamos si es valido todo el formulario, si no lo es no se envían los datos
+    if(passwordValido){
         return true;
     }
     else{
@@ -191,7 +216,7 @@ function validarNombreYApellidos(nombreApellidos, nombreNombreApellidos, tipo) {
         // Eliminamos el mensaje de error tras haber mandado datos
         eliminarElemento(tipo + '-incorrecto');
 
-        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        // Cambiamos el color del borde del campo rellenado y recuperamos el mensaje de error
         document.getElementById(nombreNombreApellidos).style.borderColor= "rgba(255, 0, 0, 0.7)";
         recuperarElemento(nombreNombreApellidos + "-incorrecto");
 
@@ -217,7 +242,7 @@ function validarUsuario(usuario, nombreUsuario, tipo) {
         // Eliminamos el mensaje de error tras haber mandado datos
         eliminarElemento(tipo + '-incorrecto');
 
-        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        // Cambiamos el color del borde del campo rellenado y recuperamos el mensaje de error
         document.getElementById(nombreUsuario).style.borderColor= "rgba(255, 0, 0, 0.7)";
         recuperarElemento(nombreUsuario + "-incorrecto");
 
@@ -245,7 +270,7 @@ function validarAula(aula, nombreAula, tipo) {
         // Eliminamos el mensaje de error tras haber mandado datos
         eliminarElemento(tipo + '-incorrecto');
 
-        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        // Cambiamos el color del borde del campo rellenado y recuperamos el mensaje de error
         document.getElementById(nombreAula).style.borderColor= "rgba(255, 0, 0, 0.7)";
         recuperarElemento(nombreAula + "-incorrecto");
 
@@ -273,9 +298,34 @@ function validarPassword(password, nombrePassword, tipo) {
         // Eliminamos el mensaje de error tras haber mandado datos
         eliminarElemento(tipo + '-incorrecto');
 
-        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        // Cambiamos el color del borde del campo rellenado y recuperamos el mensaje de error
         document.getElementById(nombrePassword).style.borderColor = "rgba(255, 0, 0, 0.7)";
         recuperarElemento(nombrePassword + "-incorrecto");
+        
+        return false;
+    }
+}
+//*****************************************************************************************************//
+
+
+//*****************************************************************************************************//
+//*****************************************************************************************************//
+function validarPasswordAlumno(password, nombrePassword, tipo) {
+    // Usamos la expresión regular /^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ0-9-_!@#$%^&*]{4,}$/
+    // para verificar que la contraseña esté compuesta por una combinación de letras (con y sin acentos),
+    // números y algunos caracteres especiales. Además, verificamos que tenga 4 o más caracteres (maximo 100)
+    // Si no se cumplen estas condiciones no se envía el formulario e informamos al usuario de lo que está pasando
+    if(/^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ0-9-_!@#$%^&*]{4,100}$/.test(password)){
+        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        document.getElementById('password-login').style.borderColor = "rgba(173, 255, 47, 0.7)";
+        document.getElementById('-login-incorrecto').textContent = "";
+
+        return true;
+    }
+    else{
+        // Cambiamos el color del borde del campo rellenado y recuperamos el mensaje de error
+        document.getElementById('password-login').style.borderColor = "rgba(255, 0, 0, 0.7)";
+        document.getElementById('-login-incorrecto').textContent = "La contraseña no es la correcta. Por favor, inténtalo de nuevo.";
         
         return false;
     }
@@ -298,7 +348,7 @@ function validarConfirmacionPassword(confirmarPassword, nombreConfirmarPassword,
         // Eliminamos el mensaje de error tras haber mandado datos
         eliminarElemento(tipo + '-incorrecto');
 
-        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        // Cambiamos el color del borde del campo rellenado y recuperamos el mensaje de error
         document.getElementById(nombreConfirmarPassword).style.borderColor = "rgba(255, 0, 0, 0.7)";
         recuperarElemento(nombreConfirmarPassword + "-incorrecto");
         
@@ -381,7 +431,7 @@ function validarRutaFoto(rutaFoto, nombreRutaFoto, tipo) {
         // Eliminamos el mensaje de error tras haber mandado datos
         eliminarElemento(tipo + '-incorrecto');
 
-        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        // Cambiamos el color del borde del campo rellenado y recuperamos el mensaje de error
         document.getElementById(nombreRutaFoto).style.borderColor= "rgba(255, 0, 0, 0.7)";
         recuperarElemento(nombreRutaFoto + "-incorrecto");
 
@@ -408,7 +458,7 @@ function validarRutaVideo(rutaVideo, nombreRutaVideo, tipo) {
         // Eliminamos el mensaje de error tras haber mandado datos
         eliminarElemento(tipo + '-incorrecto');
 
-        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        // Cambiamos el color del borde del campo rellenado y recuperamos el mensaje de error
         document.getElementById(nombreRutaVideo).style.borderColor = "rgba(255, 0, 0, 0.7)";
         recuperarElemento(nombreRutaVideo + "-incorrecto");
 
@@ -435,7 +485,7 @@ function validarRutaAudio(rutaAudio, nombreRutaAudio, tipo) {
         // Eliminamos el mensaje de error tras haber mandado datos
         eliminarElemento(tipo + '-incorrecto');
 
-        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        // Cambiamos el color del borde del campo rellenado y recuperamos el mensaje de error
         document.getElementById(nombreRutaAudio).style.borderColor = "rgba(255, 0, 0, 0.7)";
         recuperarElemento(nombreRutaAudio + "-incorrecto");
 
@@ -462,7 +512,7 @@ function validarRutaDoc(rutaDoc, nombreRutaDoc, tipo) {
         // Eliminamos el mensaje de error tras hsaber mandado datos
         eliminarElemento(tipo + '-incorrecto');
 
-        // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
+        // Cambiamos el color del borde del campo rellenado y recuperamos el mensaje de error
         document.getElementById(nombreRutaDoc).style.borderColor= "rgba(255, 0, 0, 0.7)";
         recuperarElemento(nombreRutaDoc + "-incorrecto");
 

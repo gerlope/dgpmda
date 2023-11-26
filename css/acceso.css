@@ -5,7 +5,6 @@
         align-items: center;
         justify-content: center;
         margin: 0;
-        margin-top: 80px;
     }
 
     /* Estilo para el article donde está el formulario login */
@@ -21,11 +20,10 @@
         display: inline-block;
         padding: 15px 25px;
         border: 2px solid black; 
-        margin: 0px 0px 20px 10px;
-        font-size: 24px;
-        text-decoration: none;
-        color: black;
-        background-color: white;
+        margin: 0px 0px 30px 25px;
+        font-size: 30px;
+        background-color: #080163;
+        color: white;
         border-radius: 100px; 
         text-decoration: none;
         cursor: pointer;
@@ -33,11 +31,12 @@
 
     /* Estilo para el botón de volver a la página principal al pasar el ratón por encima */
     .boton-volver:hover {
-        background-color: #f0f0f0;
+        transform: scale(1.2);
     }
 
     /* Estilo para el formulario login */
     .formulario {
+        display: grid;
         background-color: white;
         padding: 20px;
         border-radius: 10px;
@@ -45,8 +44,8 @@
         text-align: left;
     }
 
-    /* Estilo para los h2 y el texto del botón submit en el acceso alumnos */
-    h2, .submit{
+    /* Estilo para los h2, p y el texto del botón submit en el acceso alumnos */
+    h2, p, .submit, #-login-incorrecto{
         text-transform: uppercase;
         letter-spacing: 1.8px;
         font-weight: bold;
@@ -70,18 +69,23 @@
     /* Estilo para el botón de iniciar sesión */
     input[type="submit"] {
         font-size: 16px;
+        border: 2px solid black;
         border-radius: 20px;
-        background-color: #4caf50;
+        background-color: #080163;
         color: white;
         cursor: pointer;
+        width: 70%;
+        justify-self: center;
     }
 
     /* Estilo para el botón de iniciar sesión al pasar el ratón por encima */
     input[type="submit"]:hover {
-        background-color: #45a049;
+        transform: scale(1.15);
     }
 
     /* Estilo para los mensajes de error al iniciar sesión */
     p, #-login-incorrecto {
+        margin-top: 30px;
+        line-height: 30px;
         color: red;
     }

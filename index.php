@@ -32,21 +32,32 @@
 							<a href='profesores/modificacion_profesores.php'>
 							<img src='multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
 							<h2>$username</h2></a></div>
-							<div><h1 id='titulo'>Inicio</h1></div>
-							<a href='php/logout.php'><button><h3>Cerrar Sesion</h3></button></a>";
+							<div id='div-titulo'><img src='multimedia/imagenes/icono_index.png' width='60' height='60' alt='Icono página inicial'><h1 id='titulo'>Inicio</h1></div>
+							<a href='php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>";
 						}
 						else{
 							echo "<div id='perfil-login'>
 							<a href='profesores/modificacion_profesores.php'>
 							<img src='multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
 							<h2>$username</h2></a></div>
-							<div><h1 id='titulo'>Inicio</h1></div>
-							<a href='php/logout.php'><button><h3>Cerrar Sesion</h3></button></a>";
+							<div id='div-titulo'><img src='multimedia/imagenes/icono_index.png' width='60' height='60' alt='Icono página inicial'><h1 id='titulo'>Inicio</h1></div>
+							<a href='php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>";
 						}
+					}
+					else if(isset($_SESSION['perfil_visualizacion'])){
+						// Acceder al nombre de alumno almacenado en la variable de sesión
+						$username = $_SESSION['nombre'] . " " . $_SESSION['apellidos'];
+						$ruta_foto = $_SESSION['ruta_foto'];
+
+						echo "<div id='perfil-login'>
+						<img src='multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'>
+						<h2>$username</h2></div>
+						<div id='div-titulo'><img src='multimedia/imagenes/icono_index.png' width='60' height='60' alt='Icono página inicial'><h1 id='titulo'>Inicio</h1></div>
+						<a href='php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>";
 					}
 					else{
 						echo "<div id='perfil-login'></div>
-							<div><h1 id='titulo'>Inicio</h1></div>
+							<div id='div-titulo'><img src='multimedia/imagenes/icono_index.png' width='60' height='60' alt='Icono página inicial'><h1 id='titulo'>Inicio</h1></div>
 							<a href='profesores/acceso_profesores.php'><button><h3>Acceso de Profesores</h3></button></a>";
 					}
 				?>
@@ -56,6 +67,8 @@
 		<main>
 			<h2>Selecciona tu nombre y foto</h2>
 			<section class="alumnos">
+				<div class='botones-pantalla'><button class='boton-pantalla' id='prevAlumnos' aria-label="Ir a alumnos anteriores" style='display: none;'>&#129152;</button></div>
+
 				<?php
 					require_once('php/alumnos.class.inc');
 
@@ -72,12 +85,11 @@
 							$_SESSION['alumno'][$i] = serialize($alumno);
 							
 							// Creamos todos los articles de los alumnos
-							echo "<article class='alumno'>
-								<a href='alumnos/acceso_alumnos.php?indice=$i'>
+							echo "<a href='alumnos/acceso_alumnos.php?indice=$i'>
+								<article class='alumno'>
 									<img src='multimedia/imagenes/" . $alumno['ruta_foto'] . "' width='60' height='60' alt='Foto de perfil del alumno' >
 									<h3>{$alumnosNombre[$i]}</h3>
-								</a>
-							</article>";
+								</article></a>";
 
 							$i++;
 						}
@@ -86,8 +98,7 @@
 						echo "<article class='alumno'><h2>No hay ning&uacute;n alumno registrado</h2></article>";
 					}
 
-					echo "<div class='botones-pantalla'><button class='boton-pantalla' id='toggleAlumnos'>M&aacute;s</button>
-					<button class='boton-pantalla' id='prevAlumnos' style='display: none;'>Anteriores</button></div>";
+					echo "<div class='botones-pantalla'><button class='boton-pantalla' id='posAlumnos' aria-label='Mostrar más alumnos'>&#129154;</button></div>";
 				?>
 			</section>
 
@@ -95,18 +106,18 @@
 				document.addEventListener("DOMContentLoaded", function () {
 					var alumnosContainer = document.querySelector(".alumnos");
 					var alumnos = document.querySelectorAll(".alumno");
-					var toggleButton = document.getElementById("toggleAlumnos");
+					var posButton = document.getElementById("posAlumnos");
 					var prevButton = document.getElementById("prevAlumnos");
 
 					// Establece el número máximo de alumnos por pantalla
-					var alumnosPorPantalla = 9;
+					var alumnosPorPantalla = 10;
 
 					// Inicializa el estado de la pantalla
 					var pantallaActual = 0;
 					actualizarPantalla();
 
 					// Escucha el evento del botón para avanzar de pantalla
-					toggleButton.addEventListener("click", function () {
+					posButton.addEventListener("click", function () {
 						pantallaActual++;
 						actualizarPantalla();
 					});
@@ -123,11 +134,11 @@
 
 						// Muestra u oculta los alumnos según la pantalla actual
 						alumnos.forEach(function (alumno, index) {
-							alumno.style.display = index >= startIndex && index < endIndex ? "block" : "none";
+							alumno.parentNode.style.display = index >= startIndex && index < endIndex ? "block" : "none";
 						});
 
 						// Muestra u oculta los botones dependiendo de si hay más pantallas
-						toggleButton.style.display = endIndex < alumnos.length ? "block" : "none";
+						posButton.style.display = endIndex < alumnos.length ? "block" : "none";
 						prevButton.style.display = pantallaActual > 0 ? "block" : "none";
 					}
 				});

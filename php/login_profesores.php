@@ -3,9 +3,6 @@
         require_once('profesores.class.inc');
 
         $profesores = new Profesores();
-        $location = $_POST['location-login'];
-        $location2 = $_POST['location2-login'];
-        $tipo = $_POST['tipo-login'];
         $usuario = $_POST['usuario-login'];
         $password = $_POST['password-login'];
 

@@ -16,7 +16,8 @@
 		<header>
             <div>
                 <div></div>
-			    <div><h1 id="titulo">Acceso</h1></div>
+			    <div id='div-titulo'><h1 id="titulo">Acceso</h1>
+                <img src='../multimedia/imagenes/icono_login.png' width='60' height='60' alt='Icono inicio de sesion'></div>
                 <div></div>
             </div>
 		</header>
@@ -26,7 +27,7 @@
 
             <div id="form-container">
                 <article id="form-login">
-                    <form onsubmit="return validarFormularioLogin(event, '-login')" action="../php/login_profesores.php" method="POST" class="formulario">
+                    <form onsubmit="return validarFormularioLoginProfesor(event, '-login')" action="../php/login_profesores.php" method="POST" class="formulario">
                         <label for="usuario-login">Usuario:</label>
                         <input type="text" id="usuario-login" name="usuario-login" required>
                         <p id="usuario-login-incorrecto" style="display:none;">El usuario no tiene un formato v&aacute;lido</p>
@@ -37,7 +38,7 @@
                         <br>
                         <input type="submit" value="Iniciar sesi&oacute;n">
                     </form>
-                    <p id="-login-incorrecto" style="display:none;">La contrase&ntilde;a o el correo electr&oacute;nico son incorrectos. Int&eacute;ntalo de nuevo.</p>
+                    <p id="-login-incorrecto" style="display:none;">La contrase&ntilde;a o el nombre de usuario son incorrectos. Int&eacute;ntalo de nuevo.</p>
                 </article>
             </div>
 

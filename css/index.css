@@ -20,11 +20,10 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 20px;
+        gap: 4px;
     }
 
     /* Estilo para todos los h2 del main */
-    /* Accesible */
     main h2 {
         display: flex;
         justify-content: center;
@@ -35,7 +34,6 @@
     }
 
     /* Estilo para todos los h3 del main */
-    /* Accesible */
     main h3{
         font-weight: bold;
         text-transform: uppercase;
@@ -43,13 +41,23 @@
         line-height: 1.5;
     }
 
+    /* Estilo para todos los enlaces del main */
+    main a {
+        text-decoration: none;
+        color: black; 
+    }
+
+    /* Estilo para todos los enlaces del main al pasar el ratón por encima */
+    main a:hover {
+        transform: scale(1.1);
+    }
+
     /* Estilo para el article que muestra el alumno correspondiente */
     .alumno {
-        display: inline-block;
         width: 200px;
         margin: 10px;
         text-align: center;
-        background-color: white;
+        background-color: #e9cfd9;
         padding: 10px;
         border-radius: 30px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -64,8 +72,7 @@
 
     /* Estilo para el article que muestra el alumno correspondiente al pasar el ratón por encima */
     .alumno:hover{
-        cursor: pointer;
-        border: solid;
+        border: 2px solid black;
     }
 
     /* Estilo para el div que contiene a los botones que muestran más o menos alumnos por pantalla */
@@ -77,32 +84,28 @@
 
     /* Estilo para los botones que muestran más o menos alumnos por pantalla */
     .boton-pantalla{
-        padding: 10px 20px;
-        text-align: center;
+        display: inline-block;
+        padding: 15px 25px;
+        border: 2px solid black;
+        font-size: 40px;
+        background-color: #080163;
+        color: white;
+        border-radius: 100px;
         text-decoration: none;
-        font-size: 16px;
-        font-weight: bold;
-        border: none;
         cursor: pointer;
-        border-radius: 50px;
-        background-color: rgb(52, 152, 219);
-        color: rgb(255, 255, 255);
-        transition: background-color 0.3s ease 0s;
-        height: 50px;
     }
 
     /* Estilo para los botones que muestran más o menos alumnos por pantalla al pasar el ratón por encima */
     .boton-pantalla:hover{
-        background-color: #2980b9;
+        transform: scale(1.2);
     }
 
-    /* Estilo para todos los enlaces de la página */
-    a {
-        text-decoration: none;
-        color: #333; 
+    /* Estilo para el botón de ver más alumnos */
+    #posAlumnos{
+        margin-left: 40px;
     }
 
-    /* Estilo para todos los enlaces de la página al pasar el ratón por encima */
-    a:hover {
-        color: #555; 
+    /* Estilo para el botón de ver alumnos anteriores */
+    #prevAlumnos{
+        margin-right: 40px;
     }

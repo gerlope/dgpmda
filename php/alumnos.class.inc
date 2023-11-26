@@ -17,6 +17,32 @@
         );
         /****************************************************************************************/
 
+
+        /****************************************************************************************/
+        /****************************************************************************************/
+        /* Funcion boolean que se encarga de comprobar si existe un alumno
+        que tenga el id de usuario y la contraseña pasada */
+        public static function comprobarAlumno($id, $password) {
+            $conexion = parent::conectar();
+            $sql = "SELECT * FROM " . TABLA_ALUMNOS . " WHERE id = :id AND password = :password";
+
+            try {
+                $st = $conexion->prepare( $sql );
+                $st->bindValue( ":id", $id, PDO::PARAM_STR );
+                $st->bindValue( ":password", $password, PDO::PARAM_STR );
+                $st->execute();
+                $fila = $st->fetch();
+                parent::desconectar( $conexion );
+                
+                if($fila) return true;
+            } catch ( PDOException $e ) {
+                parent::desconectar( $conexion );
+
+                return false;
+            }
+        }
+        /****************************************************************************************/
+
         /****************************************************************************************/
         /****************************************************************************************/
         /* Funcion que devuelve el alumno con el id pasado */

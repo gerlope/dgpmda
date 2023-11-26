@@ -34,8 +34,9 @@
 						header("Location: ../index.php");
 					}
 				?>
-				<div><h1 id='titulo'>Perfil de usuario</h1></div>
-				<a href='../php/logout.php'><button><h3>Cerrar Sesion</h3></button></a>
+				<div id="div-titulo"><h1 id='titulo'>Perfil de Usuario</h1>
+				<img src='../multimedia/imagenes/icono_profesor.png' width='60' height='60' alt='Icono profesor'></div>
+				<a href='../php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
 			</div>
 		</header>
 

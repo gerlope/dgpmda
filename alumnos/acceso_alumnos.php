@@ -28,20 +28,16 @@
 				// al sistema ni a la seguridad y privacidad del mismo
 				$alumno = unserialize($_SESSION['alumno'][$_GET['indice']]);
 
-				$nombre = $alumno['nombre'];
-				$apellidos = $alumno['apellidos'];
-				$aula = $alumno['aula'];
-				$ruta_foto = $alumno['ruta_foto'];
 				$perfil_visualizacion = $alumno['perfil_visualizacion'];
-				$password = $alumno['password'];
-				$indice = $_GET['indice'];
+
 				$_SESSION['id_alumno'] = $alumno['id'];
+				$_SESSION['nombre_alumno'] = $alumno['nombre'];
+				$_SESSION['apellidos_alumno'] = $alumno['apellidos'];
+				$_SESSION['ruta_foto_alumno'] = $alumno['ruta_foto'];
 
 				// Según el perfil preferente de visualización del alumno tendrá un inicio de sesión personalizado
 				if(strpos($perfil_visualizacion, 'visual') || strpos($perfil_visualizacion, 'visual') === 0){
-					header("Location: inicio_sesion_visual.php");
-				}else if(strpos($perfil_visualizacion, 'audio') || strpos($perfil_visualizacion, 'audio') === 0){
-					header("Location: inicio_sesion_audio.php");
+					header("Location: inicio_sesion_pictogramas.php");
 				}else{
 					header("Location: inicio_sesion_estandar.php");
 				}

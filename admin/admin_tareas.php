@@ -35,8 +35,9 @@
 						header("Location: ../index.php");
 					}
 				?>
-				<div><h1 id='titulo'>Gesti&oacute;n de Tareas</h1></div>
-				<a href='../php/logout.php'><button><h3>Cerrar Sesion</h3></button></a>
+				<div id="div-titulo"><h1 id='titulo'>Gesti&oacute;n de Tareas</h1>
+				<img src='../multimedia/imagenes/icono_admin.png' width='60' height='60' alt='Icono administrador'></div>
+				<a href='../php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
 			</div>
 		</header>
 
@@ -81,7 +82,7 @@
 								}
 
 								if($tareas){
-									$perPage = 12;
+									$perPage = 11;
 									$startIndex = ($page - 1) * $perPage;
 									$endIndex = $startIndex + $perPage - 1;
 
@@ -108,8 +109,8 @@
 										if($page!=1) {
 											echo "<button type='submit' name='page' value='$pagem' action='admin_tareas.php'><<</button>";
 										} else {echo "<div></div>";}
-										echo "<t>Page $page</t>";
-										if(sizeof($tareas)>=$page*$perPage) {
+										echo "<span>Page $page</span>";
+										if(sizeof($tareas)>$page*$perPage) {
 											echo "<button type='submit' name='page' value='$pagep' action='admin_tareas.php'>>></button>";
 										} else {echo "<div></div>";}
 									echo "</form>";
