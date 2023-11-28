@@ -66,38 +66,55 @@
 			
 			<form action="../php/asignar_tarea.php" method="POST" class="formulario">
 				<article class="campo">
-						<fieldset id="fieldset-alumnos" name="fieldset-alumnos">
-							<?php
-								require_once('../php/alumnos.class.inc');
+					<fieldset id="fieldset-alumnos" name="fieldset-alumnos">
+						<?php
+							require_once('../php/alumnos.class.inc');
+							require_once('../php/tareas.class.inc');
 
-								$tmp = new Alumnos();
-								$alumnos = $tmp->obtenerAlumnos();
-								$_SESSION['alumno'] = array(); 			// Inicializa $_SESSION['alumno'] como una matriz vacía
-								$i = 0;
+							$tmp = new Alumnos();
+							$alumnos = $tmp->obtenerAlumnos();
+							$_SESSION['alumno'] = array(); 			// Inicializa $_SESSION['alumno'] como una matriz vacía
+							$i = 0;
 
-								if($alumnos){
-									foreach ($alumnos as $alumno) {
-										$alumnosNombre[$i] = $alumno['nombre'] . ' ' . $alumno['apellidos'];
-										$alumnosId[$i] = $alumno['id'];
+							if($alumnos){
+								foreach ($alumnos as $alumno) {
+									$alumnosNombre[$i] = $alumno['nombre'] . ' ' . $alumno['apellidos'];
+									$alumnosId[$i] = $alumno['id'];
+									$fechaIni = $tareas->obtenerFechaInicio($alumnosId[$i], $tareaId);
+									$fechaFin = $tareas->obtenerFechaLimite($alumnosId[$i], $tareaId);
 
-										// Guardamos en una variable de sesion el alumno correspondiente
-										$_SESSION['alumno'][$i] = serialize($alumno);
-										
-										// Creamos todos los input de los alumnos
-										echo "<label>
-										<input type='checkbox' name='alumnos_id[]' value='{$alumnosId[$i]}'>{$alumnosNombre[$i]}</label>";
+									echo "<article class='alumno'>";
 
-										$i++;
-									}
-								}	
-								else{
-									echo "<article class='alumno'><h2>No hay ning&uacute; alumno registrado</h2></article>";
+									// Guardamos en una variable de sesion el alumno correspondiente
+									$_SESSION['alumno'][$i] = serialize($alumno);
+									
+									// Creamos todos los input de los alumnos
+									echo "<label>
+									<input type='checkbox' name='alumnos_id[]' value='{$alumnosId[$i]}'>{$alumnosNombre[$i]}</label>";
+
+									echo "<article class='campo'>
+										<label for='fecha_ini' class='titulo-campo'>Fecha de inicio:</label>
+										<input type='date' id='fecha_ini' name='fecha_ini[{$alumnosId[$i]}]' value='$fechaIni'>
+										<p id='fecha_ini-incorrecto' style='display:none;'>La fecha de inicio debe contener un a&ntilde;o v&aacute;lido</p>
+									</article>";
+
+									echo "<article class='campo'>
+										<label for='fecha_fin' class='titulo-campo'>Fecha l&iacute;mite:</label>
+										<input type='date' id='fecha_fin' name='fecha_fin[{$alumnosId[$i]}]' value='$fechaFin'>
+										<p id='fecha_fin-incorrecto' style='display:none;'>La fecha l&iacute;mite debe contener un a&ntilde;o v&aacute;lido</p>
+									</article></article>";
+
+									$i++;
 								}
-							?>
+							}	
+							else{
+								echo "<article class='alumno'><h2>No hay ning&uacute; alumno registrado</h2></article>";
+							}
+						?>
 
-							<input type="number" id="tarea_id" name="tarea_id" value=<?php echo $tareaId;?> style="display:none;">
-						</fieldset>
-					</article>
+						<input type="number" id="tarea_id" name="tarea_id" value=<?php echo $tareaId;?> style="display:none;">
+					</fieldset>
+				</article>
 
 				<article class="enviar">
 					<input type="submit" value="Confirmar">

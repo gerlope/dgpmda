@@ -51,7 +51,6 @@
 
     /* Estilo para las imagenes, videos y audios de la sección de la multimedia al pasar el raton por encima */
     .media-section img:hover, .media-section video:hover, .media-section audio:hover {
-        cursor: pointer;
         border: solid;
     }
 

@@ -47,10 +47,16 @@
 					<input type="text" id="titulo" name="titulo" required>
 					<p id="titulo-incorrecto" style="display:none;">El t&iacute;tulo no puede estar vac&iacute;o ni contener más de 200 caracteres. Tampoco puede contener caracteres especiales que no sean signos de puntuaci&oacute;n</p>
 				</article>
+
+				<article class="campo">
+					<label for="ruta_icono" class="titulo-campo">Icono asociado:</label>
+					<input type="file" id="ruta_icono" name="ruta_icono" accept="image/*" required>
+				</article>
 				
 				<article class="campo">
 					<label for="ruta_documento" class="titulo-campo">Documento asociado:</label>
 					<input type="file" id="ruta_documento" name="ruta_documento">
+					<p id="ruta_documento-incorrecto" style="display:none;">El documento debe corresponder a un archivo v&aacute;lido</p>
 				</article>
 
 				<section id="paso">

@@ -8,4 +8,6 @@
     define('TABLA_PASOS', 'pasos');
     define('TABLA_MULTIMEDIA', 'multimedia');
     define('TABLA_TAREA_ALUMNO', 'tarea_alumno');
+    define('TABLA_CONTRASEÑA_PICTOGRAMA', 'password_pictograma');
+    define('TABLA_PICTOGRAMAS', 'pictogramas');
 ?>

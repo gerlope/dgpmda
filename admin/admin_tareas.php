@@ -82,20 +82,22 @@
 								}
 
 								if($tareas){
-									$perPage = 11;
+									$perPage = 5;
 									$startIndex = ($page - 1) * $perPage;
 									$endIndex = $startIndex + $perPage - 1;
 
 									foreach ($tareas as $tarea) {
 										if ($i >= $startIndex && $i <= $endIndex) {
 											$tareasTitulo[$i] = $tarea['titulo'];
+											$tareasIcono[$i] = $tarea['ruta_icono'];
 
 											// Guardamos en una variable de sesion de la tarea correspondiente
 											$_SESSION['tarea'][$i] = serialize($tarea);
 											
 											// Creamos todos los articles de las tareas
 											echo "<tr>
-												<td><a href='../admin/asignar_tareas.php?indice=$i'><h3>{$tareasTitulo[$i]}</h3></a></td>
+												<td><a href='../admin/asignar_tareas.php?indice=$i'><h3>{$tareasTitulo[$i]}</h3>
+												<img src='../multimedia/imagenes/{$tareasIcono[$i]}' width='60' height='60' alt='Icono tarea'></div></a></td>
 											</tr>";
 										}
 										$i++;

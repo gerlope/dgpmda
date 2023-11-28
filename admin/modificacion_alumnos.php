@@ -41,7 +41,9 @@
 		</header>
 
 		<main>
-			<?php 				
+			<?php 		
+				require_once('../php/alumnos.class.inc');
+
 				// Acceder a los datos de los alumnos almacenados en la variable de sesión
 				// Usamos $_GET porque en este caso el indice de los alumnos no compromete
 				// al sistema ni a la seguridad y privacidad del mismo
@@ -52,8 +54,11 @@
 				$aula = $alumno['aula'];
 				$ruta_foto = $alumno['ruta_foto'];
 				$perfil_visualizacion = $alumno['perfil_visualizacion'];
+				$tipo_password = $alumno['tipo_password'];
 				$password = $alumno['password'];
-				$_SESSION['id_alumno'] = $alumno['id'];
+
+				$tmp = new Alumnos();
+				$pictogramas = $tmp->obtenerPictogramasAlumno($alumno['id']);
 			?>
 
 			<h1 id='tituloSecundario'><?php echo $nombre . ' ' . $apellidos; ?></h1>
@@ -99,17 +104,45 @@
 						<input type="checkbox" name="perfil[]" value="texto" disabled>Texto</label>
 					</fieldset>
 				</article>
-      
+
 				<article class="campo">
+					<fieldset id="fieldset-tipo_password" name="fieldset-tipo_password">
+						<legend class="titulo-campo">Tipo de contrase&ntilde;a:</legend>
+
+						<label>
+						<input type="checkbox" name="tipo[]" id="tipo-texto" value="texto" disabled >Texto</label>
+
+						<label>
+						<input type="checkbox" name="tipo[]" id="tipo-pictogramas" value="pictogramas" disabled >Pictogramas</label>
+					</fieldset>
+					<p id="fieldset-tipo_password-incorrecto" style="display:none;">Se debe seleccionar al menos un tipo de contrase&ntilde;a</p>
+				</article>
+      
+				<article class="campo" id="campo-password">
 					<label for="password" class="titulo-campo">Contrase&ntilde;a:</label>
-					<input type="password" id="password" name="password" value="<?php echo $password?>" required disabled>
+					<input type="password" id="password" name="password" value="<?php echo $password?>" disabled>
 					<p id="password-incorrecto" style="display:none;">La contrase&ntilde;a debe tener 4 o más caracteres</p>
 				</article>
 				
-				<article class="campo">
+				<article class="campo" id="campo-password-confirm">
 					<label for="password-confirm" class="titulo-campo">Confirmar Contrase&ntilde;a:</label>
-					<input type="password" id="password-confirm" name="password-confirm" value="<?php echo $password?>" required disabled>
+					<input type="password" id="password-confirm" name="password-confirm" value="<?php echo $password?>" disabled>
 					<p id="password-confirm-incorrecto" style="display:none;">La contrase&ntilde;a no coincide. Int&eacute;ntalo de nuevo</p>
+				</article>
+
+				<article class="campo" id="campo-pictogramas" style="display: none;">
+					<label class="titulo-campo">Pictogramas:</label>
+					<label for="pictograma_1" class="titulo-campo">Primer Pictograma:</label>
+					<input type="text" id="pictograma_1" name="pictograma_1" value="<?php echo $pictogramas[0]?>" disabled>
+					<p id="pictograma_1-incorrecto" style="display:none;">El pictograma debe corresponder a un archivo v&aacute;lido de imagen</p>
+
+					<label for="pictograma_2" class="titulo-campo">Segundo Pictograma:</label>
+					<input type="text" id="pictograma_2" name="pictograma_2" value="<?php echo $pictogramas[1]?>" disabled>
+					<p id="pictograma_2-incorrecto" style="display:none;">El pictograma debe corresponder a un archivo v&aacute;lido de imagen</p>
+
+					<label for="pictograma_3" class="titulo-campo">Tercer Pictograma:</label>
+					<input type="text" id="pictograma_3" name="pictograma_3" value="<?php echo $pictogramas[2]?>" disabled>
+					<p id="pictograma_3-incorrecto" style="display:none;">El pictograma debe corresponder a un archivo v&aacute;lido de imagen</p>
 				</article>
 				
 				<article class="enviar">
@@ -118,8 +151,53 @@
 			</form>
 
 			<?php 
-				echo "<script>rellenarFieldset('fieldset-perfil_visualizacion', '$perfil_visualizacion');</script>";
+				echo "<script>rellenarFieldset('fieldset-perfil_visualizacion', '$perfil_visualizacion');
+				rellenarFieldset('fieldset-tipo_password', '$tipo_password');</script>";
 			?>
+
+			<script>
+				// Función para manejar la visibilidad de los campos de contraseña
+				function togglePasswordFields() {
+					var tipoTextoCheckbox = document.getElementById('tipo-texto');
+					var tipoPictogramasCheckbox = document.getElementById('tipo-pictogramas');
+					var campoPassword = document.getElementById('campo-password');
+					var campoPasswordConfirm = document.getElementById('campo-password-confirm');
+					var campoPictogramas = document.getElementById('campo-pictogramas');
+
+					// Si el tipo de contraseña es con texto
+					if (tipoTextoCheckbox.checked) {
+						campoPassword.style.display = 'block';
+						campoPasswordConfirm.style.display = 'block';
+						campoPassword.querySelector('input').setAttribute('required', 'required');
+                		campoPasswordConfirm.querySelector('input').setAttribute('required', 'required');
+					} else {
+						campoPassword.style.display = 'none';
+						campoPasswordConfirm.style.display = 'none';
+						campoPassword.querySelector('input').removeAttribute('required');
+                		campoPasswordConfirm.querySelector('input').removeAttribute('required');
+					}
+
+					// Si el tipo de contraseña es con pictogramas
+					if (tipoPictogramasCheckbox.checked) {
+						campoPictogramas.style.display = 'block';
+						campoPictogramas.querySelectorAll('input').forEach(function(input) {
+							input.setAttribute('required', 'required');
+						});
+					} else {
+						campoPictogramas.style.display = 'none';
+						campoPictogramas.querySelectorAll('input').forEach(function(input) {
+							input.removeAttribute('required');
+						});
+					}
+				}
+
+				// Asociamos la función al evento de cambio del checkbox
+				document.getElementById('tipo-texto').addEventListener('change', togglePasswordFields);
+				document.getElementById('tipo-pictogramas').addEventListener('change', togglePasswordFields);
+
+				// Llamada inicial para asegurar que los campos se muestren correctamente al cargar la página
+				togglePasswordFields();
+			</script>
 		</main>
 
 		<footer>

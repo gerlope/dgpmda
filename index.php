@@ -87,7 +87,7 @@
 							// Creamos todos los articles de los alumnos
 							echo "<a href='alumnos/acceso_alumnos.php?indice=$i'>
 								<article class='alumno'>
-									<img src='multimedia/imagenes/" . $alumno['ruta_foto'] . "' width='60' height='60' alt='Foto de perfil del alumno' >
+									<img src='multimedia/imagenes/" . $alumno['ruta_foto'] . "' width='70' height='70' alt='Foto de perfil del alumno' >
 									<h3>{$alumnosNombre[$i]}</h3>
 								</article></a>";
 

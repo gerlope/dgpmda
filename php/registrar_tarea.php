@@ -4,6 +4,7 @@
 
         $tareas = new Tareas();
         $titulo = $_POST['titulo'];
+        $ruta_icono = $_POST['ruta_icono'];
         $ruta_documento = $_POST['ruta_documento'];
 
         // Obtenemos el número de pasos del formulario
@@ -30,6 +31,6 @@
         }
 
         // Insertamos los datos en la base de datos
-        $tareas->insertarTarea($titulo, $ruta_documento, $numero_pasos, $pasos, $numero_pasos_totales);
+        $tareas->insertarTarea($titulo, $ruta_icono, $ruta_documento, $numero_pasos, $pasos, $numero_pasos_totales);
     }
 ?>

@@ -40,6 +40,38 @@ function rellenarSelect(elementoID, seleccion) {
 
 //**********************************************************//
 //**********************************************************//
+function obtenerValoresFieldset(elementoID) {
+    var elemento = document.getElementById(elementoID);
+
+    // Comprobamos que el elemento existe
+    if (elemento) {
+        // Obtener todos los elementos de entrada dentro del fieldset
+        var elementos = elemento.querySelectorAll('input[type="checkbox"]');
+
+        // Cadena de texto para almacenar los valores seleccionados
+        var valoresSeleccionados = '';
+
+        // Iterar sobre cada elemento y verificar si está marcado
+        elementos.forEach(function(elemento) {
+        if (elemento.checked) {
+            // Agregar el valor del elemento seguido de una coma y un espacio
+            valoresSeleccionados += elemento.value + ', ';
+        }
+        });
+
+        // Eliminar la última coma y espacio si no hay elementos seleccionados
+        if (valoresSeleccionados.length > 0) {
+        valoresSeleccionados = valoresSeleccionados.slice(0, -2);
+        }
+
+        return valoresSeleccionados;
+    }
+}
+//**********************************************************//
+
+
+//**********************************************************//
+//**********************************************************//
 function rellenarFieldset(elementoID, seleccion) {
     var elemento = document.getElementById(elementoID);
 
@@ -189,6 +221,44 @@ function recuperarElementoPaso(elementoID, numPasosID, estilo="block") {
                 if(document.getElementById(elementoID + i)){
                     document.getElementById(elementoID + i).style.display = estilo;
                 }
+            }
+        }
+    }
+}
+//**********************************************************//
+
+
+//**********************************************************//
+//**********************************************************//
+function habilitarPictogramas(pictogramasID) {
+    var paso = document.getElementById(pictogramasID);
+
+    // Comprobamos que al menos un paso existe
+    if(paso){
+        var numPictogramas = 3;
+
+        for (var i = 1; i <= numPictogramas; i++) {
+            if(document.getElementById("pictograma_" + i)){
+                document.getElementById("pictograma_" + i).removeAttribute('disabled');
+            }
+        }
+    }
+}
+//**********************************************************//
+
+
+//**********************************************************//
+//**********************************************************//
+function deshabilitarPictogramas(pictogramasID) {
+    var paso = document.getElementById(pictogramasID);
+
+    // Comprobamos que al menos un paso existe
+    if(paso){
+        var numPictogramas = 3;
+        
+        for (var i = 1; i <= numPictogramas; i++) {
+            if(document.getElementById("pictograma_" + i)){
+                document.getElementById("pictograma_" + i).setAttribute('disabled', 'disabled');
             }
         }
     }

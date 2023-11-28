@@ -9,6 +9,7 @@
         /* Constructor */
         protected $datos = array(
             "titulo" => "",
+            "ruta_icono"=>"",
             "ruta_documento"=>"",
             "numero_pasos"=>""
         );
@@ -88,14 +89,14 @@
         /****************************************************************************************/
         /****************************************************************************************/
         /* Funcion que inserta en la tabla tareas una tarea con los datos correspondientes */
-        public static function insertarTarea($titulo, $ruta_documento, $numero_pasos, $pasos, $numero_pasos_totales) {
+        public static function insertarTarea($titulo, $ruta_icono, $ruta_documento, $numero_pasos, $pasos, $numero_pasos_totales) {
             $conexion = parent::conectar();
 
-            $sql="INSERT INTO " . TABLA_TAREAS . "(titulo, ruta_documento, numero_pasos) VALUES (?, ?, ?)";
+            $sql="INSERT INTO " . TABLA_TAREAS . "(titulo, ruta_icono, ruta_documento, numero_pasos) VALUES (?, ?, ?, ?)";
 
             try {
                 $st = $conexion->prepare( $sql );
-                $st->execute([$titulo, $ruta_documento, $numero_pasos]);
+                $st->execute([$titulo, $ruta_icono, $ruta_documento, $numero_pasos]);
                 $tarea_id = $conexion->lastInsertId();
                 
                 // Iteramos a través de los pasos y datos multimedia
@@ -135,15 +136,16 @@
         /****************************************************************************************/
         /****************************************************************************************/
         /* Funcion que modifica en la tabla tareas una tarea con los datos correspondientes */
-        public static function modificarTarea($titulo, $ruta_documento, $numero_pasos, $pasos, $id_tarea, $numero_pasos_totales) {
+        public static function modificarTarea($titulo, $ruta_icono, $ruta_documento, $numero_pasos, $pasos, $id_tarea, $numero_pasos_totales) {
             $conexion = parent::conectar();
             $conexion->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
 
-            $sql="UPDATE " . TABLA_TAREAS . " SET titulo = :titulo, ruta_documento = :ruta_documento, numero_pasos = :numero_pasos WHERE id = :id_tarea";
+            $sql="UPDATE " . TABLA_TAREAS . " SET titulo = :titulo, ruta_icono = :ruta_icono, ruta_documento = :ruta_documento, numero_pasos = :numero_pasos WHERE id = :id_tarea";
 
             try {
                 $st = $conexion->prepare( $sql );
                 $st->bindValue( ":titulo", $titulo, PDO::PARAM_STR );
+                $st->bindValue( ":ruta_icono", $ruta_icono, PDO::PARAM_STR );
                 $st->bindValue( ":ruta_documento", $ruta_documento, PDO::PARAM_STR );
                 $st->bindValue( ":numero_pasos", $numero_pasos, PDO::PARAM_INT );
                 $st->bindValue(":id_tarea", $id_tarea, PDO::PARAM_INT);
@@ -200,24 +202,47 @@
         /****************************************************************************************/
         /****************************************************************************************/
         /* Funcion que inserta una relacion entre una tarea y un alumno en la tabla tarea_alumno*/
-        public static function asignarTarea($id_tarea, $id_alumno) {
+        public static function asignarTarea($id_tarea, $id_alumno, $fecha_ini, $fecha_fin) {
             $conexion = parent::conectar();
 
             $tareas = new Tareas();
 
+            // Formateamos las fechas para insertarlas en la tabla
+            $fecha_ini_formateada = date('Y-m-d', strtotime($fecha_ini));
+            $fecha_fin_formateada = date('Y-m-d', strtotime($fecha_fin));
+
             // Solo si la tarea no ha sido ya asociada al alumno hacemos la inserción en la BD
             if(!$tareas->existeTareaAlumno($id_tarea, $id_alumno)){
-                $sql="INSERT INTO " . TABLA_TAREA_ALUMNO . "(tarea_id, alumno_id) VALUES (?, ?)";
+                $sql="INSERT INTO " . TABLA_TAREA_ALUMNO . "(tarea_id, alumno_id, fecha_ini, fecha_fin) VALUES (?, ?, ?, ?)";
 
                 try {
                     $st = $conexion->prepare( $sql );
-                    $st->execute([$id_tarea, $id_alumno]);
+                    $st->execute([$id_tarea, $id_alumno, $fecha_ini_formateada, $fecha_fin_formateada]);
                     parent::desconectar( $conexion );
 
                     return true;
                 } catch ( PDOException $e ) {
                     parent::desconectar( $conexion );
                     
+                    return false;
+                }
+            }
+            else if($tareas->obtenerFechaInicio($id_alumno, $id_tarea) != $fecha_ini_formateada || $tareas->obtenerFechaLimite($id_alumno, $id_tarea) != $fecha_fin_formateada){    // Si se ha cambiado la fecha de inicio o de fin de la tarea al alumno
+                $sql = "UPDATE " . TABLA_TAREA_ALUMNO . " SET fecha_ini = :fecha_ini_formateada, fecha_fin = :fecha_fin_formateada WHERE tarea_id = :id_tarea AND alumno_id = :id_alumno";
+
+                try {
+                    $st = $conexion->prepare($sql);
+                    $st->bindParam(':fecha_ini_formateada', $fecha_ini_formateada, PDO::PARAM_STR); 
+                    $st->bindParam(':fecha_fin_formateada', $fecha_fin_formateada, PDO::PARAM_STR);
+                    $st->bindParam(':id_tarea', $id_tarea, PDO::PARAM_INT);
+                    $st->bindParam(':id_alumno', $id_alumno, PDO::PARAM_INT);
+                    $st->execute();
+                    $filasAfectadas = $st->rowCount();
+                    parent::desconectar($conexion);
+
+                    return $filasAfectadas > 0; // Devuelve true si se realizaron cambios, false si no se encontró ninguna coincidencia
+                } catch (PDOException $e) {
+                    parent::desconectar($conexion);
                     return false;
                 }
             }
@@ -319,6 +344,56 @@
                     parent::desconectar($conexion);
                     return false;
                 }
+            }
+        }
+        /****************************************************************************************/
+
+
+        /****************************************************************************************/
+        /****************************************************************************************/
+        /* Funcion que devuelve la fecha de inicio para una tarea y un alumno dado */
+        public function obtenerFechaInicio($id_alumno, $id_tarea) {
+            $conexion = parent::conectar();
+        
+            $sql = "SELECT fecha_ini FROM " . TABLA_TAREA_ALUMNO . " WHERE alumno_id = :id_alumno AND tarea_id = :id_tarea";
+        
+            try {
+                $st = $conexion->prepare($sql);
+                $st->bindParam(':id_alumno', $id_alumno, PDO::PARAM_INT);
+                $st->bindParam(':id_tarea', $id_tarea, PDO::PARAM_INT);
+                $st->execute();
+                $fecha_ini = $st->fetchColumn();
+                parent::desconectar($conexion);
+        
+                return $fecha_ini;
+            } catch (PDOException $e) {
+                parent::desconectar($conexion);
+                return [];
+            }
+        }
+        /****************************************************************************************/
+
+
+        /****************************************************************************************/
+        /****************************************************************************************/
+        /* Funcion que devuelve la fecha de inicio para una tarea y un alumno dado */
+        public function obtenerFechaLimite($id_alumno, $id_tarea) {
+            $conexion = parent::conectar();
+        
+            $sql = "SELECT fecha_fin FROM " . TABLA_TAREA_ALUMNO . " WHERE alumno_id = :id_alumno AND tarea_id = :id_tarea";
+        
+            try {
+                $st = $conexion->prepare($sql);
+                $st->bindParam(':id_alumno', $id_alumno, PDO::PARAM_INT);
+                $st->bindParam(':id_tarea', $id_tarea, PDO::PARAM_INT);
+                $st->execute();
+                $fecha_fin = $st->fetchColumn();
+                parent::desconectar($conexion);
+        
+                return $fecha_fin;
+            } catch (PDOException $e) {
+                parent::desconectar($conexion);
+                return [];
             }
         }
         /****************************************************************************************/

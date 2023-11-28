@@ -51,6 +51,7 @@
 
 				$titulo = $tarea['titulo'];
 				$ruta_documento = $tarea['ruta_documento'];
+				$ruta_icono = $tarea['ruta_icono'];
 				$numPasos = $tarea['numero_pasos'];
 				$_SESSION['id_tarea'] = $tarea['id'];
 				$i = 1;
@@ -79,6 +80,12 @@
 					<label for="titulo" class="titulo-campo">T&iacute;tulo:</label>
 					<input type="text" id="titulo" name="titulo" value="<?php echo $titulo?>" required disabled>
 					<p id="titulo-incorrecto" style="display:none;">El t&iacute;tulo no puede estar vac&iacute;o ni contener más de 200 caracteres. Tampoco puede contener caracteres especiales que no sean signos de puntuaci&oacute;n</p>
+				</article>
+
+				<article class="campo">
+					<label for="ruta_icono" class="titulo-campo">Icono asociado:</label>
+					<input type="text" id="ruta_icono" name="ruta_icono" value="<?php echo $ruta_icono?>" required disabled>
+					<p id="ruta_icono-incorrecto" style="display:none;">El icono debe corresponder a un archivo v&aacute;lido</p>
 				</article>
 				
 				<article class="campo">

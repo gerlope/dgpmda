@@ -88,16 +88,14 @@
     /* Estilo para la tabla que muestra las tareas */
     .tareas table{
         border: 3px solid black;
-        border-collapse: collapse;
         table-layout: auto;
-        width: 450px;
+        width: 600px;
         margin: 20px;
     }
 
     /* Estilo para el encabezado de la tabla que muestra las tareas */
     .tareas table th{
         border: 2px solid black;
-        border-collapse: collapse;
         padding: 5px;
     }
 
@@ -105,17 +103,29 @@
     .tareas table td{
         text-align: left;
         border: 1px solid black;
-        border-collapse: collapse;
+        background-color: #ffffff;
     }
 
     /* Estilo para los enlaces de la tabla que muestra las tareas */
+    .tareas table a, .tareas table #enlace-profesores{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Estilo para los enlaces de la tabla que muestra el contenido correspondiente */
     .tareas table td a, .lista-personal .profesor a, .lista-personal .alumno a{
         color: inherit;
     }
 
+    /* Estilo para los enlaces de la tabla que muestra el contenido correspondiente al pasar el ratón por encima */
+    .tareas table td:hover, .lista-personal .profesor:hover, .lista-personal .alumno:hover{
+        transform: scale(1.05);
+    }
+
     /* Estilo para el h3 de las celdas de datos de la tabla que muestra las tareas */
     .tareas table td h3{
-        margin: 3px;
+        margin: 5px;
     }
 
     /* Estilo para los formularios del contenido correspondiente */
@@ -170,6 +180,6 @@
     }
 
     /* Estilo para los botones de enviar formulario al pasar el ratón por encima */
-    button[type="submit"]:hover {
+    button[type="submit"]:hover, #boton-buscar:hover {
         transform: scale(1.1);
     }

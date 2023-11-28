@@ -80,23 +80,92 @@
 					</fieldset>
 					<p id="fieldset-perfil_visualizacion-incorrecto" style="display:none;">Se debe seleccionar al menos una opci&oacute;n de visualizaci&oacute;n</p>
 				</article>
-      
+
 				<article class="campo">
+					<fieldset id="fieldset-tipo_password" name="fieldset-tipo_password">
+						<legend class="titulo-campo">Tipo de contrase&ntilde;a:</legend>
+
+						<label>
+						<input type="checkbox" name="tipo[]" id="tipo-texto" value="texto">Texto</label>
+
+						<label>
+						<input type="checkbox" name="tipo[]" id="tipo-pictogramas" value="pictogramas">Pictogramas</label>
+					</fieldset>
+					<p id="fieldset-tipo_password-incorrecto" style="display:none;">Se debe seleccionar al menos un tipo de contrase&ntilde;a</p>
+				</article>
+      
+				<article class="campo" id="campo-password">
 					<label for="password" class="titulo-campo">Contrase&ntilde;a:</label>
-					<input type="password" id="password" name="password" required>
+					<input type="password" id="password" name="password">
 					<p id="password-incorrecto" style="display:none;">La contrase&ntilde;a debe tener 4 o más caracteres</p>
 				</article>
 				
-				<article class="campo">
+				<article class="campo" id="campo-password-confirm">
 					<label for="password-confirm" class="titulo-campo">Confirmar Contrase&ntilde;a:</label>
-					<input type="password" id="password-confirm" name="password-confirm" required>
+					<input type="password" id="password-confirm" name="password-confirm">
 					<p id="password-confirm-incorrecto" style="display:none;">La contrase&ntilde;a no coincide. Int&eacute;ntalo de nuevo</p>
+				</article>
+
+				<article class="campo" id="campo-pictogramas" style="display: none;">
+					<label class="titulo-campo">Pictogramas:</label>
+					<label for="pictograma_1" class="titulo-campo">Primer Pictograma:</label>
+					<input type="file" id="pictograma_1" name="pictograma_1" accept="image/*">
+
+					<label for="pictograma_2" class="titulo-campo">Segundo Pictograma:</label>
+					<input type="file" id="pictograma_2" name="pictograma_2" accept="image/*">
+
+					<label for="pictograma_3" class="titulo-campo">Tercer Pictograma:</label>
+					<input type="file" id="pictograma_3" name="pictograma_3" accept="image/*">
 				</article>
 				
 				<article class="enviar">
 					<input type="submit" value="Registrarse">
 				</article>
 			</form>
+
+			<script>
+				// Función para manejar la visibilidad de los campos de contraseña
+				function togglePasswordFields() {
+					var tipoTextoCheckbox = document.getElementById('tipo-texto');
+					var tipoPictogramasCheckbox = document.getElementById('tipo-pictogramas');
+					var campoPassword = document.getElementById('campo-password');
+					var campoPasswordConfirm = document.getElementById('campo-password-confirm');
+					var campoPictogramas = document.getElementById('campo-pictogramas');
+
+					// Si el tipo de contraseña es con texto
+					if (tipoTextoCheckbox.checked) {
+						campoPassword.style.display = 'block';
+						campoPasswordConfirm.style.display = 'block';
+						campoPassword.querySelector('input').setAttribute('required', 'required');
+                		campoPasswordConfirm.querySelector('input').setAttribute('required', 'required');
+					} else {
+						campoPassword.style.display = 'none';
+						campoPasswordConfirm.style.display = 'none';
+						campoPassword.querySelector('input').removeAttribute('required');
+                		campoPasswordConfirm.querySelector('input').removeAttribute('required');
+					}
+
+					// Si el tipo de contraseña es con pictogramas
+					if (tipoPictogramasCheckbox.checked) {
+						campoPictogramas.style.display = 'block';
+						campoPictogramas.querySelectorAll('input').forEach(function(input) {
+							input.setAttribute('required', 'required');
+						});
+					} else {
+						campoPictogramas.style.display = 'none';
+						campoPictogramas.querySelectorAll('input').forEach(function(input) {
+							input.removeAttribute('required');
+						});
+					}
+				}
+
+				// Asociamos la función al evento de cambio del checkbox
+				document.getElementById('tipo-texto').addEventListener('change', togglePasswordFields);
+				document.getElementById('tipo-pictogramas').addEventListener('change', togglePasswordFields);
+
+				// Llamada inicial para asegurar que los campos se muestren correctamente al cargar la página
+				togglePasswordFields();
+			</script>
 		</main>
 
 		<footer>

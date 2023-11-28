@@ -53,6 +53,11 @@ function validarFormularioRegistroAlumno(event, tipo) {
     var nombrePassword = 'password' + tipo;
     var nombreConfirmarPassword = 'password-confirm' + tipo;
     var fieldsetPerfil = 'fieldset-perfil_visualizacion' + tipo;
+    var fieldsetTipo = 'fieldset-tipo_password' + tipo;
+    var nombrePictograma1 = 'pictograma_1' + tipo;
+    var nombrePictograma2 = 'pictograma_2' + tipo;
+    var nombrePictograma3 = 'pictograma_3' + tipo;
+
 
     // Obtenemos los valores de los campos del formulario
     var nombre = document.getElementById(nombreNombre).value;
@@ -61,18 +66,49 @@ function validarFormularioRegistroAlumno(event, tipo) {
     var rutaFoto = document.getElementById(nombreRutaFoto).value;
     var password = document.getElementById(nombrePassword).value;
     var confirmarPassword = document.getElementById(nombreConfirmarPassword).value;
+    var pictograma1 = document.getElementById(nombrePictograma1).value;
+    var pictograma2 = document.getElementById(nombrePictograma2).value;
+    var pictograma3 = document.getElementById(nombrePictograma3).value;
+    
 
     // Hacemos estas asignaciones para que se ejecuten enteramente cada funcion validar
     var nombreValido = validarNombreYApellidos(nombre, nombreNombre, tipo);		            // Validamos el nombre
     var apellidosValido = validarNombreYApellidos(apellidos, nombreApellidos, tipo);		// Validamos los apellidos
     var aulaValido = validarAula(aula, nombreAula, tipo);		                            // Validamos el aula
     var rutaFotoValido = validarRutaFoto(rutaFoto, nombreRutaFoto, tipo);		            // Validamos la ruta de la imagen
-    var passwordValido = validarPassword(password, nombrePassword, tipo);	                // Validamos la contraseña
-    var confirmarPasswordValido = validarConfirmacionPassword(confirmarPassword, nombreConfirmarPassword, password, tipo);	                // Validamos la confirmación de la contraseña
-    var fieldsetPerfilValido = validarFieldset(fieldsetPerfil);	                            // Validamos el perfil de visualizacion
+    var fieldsetPerfilValido = validarFieldset(fieldsetPerfil);                             // Validamos el perfil de visualizacion
+    var fieldsetTipoValido = validarFieldset(fieldsetTipo);	                                // Validamos el tipo de contraseña
+
+    // Manejamos que la contraseña pueda o no seguir los parametros de validacion al tener el alumno
+    // una contraseña tipo pictogramas, y viceversa al tener una contraseña tipo texto
+    var valoresPassword = obtenerValoresFieldset(fieldsetTipo);
+
+    // Si el tipo de contraseña no es texto
+    if(!valoresPassword.includes("texto")){
+        passwordValido = true;
+        confirmarPasswordValido = true;
+    }
+    else{
+        var passwordValido = validarPassword(password, nombrePassword, tipo);	                // Validamos la contraseña
+        var confirmarPasswordValido = validarConfirmacionPassword(confirmarPassword, nombreConfirmarPassword, password, tipo);	                // Validamos la confirmación de la contraseña
+    }
+
+    // Si el tipo de contraseña no es pictogramas
+    if(!valoresPassword.includes("pictogramas")){
+        pictograma1Valido = true;
+        pictograma2Valido = true;
+        pictograma3Valido = true;
+    }
+    else{
+        var pictograma1Valido = validarRutaFoto(pictograma1, nombrePictograma1, tipo);	        // Validamos el primer pictograma
+        var pictograma2Valido = validarRutaFoto(pictograma2, nombrePictograma2, tipo);	        // Validamos el segundo pictograma
+        var pictograma3Valido = validarRutaFoto(pictograma3, nombrePictograma3, tipo);	        // Validamos el tercer pictograma
+    }
+    
 
     // Comprobamos si es valido todo el formulario, si no lo es no se envían los datos
-    if(nombreValido && apellidosValido && rutaFotoValido && aulaValido && passwordValido && confirmarPasswordValido && fieldsetPerfilValido){
+    if(nombreValido && apellidosValido && rutaFotoValido && aulaValido && passwordValido && confirmarPasswordValido
+                    && fieldsetPerfilValido && fieldsetTipoValido && pictograma1Valido && pictograma2Valido && pictograma3Valido){
         return true;
     }
     else{
@@ -88,14 +124,17 @@ function validarFormularioRegistroAlumno(event, tipo) {
 function validarFormularioRegistroTarea(event, tipo) {
     // Obtenemos los nombres de cada campo del formulario
     var nombreTitulo = 'titulo' + tipo;
+    var nombreRutaIcono = 'ruta_icono' + tipo;
     var nombreRutaDocumento = 'ruta_documento' + tipo;
 
     // Obtenemos los valores de los campos del formulario
     var titulo = document.getElementById(nombreTitulo).value;
+    var rutaIcono = document.getElementById(nombreRutaIcono).value;
     var rutaDocumento = document.getElementById(nombreRutaDocumento).value;
 
     // Hacemos estas asignaciones para que se ejecuten enteramente cada funcion validar
     var tituloValido = validarTexto(titulo, nombreTitulo, tipo);		                        // Validamos el titulo
+    var rutaIconoValido = validarRutaFoto(rutaIcono, nombreRutaIcono, tipo);		            // Validamos la ruta del documento
     var rutaDocumentoValido = validarRutaDoc(rutaDocumento, nombreRutaDocumento, tipo);		    // Validamos la ruta del documento
 
     var numPasos = parseInt(document.getElementById("numero_pasos").value);
@@ -130,10 +169,11 @@ function validarFormularioRegistroTarea(event, tipo) {
     }
 
     // Comprobamos si es valido todo el formulario, si no lo es no se envían los datos
-    if(tituloValido && rutaDocumentoValido && descripcionValido.every(function(valor) { return valor === true; }) &&
-                                              videoValido.every(function(valor) { return valor === true; }) &&
-                                              fotoValido.every(function(valor) { return valor === true; }) &&
-                                              audioValido.every(function(valor) { return valor === true; })){
+    if(tituloValido && rutaIconoValido && rutaDocumentoValido &&
+                                          descripcionValido.every(function(valor) { return valor === true; }) &&
+                                          videoValido.every(function(valor) { return valor === true; }) &&
+                                          fotoValido.every(function(valor) { return valor === true; }) &&
+                                          audioValido.every(function(valor) { return valor === true; })){
         return true;
     }
     else{
@@ -498,10 +538,10 @@ function validarRutaAudio(rutaAudio, nombreRutaAudio, tipo) {
 //*****************************************************************************************************//
 //*****************************************************************************************************//
 function validarRutaDoc(rutaDoc, nombreRutaDoc, tipo) {
-    // Usamos la expresión regular /^[^\n\r\s]{0,100}(\.(pdf|docx?|xlsx?|pptx?|rtf|txt|od[tps]|md|indd|ai|psd|dwg|tex|qxp))?$/i
+    // Usamos la expresión regular /^(?:[^\n\r]+(\.(pdf|docx?|xlsx?|pptx?|rtf|txt|od[tps]|md|indd|ai|psd|dwg|tex|qxp)))?$/
     // para comprobar que esté vacío o contenga un nombre de archivo con una extensión específica propia
     // de un documento. Además, verifica que el nombre del archivo tenga menos de 100 caracteres.
-    if(/^[^\n\r\s]{0,100}(\.(pdf|docx?|xlsx?|pptx?|rtf|txt|od[tps]|md|indd|ai|psd|dwg|tex|qxp))?$|^$/i.test(rutaDoc)){
+    if(/^(?:[^\n\r]+(\.(pdf|docx?|xlsx?|pptx?|rtf|txt|od[tps]|md|indd|ai|psd|dwg|tex|qxp)))?$/.test(rutaDoc)){
         // Cambiamos el color del borde del campo rellenado y eliminamos el mensaje de error
         document.getElementById(nombreRutaDoc).style.borderColor= "rgba(173, 255, 47, 0.7)";
         eliminarElemento(nombreRutaDoc + "-incorrecto");
@@ -528,18 +568,21 @@ function habilitarEdicion() {
     var inputs = document.querySelectorAll('input[name="nombre"], input[name="apellidos"], input[name="aula"], input[name="ruta_foto"],' +
                                            'input[name="usuario"], input[name="password"], input[name="password-confirm"],' +
                                            'input[name="curso"], input[name="perfil_visualizacion"], input[type="submit"],' +
-                                           'input[name="titulo"], input[name="ruta_documento"]');
+                                           'input[name="titulo"], input[name="ruta_documento"], input[name="ruta_icono"],'+ 
+                                           'input[name="tipo_password"]');
 
     // Permitimos que se puedan editar
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].removeAttribute('disabled');
     }
 
-    // Habilitamos las casillas de verificación dentro del fieldset
+    // Habilitamos las casillas de verificación dentro de los fieldsets
     habilitarFieldset('fieldset-perfil_visualizacion');
+    habilitarFieldset('fieldset-tipo_password');
 
     // Habilitamos los pasos
     habilitarPasos('numero_pasos', 'paso');
+    habilitarPictogramas('campo-pictogramas');
 
     // Eliminamos el botón para editar los datos
     eliminarElemento('boton-editar');
@@ -563,18 +606,21 @@ function deshabilitarEdicion() {
     var inputs = document.querySelectorAll('input[name="nombre"], input[name="apellidos"], input[name="aula"], input[name="ruta_foto"],' +
                                            'input[name="usuario"], input[name="password"], input[name="password-confirm"],' +
                                            'input[name="curso"], input[name="perfil_visualizacion"], input[type="submit"],' +
-                                           'input[name="titulo"], input[name="ruta_documento"]');
+                                           'input[name="titulo"], input[name="ruta_documento"], input[name="ruta_icono"],' + 
+                                           'input[name="tipo_password"]');
   
     // Evitamos que se puedan editar
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].setAttribute('disabled', 'disabled');
     }
 
-    // Deshabilitamos las casillas de verificación dentro del fieldset
+    // Deshabilitamos las casillas de verificación dentro de los fieldsets
     deshabilitarFieldset('fieldset-perfil_visualizacion');
+    deshabilitarFieldset('fieldset-tipo_password');
 
-    // Deshabilitamos los pasos
+    // Deshabilitamos los pasos y los pictogramas
     deshabilitarPasos('numero_pasos', 'paso');
+    deshabilitarPictogramas('campo-pictogramas');
 
     // Eliminamos el botón para cerrar la edicion, el de añadir pasos
     // y el necesario para enviar los datos
