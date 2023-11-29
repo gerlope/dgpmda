@@ -183,3 +183,22 @@
     button[type="submit"]:hover, #boton-buscar:hover {
         transform: scale(1.1);
     }
+
+    /* Estilo para el botón de volver a la página principal */
+    .boton-volver {
+        display: inline-block;
+        padding: 15px 25px;
+        border: 2px solid black; 
+        margin: 0px 0px 30px 25px;
+        font-size: 30px;
+        background-color: #080163;
+        color: white;
+        border-radius: 100px; 
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Estilo para el botón de volver a la página principal al pasar el ratón por encima */
+    .boton-volver:hover {
+        transform: scale(1.1);
+    }

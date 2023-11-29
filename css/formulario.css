@@ -1,0 +1,74 @@
+
+/* Estilo para el botón de volver a la página principal */
+.boton-volver {
+    display: inline-block;
+    padding: 10px 18px;
+    border: 2px solid black; 
+    margin: 0px 0px 30px 25px;
+    font-size: 30px;
+    background-color: #080163;
+    color: white;
+    border-radius: 100px; 
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilo para el botón de volver a la página principal al pasar el ratón por encima */
+.boton-volver:hover {
+    transform: scale(1.1);
+}
+
+
+/* Estilo para el formulario */
+.formulario {
+    margin:auto;
+    display: grid;
+    background-color: white;
+    width: 80%;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+/* Estilo para la preview de la foto */
+.pic_field {
+    display: none;
+    width: 60px;
+    height: 60px;
+    border:black, 1px;
+}
+
+/* Estilo para un contenedor del formulario */
+.fieldset {
+    width: 20%;
+}
+
+/* Estilo para un boton */
+.button{
+    padding: 5px 10px;
+    border: 2px solid black;
+    background-color: #080163;
+    color: white;
+}
+
+/* Estilo para un boton */
+.button-big{
+    width: 130px;
+    height: 50px;
+    display: inline-block;
+    padding: 5px 10px;
+    border: 2px solid black;
+    background-color: #080163;
+    color: white;
+}
+
+/* Estilo para los botones de las diferentes paginas de administrador al pasar el ratón por encima */
+button:hover{
+    transform: scale(1.1);
+}
+
+/* Estilo para los botones de las diferentes paginas de administrador al pasar el ratón por encima */
+button-big:hover{
+    transform: scale(1.1);
+}

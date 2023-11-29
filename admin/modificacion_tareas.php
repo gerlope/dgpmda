@@ -7,6 +7,7 @@
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/header.css">
+		<link rel="stylesheet" type="text/css" href="../css/formulario.css">
 	</head>
 	<body>
 		<header>
@@ -71,7 +72,7 @@
 				}
 			?>
 
-			<h1 id='tituloSecundario'><?php echo $titulo; ?></h1>
+			<a href="./admin_tareas.php" class="boton-volver" aria-label="Volver al inicio" role="button">&#129152;</a>
 			<form onsubmit="return validarFormularioRegistroTarea(event, '')" action="../php/modificar_tarea.php" method="POST" class="formulario" id="formulario-modificar">
 				<button type="button" onclick="habilitarEdicion()" id="boton-editar">Editar perfil</button>
 				<button type="button" onclick="deshabilitarEdicion()" id="boton-cerrarEdicion" style="display: none;">Cerrar X</button>

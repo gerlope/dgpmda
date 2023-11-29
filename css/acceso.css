@@ -46,6 +46,8 @@
 
     /* Estilo para los h2, p y el texto del botón submit en el acceso alumnos */
     h2, p, .submit, #-login-incorrecto{
+        display:flex;
+        justify-content: center;
         text-transform: uppercase;
         letter-spacing: 1.8px;
         font-weight: bold;
@@ -68,13 +70,13 @@
 
     /* Estilo para el botón de iniciar sesión */
     input[type="submit"] {
-        font-size: 16px;
+        font-size: 40px;
         border: 2px solid black;
-        border-radius: 20px;
+        border-radius: 100px;
         background-color: #080163;
         color: white;
         cursor: pointer;
-        width: 70%;
+        width: 100%;
         justify-self: center;
     }
 
@@ -88,4 +90,26 @@
         margin-top: 30px;
         line-height: 30px;
         color: red;
+    }
+
+
+    /* Estilo para la seccion de pictogrmas ya seleccionados */
+    .pictogramas-seleccionados {
+        display:flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin: 10px;
+    }
+
+    .pictogramas-seleccionados img{
+        visibility: hidden;
+        width: 150px;
+        height: 150px;
+        margin: 30px 5px;
+    }
+
+    .hidden {
+        display: none;
+        width:0%;
+        height:0%;
     }

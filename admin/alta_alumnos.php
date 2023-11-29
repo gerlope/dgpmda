@@ -7,6 +7,7 @@
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/header.css">
+		<link rel="stylesheet" type="text/css" href="../css/formulario.css">
 	</head>
 	<body>
 		<header>
@@ -41,33 +42,35 @@
 		</header>
 
 		<main>
+		<a href="./admin_alumnos.php" class="boton-volver" aria-label="Volver al inicio" role="button">&#129152;</a>
 			<form onsubmit="return validarFormularioRegistroAlumno(event, '')" action="../php/registrar_alumno.php" method="POST" class="formulario">
 				<article class="campo">
-					<label for="nombre" class="titulo-campo">Nombre:</label>
+					<label for="nombre" class="titulo-campo"><b>Nombre:</b></label></br>
 					<input type="text" id="nombre" name="nombre" required>
 					<p id="nombre-incorrecto" style="display:none;">El nombre debe contener &uacute;nicamente caracteres alfab&eacute;ticos</p>
-				</article>
+				</article></br>
 				
 				<article class="campo">
-					<label for="apellidos" class="titulo-campo">Apellidos:</label>
+					<label for="apellidos" class="titulo-campo"><b>Apellidos:</b></label></br>
 					<input type="text" id="apellidos" name="apellidos" required>
 					<p id="apellidos-incorrecto" style="display:none;">Los apellidos deben contener &uacute;nicamente caracteres alfab&eacute;ticos</p>
-				</article>
+				</article></br>
 
 				<article class="campo">
-					<label for="aula" class="titulo-campo">Aula:</label>
+					<label for="aula" class="titulo-campo"><b>Aula:</b></label></br>
 					<input type="text" id="aula" name="aula" required>
 					<p id="aula-incorrecto" style="display:none;">El aula debe contener &uacute;nicamente caracteres alfan&uacute;mericos</p>
-				</article>
+				</article></br>
 
                 <article class="campo">
-					<label for="ruta_foto" class="titulo-campo">Fotograf&iacute;a personal:</label>
+					<label for="ruta_foto" class="titulo-campo"><b>Fotograf&iacute;a personal:</b></label></br>
+					<img src="" class="pic_field" id="foto"></br>
 					<input type="file" id="ruta_foto" name="ruta_foto" accept="image/*" required>
-				</article>
+				</article></br>
 
-				<article class="campo">
-					<fieldset id="fieldset-perfil_visualizacion" name="fieldset-perfil_visualizacion">
-						<legend class="titulo-campo">Perfil preferente de visualizaci&oacute;n:</legend>
+				<article>
+					<fieldset id="fieldset-perfil_visualizacion" name="fieldset-perfil_visualizacion" class="fieldset">
+						<legend class="titulo-campo"><b>Perfil preferente de visualizaci&oacute;n:</b></legend>
 
 						<label>
 						<input type="checkbox" name="perfil[]" value="audio">Audio</label>
@@ -79,52 +82,61 @@
 						<input type="checkbox" name="perfil[]" value="texto">Texto</label>
 					</fieldset>
 					<p id="fieldset-perfil_visualizacion-incorrecto" style="display:none;">Se debe seleccionar al menos una opci&oacute;n de visualizaci&oacute;n</p>
-				</article>
+				</article></br>
 
-				<article class="campo">
-					<fieldset id="fieldset-tipo_password" name="fieldset-tipo_password">
-						<legend class="titulo-campo">Tipo de contrase&ntilde;a:</legend>
-
-						<label>
-						<input type="checkbox" name="tipo[]" id="tipo-texto" value="texto">Texto</label>
+				<article>
+					<fieldset id="fieldset-tipo_password" name="fieldset-tipo_password" class="fieldset">
+						<legend class="titulo-campo"><b>Tipo de contrase&ntilde;a:</b></legend>
 
 						<label>
-						<input type="checkbox" name="tipo[]" id="tipo-pictogramas" value="pictogramas">Pictogramas</label>
+						<input type="radio" name="tipo[]" id="tipo-texto" value="texto">Texto</label>
+
+						<label>
+						<input type="radio" name="tipo[]" id="tipo-pictogramas" value="pictogramas">Pictogramas</label>
 					</fieldset>
 					<p id="fieldset-tipo_password-incorrecto" style="display:none;">Se debe seleccionar al menos un tipo de contrase&ntilde;a</p>
-				</article>
+				</article></br>
       
 				<article class="campo" id="campo-password">
-					<label for="password" class="titulo-campo">Contrase&ntilde;a:</label>
+					<label for="password" class="titulo-campo"><b>Contrase&ntilde;a:</b></label></br>
 					<input type="password" id="password" name="password">
 					<p id="password-incorrecto" style="display:none;">La contrase&ntilde;a debe tener 4 o más caracteres</p>
-				</article>
+				</article></br>
 				
 				<article class="campo" id="campo-password-confirm">
-					<label for="password-confirm" class="titulo-campo">Confirmar Contrase&ntilde;a:</label>
+					<label for="password-confirm" class="titulo-campo"><b>Confirmar Contrase&ntilde;a:</b></label></br>
 					<input type="password" id="password-confirm" name="password-confirm">
 					<p id="password-confirm-incorrecto" style="display:none;">La contrase&ntilde;a no coincide. Int&eacute;ntalo de nuevo</p>
 				</article>
 
-				<article class="campo" id="campo-pictogramas" style="display: none;">
-					<label class="titulo-campo">Pictogramas:</label>
-					<label for="pictograma_1" class="titulo-campo">Primer Pictograma:</label>
-					<input type="file" id="pictograma_1" name="pictograma_1" accept="image/*">
+				<article class="campo" id="campo-pictogramas" style="display:none;">
+					<label class="titulo-campo"><b>Pictogramas:</b></label></br></br>
+					<label for="pictograma_1" class="titulo-campo">Primer Pictograma:</label></br>
+					<img src="" class="pic_field" id="picto1"></br>
+					<input type="file" id="pictograma_1" name="pictograma_1" accept="image/*"></br></br>
 
-					<label for="pictograma_2" class="titulo-campo">Segundo Pictograma:</label>
-					<input type="file" id="pictograma_2" name="pictograma_2" accept="image/*">
+					<label for="pictograma_2" class="titulo-campo">Segundo Pictograma:</label></br>
+					<img src="" class="pic_field" id="picto2"></br>
+					<input type="file" id="pictograma_2" name="pictograma_2" accept="image/*"></br></br>
 
-					<label for="pictograma_3" class="titulo-campo">Tercer Pictograma:</label>
-					<input type="file" id="pictograma_3" name="pictograma_3" accept="image/*">
-				</article>
+					<label for="pictograma_3" class="titulo-campo">Tercer Pictograma:</label></br>
+					<img src="" class="pic_field" id="picto3"></br>
+					<input type="file" id="pictograma_3" name="pictograma_3" accept="image/*"></br></br>
+				</article></br>
 				
 				<article class="enviar">
-					<input type="submit" value="Registrarse">
-				</article>
+					<input type="submit" value="Registrarse" class="button-big">
+				</article></br>
 			</form>
 
 			<script>
 				// Función para manejar la visibilidad de los campos de contraseña
+				function displayImage(id, archivo) {
+					document.getElementById(id).src="../multimedia/pictogramas_password/" + archivo;
+					document.getElementById(id).value = archivo;
+					document.getElementById(id).display = "block";
+				};
+				
 				function togglePasswordFields() {
 					var tipoTextoCheckbox = document.getElementById('tipo-texto');
 					var tipoPictogramasCheckbox = document.getElementById('tipo-pictogramas');
