@@ -92,7 +92,7 @@
 										// Creamos todos los articles de los profesores
 										echo "
 										<article class='profesor'>";
-										if($profesor['usuario'] == $_SESSION['usuario']){
+										if($profesor['id'] == $_SESSION['id_profesor']){
 											echo "
 											<a href='../profesores/modificacion_profesores.php'>";
 										}

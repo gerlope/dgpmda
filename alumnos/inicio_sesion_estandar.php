@@ -54,7 +54,7 @@
             <div id="form-container">
                 <article id="form-login">
                     <form onsubmit="return validarFormularioLoginAlumno(event, '-login')" action="../php/login_alumnos.php" method="POST" class="formulario">
-                        <label for="password-login"><h2>Contrase&ntilde;a:</h2></label>
+                        <label for="password-login"><h2>Escribe tu contrase&ntilde;a:</h2></label>
                         <input type="password" id="password-login" name="password-login" aria-label="Contraseña" aria-describedby="password-login-incorrecto" required>
                         <p id="password-login-incorrecto" style="display:none;">La contrase&ntilde;a no es v&aacute;lida. Por favor, int&eacute;ntalo de nuevo.</p>
                         <br>

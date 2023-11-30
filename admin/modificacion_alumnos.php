@@ -49,6 +49,8 @@
 				// al sistema ni a la seguridad y privacidad del mismo
 				$alumno = unserialize($_SESSION['alumno'][$_GET['indice']]);
 
+				$_SESSION['id_alumno'] = $alumno['id'];
+
 				$nombre = $alumno['nombre'];
 				$apellidos = $alumno['apellidos'];
 				$aula = $alumno['aula'];
