@@ -7,7 +7,6 @@
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/header.css">
-		<link rel="stylesheet" type="text/css" href="../css/formulario.css">
 	</head>
 	<body>
 		<header>
@@ -62,39 +61,38 @@
 				$pictogramas = $tmp->obtenerPictogramasAlumno($alumno['id']);
 			?>
 
-			<a href="./admin_alumnos.php" class="boton-volver" aria-label="Volver al inicio" role="button">&#129152;</a>
+			<h1 id='tituloSecundario'><?php echo $nombre . ' ' . $apellidos; ?></h1>
 			<form onsubmit="return validarFormularioRegistroAlumno(event, '')" action="../php/modificar_alumno.php" method="POST" class="formulario" id="formulario-modificar">
-				<button type="button" onclick="habilitarEdicion()" class="button" id="boton-editar">Editar perfil</button>
-				<button type="button" onclick="deshabilitarEdicion()" class="button" id="boton-cerrarEdicion" style="display: none;">Cerrar X</button>
+				<button type="button" onclick="habilitarEdicion()" id="boton-editar">Editar perfil</button>
+				<button type="button" onclick="deshabilitarEdicion()" id="boton-cerrarEdicion" style="display: none;">Cerrar X</button>
 
 				<article class="campo">
-					<label for="nombre" class="titulo-campo"><b>Nombre:</b></label></br>
+					<label for="nombre" class="titulo-campo">Nombre:</label>
 					<input type="text" id="nombre" name="nombre" value="<?php echo $nombre?>" required disabled>
 					<p id="nombre-incorrecto" style="display:none;">El nombre debe contener &uacute;nicamente caracteres alfab&eacute;ticos</p>
-				</article></br>
+				</article>
 				
 				<article class="campo">
-					<label for="apellidos" class="titulo-campo"><b>Apellidos:</b></label></br>
+					<label for="apellidos" class="titulo-campo">Apellidos:</label>
 					<input type="text" id="apellidos" name="apellidos" value="<?php echo $apellidos?>" required disabled>
 					<p id="apellidos-incorrecto" style="display:none;">Los apellidos deben contener &uacute;nicamente caracteres alfab&eacute;ticos</p>
-				</article></br>
+				</article>
 
                 <article class="campo">
-					<label for="ruta_foto" class="titulo-campo"><b>Fotograf&iacute;a:</b></label></br>
-					<img src="" class="pic_field" id="picto1"></br>
-					<input type="file" id="pictograma_1" name="pictograma_1" accept="image/*" required disabled></br>
+					<label for="ruta_foto" class="titulo-campo">Fotograf&iacute;a:</label>
+					<input type="text" id="ruta_foto" name="ruta_foto" value="<?php echo $ruta_foto?>" required disabled>
 					<p id="ruta_foto-incorrecto" style="display:none;">La fotograf&iacute;a debe corresponder a un archivo v&aacute;lido de imagen</p>
-				</article></br>
+				</article>
 
 				<article class="campo">
-					<label for="aula" class="titulo-campo"><b>Aula:</b></label></br>
+					<label for="aula" class="titulo-campo">Aula:</label>
 					<input type="text" id="aula" name="aula" value="<?php echo $aula?>" required disabled>
 					<p id="aula-incorrecto" style="display:none;">El aula debe contener &uacute;nicamente caracteres alfan&uacute;mericos</p>
-				</article></br>
+				</article>
 
 				<article class="campo">
-					<fieldset id="fieldset-perfil_visualizacion" name="fieldset-perfil_visualizacion" class="fieldset">
-						<legend class="titulo-campo"><b>Perfil preferente de visualizaci&oacute;n:</b></legend>
+					<fieldset id="fieldset-perfil_visualizacion" name="fieldset-perfil_visualizacion">
+						<legend class="titulo-campo">Perfil preferente de visualizaci&oacute;n:</legend>
 
 						<label>
 						<input type="checkbox" name="perfil[]" value="audio" disabled >Audio</label>
@@ -105,11 +103,11 @@
 						<label>
 						<input type="checkbox" name="perfil[]" value="texto" disabled>Texto</label>
 					</fieldset>
-				</article></br>
+				</article>
 
 				<article class="campo">
-					<fieldset id="fieldset-tipo_password" name="fieldset-tipo_password" class="fieldset">
-						<legend class="titulo-campo"><b>Tipo de contrase&ntilde;a:</b></legend>
+					<fieldset id="fieldset-tipo_password" name="fieldset-tipo_password">
+						<legend class="titulo-campo">Tipo de contrase&ntilde;a:</legend>
 
 						<label>
 						<input type="checkbox" name="tipo[]" id="tipo-texto" value="texto" disabled >Texto</label>
@@ -121,34 +119,34 @@
 				</article>
       
 				<article class="campo" id="campo-password">
-					<label for="password" class="titulo-campo">Contrase&ntilde;a:</label></br>
+					<label for="password" class="titulo-campo">Contrase&ntilde;a:</label>
 					<input type="password" id="password" name="password" value="<?php echo $password?>" disabled>
 					<p id="password-incorrecto" style="display:none;">La contrase&ntilde;a debe tener 4 o más caracteres</p>
-				</article></br>
+				</article>
 				
 				<article class="campo" id="campo-password-confirm">
-					<label for="password-confirm" class="titulo-campo">Confirmar Contrase&ntilde;a:</label></br>
+					<label for="password-confirm" class="titulo-campo">Confirmar Contrase&ntilde;a:</label>
 					<input type="password" id="password-confirm" name="password-confirm" value="<?php echo $password?>" disabled>
 					<p id="password-confirm-incorrecto" style="display:none;">La contrase&ntilde;a no coincide. Int&eacute;ntalo de nuevo</p>
-				</article></br>
+				</article>
 
 				<article class="campo" id="campo-pictogramas" style="display: none;">
-					<label class="titulo-campo"><b>Pictogramas:</b></label></br></br>
-					<label for="pictograma_1" class="titulo-campo">Primer Pictograma:</label></br>
-					<img src="" class="pic_field" id="picto1"></br>
-					<input type="file" id="pictograma_1" name="pictograma_1" accept="image/*" disabled></br></br>
+					<label class="titulo-campo">Pictogramas:</label>
+					<label for="pictograma_1" class="titulo-campo">Primer Pictograma:</label>
+					<input type="text" id="pictograma_1" name="pictograma_1" value="<?php echo $pictogramas[0]?>" disabled>
+					<p id="pictograma_1-incorrecto" style="display:none;">El pictograma debe corresponder a un archivo v&aacute;lido de imagen</p>
 
-					<label for="pictograma_2" class="titulo-campo">Segundo Pictograma:</label></br>
-					<img src="" class="pic_field" id="picto2"></br>
-					<input type="file" id="pictograma_2" name="pictograma_2" accept="image/*" disabled></br></br>
+					<label for="pictograma_2" class="titulo-campo">Segundo Pictograma:</label>
+					<input type="text" id="pictograma_2" name="pictograma_2" value="<?php echo $pictogramas[1]?>" disabled>
+					<p id="pictograma_2-incorrecto" style="display:none;">El pictograma debe corresponder a un archivo v&aacute;lido de imagen</p>
 
-					<label for="pictograma_3" class="titulo-campo">Tercer Pictograma:</label></br>
-					<img src="" class="pic_field" id="picto3"></br>
-					<input type="file" id="pictograma_3" name="pictograma_3" accept="image/*" disabled></br></br>
-				</article></br>
+					<label for="pictograma_3" class="titulo-campo">Tercer Pictograma:</label>
+					<input type="text" id="pictograma_3" name="pictograma_3" value="<?php echo $pictogramas[2]?>" disabled>
+					<p id="pictograma_3-incorrecto" style="display:none;">El pictograma debe corresponder a un archivo v&aacute;lido de imagen</p>
+				</article>
 				
 				<article class="enviar">
-					<input type="submit" class="button-big" id="boton-enviar" value="Guardar cambios" style="display:none;" disabled>
+					<input type="submit" id="boton-enviar" value="Guardar cambios" style="display:none;" disabled>
 				</article>
 			</form>
 

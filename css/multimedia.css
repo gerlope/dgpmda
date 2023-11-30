@@ -71,23 +71,3 @@
         justify-content: space-around;
         display: flex;
     }
-
-    /* Estilo para las imagenes de la sección de la multimedia */
-    #pictogramas {
-        margin:auto;
-    }
-
-    /* Estilo para el article que muestra el alumno correspondiente */
-    .pictograma {
-        margin: 5px;
-        text-align: center;
-        background-color: #e9cfd9;
-        border-radius: 30px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .pictogramas img{
-        width: 150px;
-        height: 150px;
-        margin: 30px 5px;
-    }

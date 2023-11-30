@@ -46,65 +46,6 @@
 
         /****************************************************************************************/
         /****************************************************************************************/
-        /* Funcion boolean que se encarga de comprobar si existe un alumno
-        que tenga el id de usuario y la contraseña pasada */
-        public static function comprobarAlumnoPictos($id, $picto1, $picto2, $picto3) {
-            $conexion = parent::conectar();
-            $sql = "SELECT * FROM " . TABLA_CONTRASEÑA_PICTOGRAMA . " WHERE alumno_id = :id";
-            $numero_pictos = 0;
-            $passwd_id = 0;
-
-            try {
-                $st = $conexion->prepare( $sql );
-                $st->bindValue( ":id", $id, PDO::PARAM_STR );
-                $st->bindValue( ":password", $password, PDO::PARAM_STR );
-                $st->execute();
-                $fila = $st->fetch();
-                parent::desconectar( $conexion );
-
-                if(!$fila) return false;
-
-                $numero_pictos = $fila->numero_pictogramas;
-                $passwd_id = $fila->id;
-            } catch ( PDOException $e ) {
-                parent::desconectar( $conexion );
-
-                return false;
-            }
-
-            $sql1 = "SELECT * FROM " . TABLA_PICTOGRAMAS . " WHERE password_pictograma_id = :passwd_id AND orden = 1";
-            $sql2 = "SELECT * FROM " . TABLA_PICTOGRAMAS . " WHERE password_pictograma_id = :passwd_id AND orden = 2";
-            $sql3 = "SELECT * FROM " . TABLA_PICTOGRAMAS . " WHERE password_pictograma_id = :passwd_id AND orden = 3";
-
-            try {
-                $st = $conexion->prepare( $sql1 );
-                $st->bindValue( ":passwd_id", $passwd_id, PDO::PARAM_STR );
-                $st->execute();
-                $fila1 = $st->fetch();
-                parent::desconectar( $conexion );
-                $st = $conexion->prepare( $sql2 );
-                $st->bindValue( ":passwd_id", $passwd_id, PDO::PARAM_STR );
-                $st->execute();
-                $fila2 = $st->fetch();
-                parent::desconectar( $conexion );
-                $st = $conexion->prepare( $sql3 );
-                $st->bindValue( ":passwd_id", $passwd_id, PDO::PARAM_STR );
-                $st->execute();
-                $fila3 = $st->fetch();
-                parent::desconectar( $conexion );
-                
-                if($fila1->ruta_pictograma == $picto1 && $fila2->ruta_pictograma == $picto2 && $fila3->ruta_pictograma == $picto3) return true;
-            } catch ( PDOException $e ) {
-                parent::desconectar( $conexion );
-
-                return false;
-            }
-            return false;
-        }
-        /****************************************************************************************/
-
-        /****************************************************************************************/
-        /****************************************************************************************/
         /* Funcion que devuelve el alumno con el id pasado */
         public static function obtenerAlumno($id) {
             $conexion = parent::conectar();

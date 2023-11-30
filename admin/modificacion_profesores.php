@@ -7,7 +7,6 @@
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/header.css">
-		<link rel="stylesheet" type="text/css" href="../css/formulario.css">
 	</head>
 	<body>
 		<header>
@@ -58,55 +57,55 @@
 				$_SESSION['usuario_profesor'] = $profesor['usuario'];
 			?>
 
-			<a href="./admin_profesores.php" class="boton-volver" aria-label="Volver al inicio" role="button">&#129152;</a>
-			<form onsubmit="return validarFormularioRegistroProfesor(event, '')" action="../php/modificar_profesor.php" method="POST" class="formulario" id="formulario-modificar">
-				<button type="button" onclick="habilitarEdicion()" class="button" id="boton-editar">Editar perfil</button>
-				<button type="button" onclick="deshabilitarEdicion()" class="button" id="boton-cerrarEdicion" style="display: none;">Cerrar X</button></br>
+			<h1 id='tituloSecundario'><?php echo $nombre . ' ' . $apellidos; ?></h1>
+			<form onsubmit="return validarFormularioRegistroProfesor(event, '')" action="../php/modificar_profesor_admin.php" method="POST" class="formulario" id="formulario-modificar">
+				<button type="button" onclick="habilitarEdicion()" id="boton-editar">Editar perfil</button>
+				<button type="button" onclick="deshabilitarEdicion()" id="boton-cerrarEdicion" style="display: none;">Cerrar X</button>
 
 				<article class="campo">
-					<label for="nombre" class="titulo-campo"><b>Nombre:</b></label></br>
+					<label for="nombre" class="titulo-campo">Nombre:</label>
 					<input type="text" id="nombre" name="nombre" value="<?php echo $nombre?>" required disabled>
 					<p id="nombre-incorrecto" style="display:none;">El nombre debe contener &uacute;nicamente caracteres alfab&eacute;ticos</p>
-				</article></br>
+				</article>
 				
 				<article class="campo">
-					<label for="apellidos" class="titulo-campo"><b>Apellidos:</b></label></br>
+					<label for="apellidos" class="titulo-campo">Apellidos:</label>
 					<input type="text" id="apellidos" name="apellidos" value="<?php echo $apellidos?>" required disabled>
 					<p id="apellidos-incorrecto" style="display:none;">Los apellidos deben contener &uacute;nicamente caracteres alfab&eacute;ticos</p>
-				</article></br>
-
-                <article class="campo">
-					<label for="ruta_foto" class="titulo-campo"><b>Fotograf&iacute;a:</b></label></br>
-					<img src="" class="pic_field" id="foto"></br>
-					<input type="file" id="ruta_foto" name="ruta_foto" accept="image/*" required disabled>
-				</article></br>
+				</article>
 
 				<article class="campo">
-					<label for="aula" class="titulo-campo"><b>Aula:</b></label></br>
+					<label for="ruta_foto" class="titulo-campo">Fotograf&iacute;a:</label>
+					<input type="text" id="ruta_foto" name="ruta_foto" value="<?php echo $ruta_foto?>" required disabled>
+					<p id="ruta_foto-incorrecto" style="display:none;">La fotograf&iacute;a debe corresponder a un archivo v&aacute;lido de imagen</p>
+				</article>
+
+				<article class="campo">
+					<label for="aula" class="titulo-campo">Aula:</label>
 					<input type="text" id="aula" name="aula" value="<?php echo $aula?>" required disabled>
 					<p id="aula-incorrecto" style="display:none;">El aula debe contener &uacute;nicamente caracteres alfan&uacute;mericos</p>
-				</article></br>
+				</article>
 
 				<article class="campo">
-					<label for="usuario" class="titulo-campo"><b>Nombre de usuario:</b></label></br>
+					<label for="usuario" class="titulo-campo">Nombre de usuario:</label>
 					<input type="text" id="usuario" name="usuario" value="<?php echo $usuario?>" required disabled>
-					<p id="usuario-incorrecto" style="display:none;">El nombre de usuario debe tener entre 4 y 30 carcteres y contener &uacute;nicamente letras, n&uacute;meros, guiones y guiones bajos</p>
-				</article></br>
+					<p id="usuario-incorrecto" style="display:none;">El usuario debe contener &uacute;nicamente caracteres alfab&eacute;ticos</p>
+				</article>
       
 				<article class="campo">
-					<label for="password" class="titulo-campo"><b>Contrase&ntilde;a:</b></label></br>
+					<label for="password" class="titulo-campo">Contrase&ntilde;a:</label>
 					<input type="password" id="password" name="password" value="<?php echo $password?>" required disabled>
 					<p id="password-incorrecto" style="display:none;">La contrase&ntilde;a debe tener 4 o más caracteres</p>
-				</article></br>
+				</article>
 				
 				<article class="campo">
-					<label for="password-confirm" class="titulo-campo"><b>Confirmar Contrase&ntilde;a:</b></label></br>
+					<label for="password-confirm" class="titulo-campo">Confirmar Contrase&ntilde;a:</label>
 					<input type="password" id="password-confirm" name="password-confirm" value="<?php echo $password?>" required disabled>
 					<p id="password-confirm-incorrecto" style="display:none;">La contrase&ntilde;a no coincide. Int&eacute;ntalo de nuevo</p>
-				</article></br>
+				</article>
 				
 				<article class="enviar">
-					<input type="submit" class="button-big" id="boton-enviar" value="Guardar cambios" style="display:none;" disabled>
+					<input type="submit" id="boton-enviar" value="Guardar cambios" style="display:none;" disabled>
 				</article>
 			</form>
 		</main>

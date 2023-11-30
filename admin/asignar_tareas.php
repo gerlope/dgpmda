@@ -7,7 +7,6 @@
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/header.css">
-		<link rel="stylesheet" type="text/css" href="../css/formulario.css">
 	</head>
 	<body>
 		<header>
@@ -58,13 +57,13 @@
 				$tareas = new Tareas();
 			?>
 
-			<a href="./admin_tareas.php" class="boton-volver" aria-label="Volver al inicio" role="button">&#129152;</a>
+			<h1 id='tituloSecundario'><?php echo $titulo;?></h1>
 			<article>
 				<a href='../admin/modificacion_tareas.php?indice=<?php echo $indice;?>'>
 					<h3>Modificar tarea</h3>
 				</a>
 			</article>
-
+			
 			<form action="../php/asignar_tarea.php" method="POST" class="formulario">
 				<article class="campo">
 					<fieldset id="fieldset-alumnos" name="fieldset-alumnos">

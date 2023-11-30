@@ -7,7 +7,6 @@
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/header.css">
-		<link rel="stylesheet" type="text/css" href="../css/formulario.css">
 	</head>
 	<body>
 		<header>
@@ -42,7 +41,6 @@
 		</header>
 
 		<main>
-		<a href="./admin_profesores.php" class="boton-volver" aria-label="Volver al inicio" role="button">&#129152;</a>
 			<form onsubmit="return validarFormularioRegistroProfesor(event, '')" action="../php/registrar_profesor.php" method="POST" class="formulario">
 				<article class="campo">
 					<label for="nombre" class="titulo-campo">Nombre:</label>
