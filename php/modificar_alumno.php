@@ -36,7 +36,7 @@
             unset($pictogramas);
             $pictogramas = [];
         }
-        echo $id_alumno;
+
         // Modificamos los datos en la base de datos
         $alumnos->modificarAlumno($nombre, $apellidos, $aula, $perfil_visualizacion, $tipo_password, $password, $pictogramas, $ruta_foto, $id_alumno);
     }

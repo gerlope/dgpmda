@@ -302,6 +302,29 @@
 
         /****************************************************************************************/
         /****************************************************************************************/
+        /* Funcion que devuelve un array de todos los alumnos asignados a una tarea */
+        public function obtenerTareasAsignadas($id_alumno) {
+            $conexion = parent::conectar();
+    
+            $sql = "SELECT tarea_id FROM " . TABLA_TAREA_ALUMNO . " WHERE alumno_id = ?";
+            
+            try {
+                $st = $conexion->prepare($sql);
+                $st->execute([$id_alumno]);
+                $tareasAsignadas = $st->fetchAll(PDO::FETCH_ASSOC);
+                parent::desconectar($conexion);
+    
+                return $tareasAsignadas;
+            } catch (PDOException $e) {
+                parent::desconectar($conexion);
+                return [];
+            }
+        }
+        /****************************************************************************************/
+
+
+        /****************************************************************************************/
+        /****************************************************************************************/
         /* Funcion que elimina todas las asignaciones alummno-tarea de la tarea pasada */
         public function eliminarTareaAlumno($id_tarea) {
             $conexion = parent::conectar();
@@ -399,3 +422,11 @@
         /****************************************************************************************/
     }
  ?>
+
+
+
+
+
+
+
+

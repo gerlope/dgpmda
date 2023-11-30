@@ -91,6 +91,7 @@
 											$tareasTitulo[$i] = $tarea['titulo'];
 											$tareasIcono[$i] = $tarea['ruta_icono'];
 
+
 											// Guardamos en una variable de sesion de la tarea correspondiente
 											$_SESSION['tarea'][$i] = serialize($tarea);
 											

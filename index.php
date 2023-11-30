@@ -109,12 +109,8 @@
 					var posButton = document.getElementById("posAlumnos");
 					var prevButton = document.getElementById("prevAlumnos");
 
-					// Obtén el tamaño de la ventana
-					var anchoVentana = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-					var altoVentana = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-					// Establece el número máximo de alumnos por pantalla basado en las dimensiones de la ventana
-					var alumnosPorPantalla = Math.floor(anchoVentana / 150); // Ajusta este valor según tus necesidades
+					// Establece el número máximo de alumnos por pantalla
+					var alumnosPorPantalla = 10;
 
 					// Inicializa el estado de la pantalla
 					var pantallaActual = 0;
@@ -145,14 +141,6 @@
 						posButton.style.display = endIndex < alumnos.length ? "block" : "none";
 						prevButton.style.display = pantallaActual > 0 ? "block" : "none";
 					}
-
-					// Actualiza el número de alumnos por pantalla al cambiar el tamaño de la ventana
-					window.addEventListener("resize", function () {
-						anchoVentana = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-						altoVentana = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-						alumnosPorPantalla = Math.floor(anchoVentana / 150); // Ajusta este valor según tus necesidades
-						actualizarPantalla();
-					});
 				});
 			</script>
 		</main>

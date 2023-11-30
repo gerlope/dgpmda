@@ -109,3 +109,13 @@
     #prevAlumnos{
         margin-right: 40px;
     }
+
+        /* Estilo para el botón de ver más tareas */
+        #posTareas{
+            margin-left: 40px;
+        }
+    
+        /* Estilo para el botón de ver alumnos tareas */
+        #prevTareas{
+            margin-right: 40px;
+        }
