@@ -1,9 +1,4 @@
 
-    /* Estilo para el cuerpo de la página */
-    body {
-        overflow-y: hidden;
-    }
-
     /* Estilo para todos los enlaces, los botones y el input que confirman una busqueda */
     a, button, #boton-buscar {
         text-decoration: none;
@@ -63,7 +58,7 @@
 
     /* Estilo para la seccion que muestra la lista de profesores y la de alumnos */
     .profesores, .alumnos{
-        width: 70%;
+        width: 75%;
     }
 
     /* Estilo para los h2 de la secciones que muestra el contenido correspondiente al administrador */
@@ -77,6 +72,11 @@
         display: flex;
         justify-content: space-between;
         margin-top: 60px;
+    }
+
+    /* Estilo para las barras de busqueda del contenido correspondiente */
+    .profesores .barra-busqueda, .alumnos .barra-busqueda{
+        margin-right: 50px;
     }
 
     /* Estilo para los formularios dentro de las barras de busqueda */

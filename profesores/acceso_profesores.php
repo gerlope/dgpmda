@@ -8,16 +8,17 @@
 		<meta name="viewport" content="width=device-width">
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
+        <script src="../javascript/header_responsive.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/header.css">
         <link rel="stylesheet" type="text/css" href="../css/acceso.css">
 	</head>
 
 	<body>
 		<header>
-            <div>
+            <div id="div-header">
                 <div></div>
-			    <div id='div-titulo'><h1 id="titulo">Acceso</h1>
-                <img src='../multimedia/imagenes/icono_login.png' width='60' height='60' alt='Icono inicio de sesion'></div>
+			    <div id='div-titulo' class="sin-barra-lateral"><img src='../multimedia/imagenes/icono_login.png' width='60' height='60' alt='Icono inicio de sesion'>
+                <h1 id="tituloPrincipal">Acceso</h1></div>
                 <div></div>
             </div>
 		</header>
@@ -63,7 +64,6 @@
 		</main>
 
 		<footer>
-
     	</footer>
 	</body>
 </html>

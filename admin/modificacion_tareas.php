@@ -4,13 +4,29 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Perfil de tarea</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width">
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
+		<script src="../javascript/header_responsive.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/header.css">
+		<link rel="stylesheet" type="text/css" href="../css/formularios.css">
 	</head>
 	<body>
 		<header>
-			<div>
+			<div id="div-header">
+				<div id="barra-lateral" class="barra-lateral">
+					<a href="#" class="boton-cerrar" onclick="ocultar()"><button><h3>&#10008;</h3></button></a>
+					<div id="contenido">
+						<div id='perfil-login-reducido'></div>
+						<a id='enlace-header-reducido' href='profesores/acceso_profesores.php'><button><h3>Acceso de Profesores</h3></button></a>
+					</div>
+				</div>
+					
+				<div id="boton-barra-lateral">
+					<a id="abrir" class="abrir-cerrar" href="javascript:void(0)" onclick="mostrar()"><button><h3>&#9776;</h3></button></a>
+					<a id="cerrar" class="abrir-cerrar" href="javascript:void(0)" onclick="ocultar()" style='display: none;'></button><h3>&#9776;</h3></button></a>
+				</div>
 				<?php
 					// Iniciar la sesión
 					session_start();
@@ -34,9 +50,9 @@
 						header("Location: ../index.php");
 					}
 				?>
-				<div id="div-titulo"><h1 id='titulo'>Modificar Tarea</h1>
-				<img src='../multimedia/imagenes/icono_admin.png' width='60' height='60' alt='Icono administrador'></div>
-				<a href='../php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
+				<div id="div-titulo"><img src='../multimedia/imagenes/icono_admin.png' width='60' height='60' alt='Icono administrador'>
+				<h1 id='tituloPrincipal'>Modificar Tarea</h1></div>
+				<a id='enlace-header' href='../php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
 			</div>
 		</header>
 
@@ -71,26 +87,37 @@
 				}
 			?>
 
-			<h1 id='tituloSecundario'><?php echo $titulo; ?></h1>
+			<a href="javascript:void(0);" onclick="volverPaginaAnterior()" class="boton-volver" aria-label="Volver a la asignación de tareas" role="button">&#129152;</a>
+
+			<script>
+				function volverPaginaAnterior() {
+					window.history.length > 1 ? window.history.go(-1) : window.location.href = document.referrer;
+				}
+			</script>
+
+			<article id="tituloSecundario">
+				<img src='../multimedia/imagenes/icono_tarea.png' width='30' height='30' alt='Icono tarea'>
+				<h2><?php echo $titulo; ?></h2>
+			</article>
 			<form onsubmit="return validarFormularioRegistroTarea(event, '')" action="../php/modificar_tarea.php" method="POST" class="formulario" id="formulario-modificar">
-				<button type="button" onclick="habilitarEdicion()" id="boton-editar">Editar perfil</button>
-				<button type="button" onclick="deshabilitarEdicion()" id="boton-cerrarEdicion" style="display: none;">Cerrar X</button>
+				<button type="button" onclick="habilitarEdicion()" id="boton-editar">Editar Tarea</button>
+				<button type="button" onclick="deshabilitarEdicion()" id="boton-cerrarEdicion" style="display: none;">Cerrar &#10008;</button>
 				
 				<article class="campo">
 					<label for="titulo" class="titulo-campo">T&iacute;tulo:</label>
-					<input type="text" id="titulo" name="titulo" value="<?php echo $titulo?>" required disabled>
+					<input type="text" id="titulo" name="titulo" value="<?php echo $titulo?>" placeholder="Introduce el t&iacute;tulo de la tarea" required disabled>
 					<p id="titulo-incorrecto" style="display:none;">El t&iacute;tulo no puede estar vac&iacute;o ni contener más de 200 caracteres. Tampoco puede contener caracteres especiales que no sean signos de puntuaci&oacute;n</p>
 				</article>
 
 				<article class="campo">
 					<label for="ruta_icono" class="titulo-campo">Icono asociado:</label>
-					<input type="text" id="ruta_icono" name="ruta_icono" value="<?php echo $ruta_icono?>" required disabled>
+					<input type="text" id="ruta_icono" name="ruta_icono" value="<?php echo $ruta_icono?>" placeholder="Introduce el nombre de archivo completo de la imagen" required disabled>
 					<p id="ruta_icono-incorrecto" style="display:none;">El icono debe corresponder a un archivo v&aacute;lido</p>
 				</article>
 				
 				<article class="campo">
 					<label for="ruta_documento" class="titulo-campo">Documento asociado:</label>
-					<input type="text" id="ruta_documento" name="ruta_documento" value="<?php echo $ruta_documento?>" disabled>
+					<input type="text" id="ruta_documento" name="ruta_documento" value="<?php echo $ruta_documento?>" placeholder="Introduce el nombre de archivo completo del documento" disabled>
 					<p id="ruta_documento-incorrecto" style="display:none;">El documento debe corresponder a un archivo v&aacute;lido</p>
 				</article>
 
@@ -114,25 +141,25 @@
 
 							<article class="campo">
 								<label for="paso_descripcion_${i}" class="titulo-campo">Descripción:</label>
-								<textarea id="paso_descripcion_${i}" name="paso_descripcion_${i}" required disabled>${pasoDescripcion[i]}</textarea>
+								<textarea id="paso_descripcion_${i}" name="paso_descripcion_${i}" placeholder="Introduce la descripci&oacute;n completa del paso" required disabled>${pasoDescripcion[i]}</textarea>
 								<p id="paso_descripcion_${i}-incorrecto" style="display:none;">La descripci&oacute;n no puede estar vac&iacute;a ni contener más de 200 caracteres. Tampoco puede contener caracteres especiales que no sean signos de puntuaci&oacute;n</p>
 							</article>
 
 							<article class="campo">
 								<label for="paso_video_${i}" class="titulo-campo">V&iacute;deo:</label>
-								<input type="text" id="paso_video_${i}" name="paso_video_${i}" value="${pasoVideo[i]}" disabled>
+								<input type="text" id="paso_video_${i}" name="paso_video_${i}" value="${pasoVideo[i]}" placeholder="Introduce el nombre de archivo completo del v&iacute;deo" disabled>
 								<p id="paso_video_${i}-incorrecto" style="display:none;">El v&iacute;deo del paso debe corresponder a un archivo de v&iacute;deo v&aacute;lido</p>
 							</article>
 
 							<article class="campo">
 								<label for="paso_foto_${i}" class="titulo-campo">Foto:</label>
-								<input type="text" id="paso_foto_${i}" name="paso_foto_${i}" value="${pasoFoto[i]}" disabled>
+								<input type="text" id="paso_foto_${i}" name="paso_foto_${i}" value="${pasoFoto[i]}" placeholder="Introduce el nombre de archivo completo de la imagen" disabled>
 								<p id="paso_foto_${i}-incorrecto" style="display:none;">La fotograf&iacute;a del paso debe corresponder a un archivo de imagen v&aacute;lido</p>
 							</article>
 
 							<article class="campo">
 								<label for="paso_audio_${i}" class="titulo-campo">Audio:</label>
-								<input type="text" id="paso_audio_${i}" name="paso_audio_${i}" value="${pasoAudio[i]}" disabled>
+								<input type="text" id="paso_audio_${i}" name="paso_audio_${i}" value="${pasoAudio[i]}" placeholder="Introduce el nombre de archivo completo del audio" disabled>
 								<p id="paso_audio_${i}-incorrecto" style="display:none;">El audio del paso debe corresponder a un archivo de sonido v&aacute;lido</p>
 							</article>
 
@@ -167,7 +194,7 @@
 
 							<article class="campo">
 								<label for="paso_descripcion_${contadorPasos}" class="titulo-campo">Descripción:</label>
-								<textarea id="paso_descripcion_${contadorPasos}" name="paso_descripcion_${contadorPasos}" required></textarea>
+								<textarea id="paso_descripcion_${contadorPasos}" name="paso_descripcion_${contadorPasos}" placeholder="Introduce la descripci&oacute;n completa del paso" required></textarea>
 								<p id="paso_descripcion_${contadorPasos}-incorrecto" style="display:none;">La descripci&oacute;n no puede estar vac&iacute;a ni contener más de 200 caracteres. Tampoco puede contener caracteres especiales que no sean signos de puntuaci&oacute;n</p>
 							</article>
 

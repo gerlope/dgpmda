@@ -5,14 +5,29 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Iniciar Sesión</title>
-        <script src="../javascript/funciones_basicas.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width">
+		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
+		<script src="../javascript/header_responsive.js"></script>
         <link rel="stylesheet" type="text/css" href="../css/header.css">
         <link rel="stylesheet" type="text/css" href="../css/acceso.css">
     </head>
     <body>
         <header>
-            <div>
+            <div id="div-header">
+				<div id="barra-lateral" class="barra-lateral">
+					<a href="#" class="boton-cerrar" onclick="ocultar()"><button><h3>&#10008;</h3></button></a>
+					<div id="contenido">
+						<div id='perfil-login-reducido'></div>
+						<a id='enlace-header-reducido' href='profesores/acceso_profesores.php'><button><h3>Acceso de Profesores</h3></button></a>
+					</div>
+				</div>
+					
+				<div id="boton-barra-lateral">
+					<a id="abrir" class="abrir-cerrar" href="javascript:void(0)" onclick="mostrar()"><button><h3>&#9776;</h3></button></a>
+					<a id="cerrar" class="abrir-cerrar" href="javascript:void(0)" onclick="ocultar()" style='display: none;'></button><h3>&#9776;</h3></button></a>
+				</div>
 				<?php
 					// Iniciar la sesión
 					session_start();
@@ -24,22 +39,20 @@
 					else if (isset($_SESSION['usuario'])) {		// Si hay una sesión activa de usuario redirigimos a la página de profesor
                         header("Location: ../profesor/profesor_alumnos.php");
 					}
-                    else if(isset($_SESSION['id_alumno'])){     // Si hay una sesión activa de alumno redirigimos mostramos su nombre y foto
+                    else if(isset($_SESSION['sesion_alumno']) && $_SESSION['sesion_alumno'] == true){		// Si hay una sesión ya activa de alumnos redirigimos al alumno a la página correspondiente
+                        header('Location: ../alumnos/alumno.php');
+                    }
+                    else if(isset($_SESSION['id_alumno'])){     // Si hay una sesión de inicio de sesión iniciada de alumno mostramos su nombre y foto
                         // Acceder al nombre de alumno almacenado en la variable de sesión
 						$nombre = $_SESSION['nombre_alumno'] . " " . $_SESSION['apellidos_alumno'];
 						$ruta_foto = $_SESSION['ruta_foto_alumno'];
 
                         echo "<div id='perfil-login'>
                         <div><img src='../multimedia/imagenes/$ruta_foto' width='60' height='60' alt='Foto de perfil'></div>
-                        <div><h2>$nombre</h2></div></div>
-                        <div id='div-titulo'><h1 id='titulo'>Iniciar Sesi&oacute;n</h1>
+                        <div><h2>$nombre</h2></div><a id='enlace-header'></a></div>
+                        <div id='div-titulo'><h1 id='tituloPrincipal'>Iniciar Sesi&oacute;n</h1>
                         <img src='../multimedia/imagenes/icono_login.png' width='60' height='60' alt='Icono inicio de sesion'></div>
                         <div></div><div></div><div></div>";
-
-                        // Si hay una sesión ya activa de alumnos redirigimos al alumno a la página correspondiente
-                        if(isset($_SESSION['perfil_visualizacion'])){
-                            header("Location: ../alumnos/alumno.php");
-                        }
                     }
 					else{		// Si no hay ninguna sesión de usuario activa
 						header("Location: ../index.php");
@@ -54,7 +67,7 @@
             <div id="form-container">
                 <article id="form-login">
                     <form onsubmit="return validarFormularioLoginAlumno(event, '-login')" action="../php/login_alumnos.php" method="POST" class="formulario">
-                        <label for="password-login"><h2>Contrase&ntilde;a:</h2></label>
+                        <label for="password-login"><h2>Escribe tu contrase&ntilde;a:</h2></label>
                         <input type="password" id="password-login" name="password-login" aria-label="Contraseña" aria-describedby="password-login-incorrecto" required>
                         <p id="password-login-incorrecto" style="display:none;">La contrase&ntilde;a no es v&aacute;lida. Por favor, int&eacute;ntalo de nuevo.</p>
                         <br>
