@@ -3,15 +3,30 @@
 <html lang="es">
 	<head>
 		<meta charset="utf-8">
-		<title>Perfil de administrador</title>
+		<title>Perfil de administrador - Profesores</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width">
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
+		<script src="../javascript/header_responsive.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/header.css">
 		<link rel="stylesheet" type="text/css" href="../css/admin.css">
 	</head>
 	<body>
 		<header>
-			<div>
+			<div id="div-header">
+				<div id="barra-lateral" class="barra-lateral">
+					<a href="#" class="boton-cerrar" onclick="ocultar()"><button><h3>&#10008;</h3></button></a>
+					<div id="contenido">
+						<div id='perfil-login-reducido'></div>
+						<a id='enlace-header-reducido' href='profesores/acceso_profesores.php'><button><h3>Acceso de Profesores</h3></button></a>
+					</div>
+				</div>
+					
+				<div id="boton-barra-lateral">
+					<a id="abrir" class="abrir-cerrar" href="javascript:void(0)" onclick="mostrar()"><button><h3>&#9776;</h3></button></a>
+					<a id="cerrar" class="abrir-cerrar" href="javascript:void(0)" onclick="ocultar()" style='display: none;'></button><h3>&#9776;</h3></button></a>
+				</div>
 				<?php
 					// Iniciar la sesión
 					session_start();
@@ -35,9 +50,9 @@
 						header("Location: ../index.php");
 					}
 				?>
-				<div id="div-titulo"><h1 id='titulo'>Gesti&oacute;n de Profesores</h1>
-				<img src='../multimedia/imagenes/icono_admin.png' width='60' height='60' alt='Icono administrador'></div>
-				<a href='../php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
+				<div id="div-titulo"><img src='../multimedia/imagenes/icono_admin.png' width='60' height='60' alt='Icono administrador'>
+				<h1 id='tituloPrincipal'>Profesores</h1></div>
+				<a id='enlace-header' href='../php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
 			</div>
 		</header>
 

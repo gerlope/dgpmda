@@ -4,13 +4,29 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Perfil de profesor</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width">
 		<script src="../javascript/funciones_basicas.js"></script>
 		<script src="../javascript/validar_formularios.js"></script>
+		<script src="../javascript/header_responsive.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/header.css">
+		<link rel="stylesheet" type="text/css" href="../css/formularios.css">
 	</head>
 	<body>
 		<header>
-			<div>
+			<div id="div-header">
+				<div id="barra-lateral" class="barra-lateral">
+					<a href="#" class="boton-cerrar" onclick="ocultar()"><button><h3>&#10008;</h3></button></a>
+					<div id="contenido">
+						<div id='perfil-login-reducido'></div>
+						<a id='enlace-header-reducido' href='profesores/acceso_profesores.php'><button><h3>Acceso de Profesores</h3></button></a>
+					</div>
+				</div>
+					
+				<div id="boton-barra-lateral">
+					<a id="abrir" class="abrir-cerrar" href="javascript:void(0)" onclick="mostrar()"><button><h3>&#9776;</h3></button></a>
+					<a id="cerrar" class="abrir-cerrar" href="javascript:void(0)" onclick="ocultar()" style='display: none;'></button><h3>&#9776;</h3></button></a>
+				</div>
 				<?php
 					// Iniciar la sesión
 					session_start();
@@ -34,9 +50,9 @@
 						header("Location: ../index.php");
 					}
 				?>
-				<div id="div-titulo"><h1 id='titulo'>Perfil de Usuario</h1>
-				<img src='../multimedia/imagenes/icono_profesor.png' width='60' height='60' alt='Icono profesor'></div>
-				<a href='../php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
+				<div id="div-titulo"><img src='../multimedia/imagenes/icono_profesor.png' width='60' height='60' alt='Icono profesor'>
+				<h1 id='tituloPrincipal'>Perfil</h1></div>
+				<a id='enlace-header' href='../php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
 			</div>
 		</header>
 
@@ -54,7 +70,18 @@
 				}
 			?>
 
-			<h1 id='tituloPrincipal'><?php echo $usuario; ?></h1>
+			<a href="javascript:void(0);" onclick="volverPaginaAnterior()" class="boton-volver" aria-label="Volver a la página anterior" role="button">&#129152;</a>
+
+			<script>
+				function volverPaginaAnterior() {
+					window.history.length > 1 ? window.history.go(-1) : window.location.href = document.referrer;
+				}
+			</script>
+
+			<article id="tituloSecundario">
+				<img src='../multimedia/imagenes/icono_usuario.png' width='30' height='30' alt='Icono usuario'>
+				<h2><?php echo $nombre . ' ' . $apellidos; ?></h2>
+			</article>
 			<form onsubmit="return validarFormularioRegistroProfesor(event, '')" action="../php/modificar_profesor.php" method="POST" class="formulario" id="formulario-modificar">
 				<button type="button" onclick="habilitarEdicion()" id="boton-editar">Editar perfil</button>
 				<button type="button" onclick="deshabilitarEdicion()" id="boton-cerrarEdicion" style="display: none;">Cerrar X</button>

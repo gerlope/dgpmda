@@ -595,7 +595,7 @@ function habilitarEdicion() {
     recuperarElemento('boton-enviar', 'inline-block');
 
     // Iluminamos con un box shadow el formulario
-    document.getElementById('formulario-modificar').style.boxShadow = '0px 0px 10px rgb(0 123 255 / 40%)';
+    document.getElementById('formulario-modificar').style.boxShadow = '0px 0px 10px rgb(8 1 99 / 40%)';
 }
 //*****************************************************************************************************//
 

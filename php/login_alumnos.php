@@ -28,6 +28,8 @@
             $_SESSION['ruta_foto'] = $alumnoActivo['ruta_foto'];
             $_SESSION['perfil_visualizacion'] = $alumnoActivo['perfil_visualizacion'];
             $_SESSION['password'] = $alumnoActivo['password'];
+
+            $_SESSION['sesion_alumno'] = true;
             
             // Redirigimos al alumno a la página correspondiente
             header("Location: ../alumnos/alumno.php");

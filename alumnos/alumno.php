@@ -6,21 +6,34 @@
 		<title>Inicio</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="viewport" content="width=device-width">
-		<script src="javascript/funciones_basicas.js"></script>
-		<script src="javascript/validar_formularios.js"></script>
+		<script src="../javascript/funciones_basicas.js"></script>
+		<script src="../javascript/validar_formularios.js"></script>
+		<script src="../javascript/header_responsive.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/header.css">
 		<link rel="stylesheet" type="text/css" href="../css/alumno.css">
 	</head>
 
 	<body>
 		<header>
-			<div>
-			<?php
+			<div id="div-header">
+				<div id="barra-lateral" class="barra-lateral">
+					<a href="#" class="boton-cerrar" onclick="ocultar()"><button><h3>&#10008;</h3></button></a>
+					<div id="contenido">
+						<div id='perfil-login-reducido'></div>
+						<a id='enlace-header-reducido' href='profesores/acceso_profesores.php'><button><h3>Acceso de Profesores</h3></button></a>
+					</div>
+				</div>
+					
+				<div id="boton-barra-lateral">
+					<a id="abrir" class="abrir-cerrar" href="javascript:void(0)" onclick="mostrar()"><button><h3>&#9776;</h3></button></a>
+					<a id="cerrar" class="abrir-cerrar" href="javascript:void(0)" onclick="ocultar()" style='display: none;'></button><h3>&#9776;</h3></button></a>
+				</div>
+				<?php
 					// Iniciar la sesión
 					session_start();
 
-					if (isset($_SESSION['alumno'])) {		// Si hay una sesión activa de usuario, mostrar el nombre de usuario y la posibilidad de cerrar sesión
-
+					// Si hay una sesión activa de usuario, mostrar el nombre de usuario y la posibilidad de cerrar sesión
+					if (isset($_SESSION['sesion_alumno']) && $_SESSION['sesion_alumno'] == true) {		
 						// Acceder al nombre de usuario almacenado en la variable de sesión
 						$username = $_SESSION['nombre'];
 						$ruta_foto = $_SESSION['ruta_foto'];
@@ -40,9 +53,10 @@
 
 					$seccion_actual = isset($_GET['section']) ? $_GET['section'] : 'imagenes';
 				?>
-				<div id='div-titulo'><img src='../multimedia/imagenes/icono_alumno.png' width='60' height='60' alt='Icono página inicial'>
-				<h1 id='titulo'>Tareas</h1></div>
-				<a href='../php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
+				
+				<div id='div-titulo'><img src='../multimedia/imagenes/icono_alumno.png' width='60' height='60' alt='Icono página del alumno'>
+				<h1 id='tituloPrincipal'>Tareas</h1></div>
+				<a id='enlace-header' href='../php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
 			</div>
 		</header>
 
@@ -53,8 +67,6 @@
 
 				<?php
 					require_once('../php/tareas.class.inc');
-
-					
 
 					$tmp = new Tareas();
 					$tareas = $tmp->obtenerTareasAsignadas($idAlumno);
@@ -117,7 +129,7 @@
 						var startIndex = pantallaActual * tareasPorPantalla;
 						var endIndex = startIndex + tareasPorPantalla;
 
-						// Muestra u oculta los alumnos según la pantalla actual
+						// Muestra u oculta las tareas según la pantalla actual
 						tareas.forEach(function (tarea, index) {
 							tarea.style.display = index >= startIndex && index < endIndex ? "block" : "none";
 						});
@@ -126,6 +138,11 @@
 						posButton.style.display = endIndex < tareas.length ? "block" : "none";
 						prevButton.style.display = pantallaActual > 0 ? "block" : "none";
 					}
+
+					// Actualizamos el número de tareas por pantalla al cambiar el tamaño de la ventana
+					window.addEventListener("resize", function () {
+						actualizarPantalla();
+					});
 				});
 			</script>
 		</main>

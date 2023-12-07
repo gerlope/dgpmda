@@ -72,7 +72,8 @@
     .tarea p {
         padding: 5px;
         margin: 10px;
-        font-size: 36px; /* Ajusta el tamaño de la fuente */
+        font-weight: bold;
+        font-size: 30px; /* Ajusta el tamaño de la fuente */
         text-transform: uppercase;
     }
 
