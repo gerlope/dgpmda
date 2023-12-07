@@ -17,11 +17,8 @@
 
     /* Estilo para la seccion que contiene todos los alumnos */
     .tareas {
-        margin-top: 30px;;
         display: flex;
-        flex-wrap: wrap;
         justify-content: center;
-        gap: 4px;
     }
 
     /* Estilo para todos los h2 del main */
