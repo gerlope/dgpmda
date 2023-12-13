@@ -73,29 +73,62 @@
                         <br>
                         <input type="submit" class="submit" value="Confirmar">
                     </form>
-                    <div id="-login-incorrecto" aria-live="assertive" role="status"></div>
+                    <div id="-login-incorrecto" aria-live="assertive" role="status" style='display: none;'></div>
                 </article>
             </div>
 
             <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const form = document.querySelector(".formulario");
+                    const resultDiv = document.getElementById("-login-incorrecto");
+
+                    // Creamos los elementos de audio y los agregamos al documento
+                    const sonidoCorrecto = new Audio("../multimedia/sonidos/correcto.mp3");
+                    const sonidoIncorrecto = new Audio("../multimedia/sonidos/incorrecto.mp3");
+
+                    form.addEventListener("submit", async function (event) {
+                        event.preventDefault();
+
+                        // Realizamos la lógica de autenticación con PHP
+                        const response = await fetch("../php/login_alumnos.php", {
+                            method: "POST",
+                            body: new FormData(form),
+                        });
+
+                        const result = await response.text();
+
+                        // Mostramos el resultado en la pantalla
+                        if (result === "correcto") {
+                            // Reproducimos el sonido de éxito
+                            sonidoCorrecto.play();
+
+                            showResult("icono_correcto", "green");
+                            setTimeout(function () {
+                                window.location.href = "../alumnos/alumno.php";
+                            }, 1700);      // Redirigimos después de 2 segundos
+                        } else {
+                            // Reproducimos el sonido de error
+                            sonidoIncorrecto.play();
+
+                            showResult("icono_incorrecto", "red");
+                            setTimeout(function () {
+                                window.location.href = "../alumnos/inicio_sesion_estandar.php";
+                            }, 1700);      // Redirigimos después de 1 segundo
+                        }
+                    });
+
+                    function showResult(message, color) {
+                        resultDiv.style.display = "flex";
+                        resultDiv.innerHTML = "<button id='mensaje-login' style='border-color: " + color + "'><img src='../multimedia/imagenes/" + message  + ".png' width='300' height='300' alt='Icono iniciar sesión'></button>";
+                        resultDiv.style.color = color;
+                    }
+                });
+
                 // Función para enfocar automáticamente el campo de contraseña al cargar la página
                 window.onload = function () {
                     document.getElementById("password-login").focus();
                 };
             </script>
-
-            <?php
-                // Almacenamos la página del login del alumno
-                $_SESSION['paginaLogin'] = $_SERVER['REQUEST_URI'];
-
-                if(isset($_SESSION['formularioEnviado-login']) && $_SESSION['formularioEnviado-login'] == true){	// Si no hay ninguna sesión activa
-                    // Cambiamos el div con el atributo aria-live="assertive" para indicar que los cambios en este elemento deben ser anunciados de inmediato por un lector de pantalla, en este caso un mensaje de error
-                    echo "<script> document.getElementById('-login-incorrecto').textContent = 'La contraseña no es la correcta. Por favor, inténtalo de nuevo.';
-                    document.getElementById('password-login').style.borderColor = 'rgba(255, 0, 0, 0.7)';</script>";
-
-                    $_SESSION['formularioEnviado-login'] = false;
-                }
-            ?>
         </main>
 
         <footer>

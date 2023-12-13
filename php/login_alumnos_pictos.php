@@ -7,10 +7,12 @@
 
         $alumnos = new Alumnos();
         $id = $_SESSION['id_alumno'];
-        $password = $_POST['password-login'];
+        $picto1 = $_POST['picto1d'];
+        $picto2 = $_POST['picto2d'];
+        $picto3 = $_POST['picto3d'];
 
         // Si el alumno existe con ese id y esa contraseña
-        if($alumnos->comprobarAlumno($id, $password)){
+        if($alumnos->comprobarAlumnoPictos($id, $picto1, $picto2, $picto3)){
             // Obtenemos el alumno 
             $alumnoActivo = $alumnos->obtenerAlumno($id);
 
