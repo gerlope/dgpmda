@@ -61,12 +61,22 @@
 		</header>
 
 		<main>
-			<h2>Tareas por hacer</h2>
 			<section class="tareas">
-				<div class='botones-pantalla'><button class='boton-pantalla' id='prevTareas' aria-label="Ir a tareas anteriores" style='display: none;'>&#129152;</button></div>
+				<div class='botones-pantalla'><button class='boton-pantalla' id='prevTareas' aria-label="Ir a tareas anteriores" style='visibility: hidden;'>&#129152;</button></div>
 
 				<?php
+					require_once('../php/alumnos.class.inc');
 					require_once('../php/tareas.class.inc');
+					
+					$tmp = new Alumnos();
+					$comandas = $tmp->esEncargado($idAlumno);
+
+					if($comandas){
+						echo "<a href='../php/comandas.php' class='tarea' id='boton-comandas'>
+							  	<h3>Comandas</h3>
+							  	<img src='../multimedia/imagenes/icono_comandas.png' alt='Comandas'>
+							  </a>";
+					}
 
 					$tmp = new Tareas();
 					$tareas = $tmp->obtenerTareasAsignadas($idAlumno);
@@ -85,8 +95,8 @@
 					
 								// Mostrar la información de la tarea
 								echo "<a href='ver_tarea.php?tarea_id=$tarea_id' class='tarea'>";
-								echo "<p>$titulo</p>";
 								echo "<img src='../multimedia/imagenes/$ruta_foto' alt='Foto de la tarea'>";
+								echo "<p>$titulo</p>";
 								echo "</a>";
 								
 							} else {
@@ -135,8 +145,8 @@
 						});
 
 						// Muestra u oculta los botones dependiendo de si hay más pantallas
-						posButton.style.display = endIndex < tareas.length ? "block" : "none";
-						prevButton.style.display = pantallaActual > 0 ? "block" : "none";
+						posButton.style.visibility = endIndex < tareas.length ? "visible" : "hidden";
+						prevButton.style.visibility = pantallaActual > 0 ? "visible" : "hidden";
 					}
 
 					// Actualizamos el número de tareas por pantalla al cambiar el tamaño de la ventana
@@ -148,17 +158,10 @@
 		</main>
 
 		<footer>
-			<a href='../php/historial.php' class='boton-con-imagen'>
-				<button>
-					<h3>Historial</h3>
-					<img src='../multimedia/imagenes/historial.png' alt='Historial'>
-				</button>
-			</a>
-        	
 			<a href='../php/logout.php' class='boton-con-imagen'>
 				<button>
-					<h3>Cerrar Sesión</h3>
-					<img src='../multimedia/imagenes/icono_logout.png' alt='Historial'>
+					<h3>Cerrar Sesi&oacute;n</h3>
+					<img src='../multimedia/imagenes/icono_logout.png' alt='Cerrar sesi&oacute;n'>
 				</button>
 			</a>
 

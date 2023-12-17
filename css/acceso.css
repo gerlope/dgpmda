@@ -229,4 +229,23 @@
         height:0%;
     }
 
+    #pictogramas-pulsadores{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    #pictogramas-pulsadores button{
+        margin: 5px;
+    }
+
+    /* Estilo para el article de cada pictograma al pasar el raton por encima */
+    #pictogramas-pulsadores .pictograma:hover, #pictogramas-pulsadores .pictograma:focus{
+        border: 10px solid #080163;
+        transform: none;
+    }
+
+    #pictogramas-pulsadores .pictograma.clicked{
+        background-color: #080163;
+    }
+
     

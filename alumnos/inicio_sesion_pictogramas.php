@@ -52,7 +52,7 @@
             <a href="../index.php" class="boton-volver" aria-label="Volver al inicio" role="button">&#129152;</a>
 
             <section class="pictogramas">
-				<div class='botones-pantalla'><button class='boton-pantalla' id='prevPictos' aria-label="Ir a pictogramas anteriores" style='display: none;'>&#129152;</button></div>
+				<div class='botones-pantalla'><button class='boton-pantalla' id='prevPictos' aria-label="Ir a pictogramas anteriores" style='visibility: hidden;'>&#129152;</button></div>
 
 				<?php
 					$directorio = "../multimedia/pictogramas_password";
@@ -296,13 +296,7 @@
 					});
 
 					function actualizarPantalla() {
-						var pictogramasPorPantalla = calcularPictogramasPorPantalla();
-						
-						// En las pantallas con el boton previo quitar un pictograma
-						if(pantallaActual > 0){
-							pictogramasPorPantalla--;
-						}
-
+						var pictogramasPorPantalla = calcularPictogramasPorPantalla()-1;
 						var startIndex = pantallaActual * pictogramasPorPantalla;
 						var endIndex = startIndex + pictogramasPorPantalla;
 
@@ -312,8 +306,8 @@
 						});
 
 						// Mostramos u ocultamos los botones dependiendo de si hay más pantallas
-						posButton.style.display = endIndex < pictogramas.length ? "block" : "none";
-						prevButton.style.display = pantallaActual > 0 ? "block" : "none";
+						posButton.style.visibility = endIndex < pictogramas.length ? "visible" : "hidden";
+						prevButton.style.visibility = pantallaActual > 0 ? "visible" : "hidden";
 					}
 
 					// Actualizamos el número de pictogramas por pantalla al cambiar el tamaño de la ventana

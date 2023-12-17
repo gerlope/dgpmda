@@ -17,7 +17,7 @@
     }
     
     /* Estilo para todos los botones al pasar el ratón por encima */
-    button:hover{
+    button:hover, button:focus{
         transform: scale(1.1);
     }
 

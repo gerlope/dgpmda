@@ -14,8 +14,18 @@
         margin: 20px auto 50px;
     }
 
+    /* Estilo para todos los enlaces */
+    a {
+        text-decoration: none; 
+    }
+
+    /* Estilo para los enlace al pasar el ratón por encima */
+    header a:hover {
+        text-decoration: underline;
+    }
+
     /* Estilo para los enlaces y botones al pasar el raton por encima */
-    main a:hover, button:hover, input[type="submit"], input[type="file"]{
+    button:hover, input[type="submit"], input[type="file"]{
         text-decoration: none;
         cursor: pointer; 
     }
@@ -75,6 +85,12 @@
         margin-bottom: 5px;
     }
 
+    /* Estilo del article que contiene los botones para editar el perfil de un alumno o asignar comandas */
+    .botones-alumno{
+        display: flex;
+        justify-content: space-between;
+    }
+
     /* Estilo para los inputs de todos los campos */
     input[type="text"], input[type="password"], input[type="file"], textarea, fieldset {
         width: 100%;
@@ -99,7 +115,7 @@
     }
 
     /* Estilo para todos los botones */
-    button, input[type="submit"] {
+    #boton-editar, #boton-cerrarEdicion, #boton-comandas, input[type="submit"] {
         display: inline-block;
         padding: 10px 15px;
         border: 2px solid black;
@@ -143,7 +159,7 @@
     }
 
     /* Estilo para el boton de editar y cerrar la edicion */
-    #boton-editar, #boton-cerrarEdicion{
+    #boton-editar, #boton-cerrarEdicion, #boton-comandas{
         margin-bottom: 40px;
     }
 

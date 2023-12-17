@@ -73,6 +73,8 @@
 				$tipo_password = $alumno['tipo_password'];
 				$password = $alumno['password'];
 
+				$_SESSION['id_alumno'] = $alumno['id'];
+
 				$tmp = new Alumnos();
 				$pictogramas = $tmp->obtenerPictogramasAlumno($alumno['id']);
 			?>
@@ -84,8 +86,11 @@
 				<h2><?php echo $nombre . ' ' . $apellidos; ?></h2>
 			</article>
 			<form onsubmit="return validarFormularioRegistroAlumno(event, '')" action="../php/modificar_alumno.php" method="POST" class="formulario" id="formulario-modificar">
-				<button type="button" onclick="habilitarEdicion()" id="boton-editar">Editar Perfil</button>
-				<button type="button" onclick="deshabilitarEdicion()" id="boton-cerrarEdicion" style="display: none;">Cerrar &#10008;</button>
+				<article class="botones-alumno">
+					<button type="button" onclick="habilitarEdicion()" id="boton-editar">Editar Perfil</button>
+					<button type="button" onclick="deshabilitarEdicion()" id="boton-cerrarEdicion" style="display: none;">Cerrar &#10008;</button>
+					<button type="button" id="boton-comandas">Asignar Comandas</button>
+				</article>
 
 				<article class="campo">
 					<label for="nombre" class="titulo-campo">Nombre:</label>
