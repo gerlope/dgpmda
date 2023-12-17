@@ -14,7 +14,8 @@
             "password"=>"",
             "aula"=>"",
             "perfil_visualizacion"=>"",
-            "ruta_foto"=>""
+            "ruta_foto"=>"",
+            "comandas"=>""
         );
         /****************************************************************************************/
 
@@ -144,6 +145,28 @@
             } catch ( PDOException $e ) {
                 parent::desconectar( $conexion );
                 die( "Consulta fallada: " . $e->getMessage() );
+            }
+        }
+        /****************************************************************************************/
+
+        /****************************************************************************************/
+        /****************************************************************************************/
+        /* Funcion que devuelve si es encargado de las comandas el alumno con el id pasado */
+        public static function esEncargado($id) {
+            $conexion = parent::conectar();
+            $sql = "SELECT * FROM " . TABLA_ALUMNOS . " WHERE id = :id";
+
+            try {
+                $st = $conexion->prepare( $sql );
+                $st->bindValue( ":id", $id, PDO::PARAM_STR );
+                $st->execute();
+                $esEncargado= $st->fetch();
+                parent::desconectar( $conexion );
+
+                return $esEncargado["comandas"];
+            } catch ( PDOException $e ) {
+                parent::desconectar( $conexion );
+                return false;
             }
         }
         /****************************************************************************************/
