@@ -94,7 +94,7 @@
 								$ruta_foto = $tarea_info['ruta_icono'];
 					
 								// Mostrar la información de la tarea
-								echo "<a href='ver_tarea.php?tarea_id=$tarea_id' class='tarea'>";
+								echo "<a href='ver_pasos_tarea.php?tarea_id=$tarea_id' class='tarea'>";
 								echo "<img src='../multimedia/imagenes/$ruta_foto' alt='Foto de la tarea'>";
 								echo "<p>$titulo</p>";
 								echo "</a>";

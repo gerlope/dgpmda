@@ -420,6 +420,85 @@
             }
         }
         /****************************************************************************************/
+
+
+        /****************************************************************************************/
+        /****************************************************************************************/
+        public static function obtenerPasosCompletados($tarea_id, $alumno_id) {
+            // Conexión a la base de datos con PDO (debes tener tu lógica de conexión aquí)
+            $conexion = parent::conectar();
+
+            // Consulta SQL para obtener el número de pasos completados
+            $consulta = "SELECT numero_pasos_completados FROM tarea_alumno WHERE tarea_id = :tarea_id AND alumno_id = :alumno_id";
+
+            // Preparar la consulta
+            $stmt = $conexion->prepare($consulta);
+
+            // Bind de parámetros
+            $stmt->bindParam(':tarea_id', $tarea_id, PDO::PARAM_INT);
+            $stmt->bindParam(':alumno_id', $alumno_id, PDO::PARAM_INT);
+
+            // Ejecutar la consulta
+            $resultado = $stmt->execute();
+
+            // Verificar si la consulta fue exitosa
+            if ($resultado) {
+                // Obtener el número de pasos completados
+                $numero_pasos_completados = $stmt->fetchColumn();
+
+                // Cerrar la conexión
+                $conexion = null;
+
+                return $numero_pasos_completados;
+            } else {
+                // Manejar el error, por ejemplo, podrías registrar el error o lanzar una excepción
+                // ...
+
+                // Cerrar la conexión
+                $conexion = null;
+
+                return null;
+            }
+        }
+        /****************************************************************************************/
+
+
+        /****************************************************************************************/
+        /****************************************************************************************/
+        public static function actualizarPasosCompletados($tarea_id, $alumno_id, $nuevo_valor) {
+            // Conexión a la base de datos con PDO (debes tener tu lógica de conexión aquí)
+            $conexion = parent::conectar();
+
+            // Consulta SQL para actualizar el número de pasos completados
+            $consulta = "UPDATE tarea_alumno SET numero_pasos_completados = :nuevo_valor WHERE tarea_id = :tarea_id AND alumno_id = :alumno_id";
+
+            // Preparar la consulta
+            $stmt = $conexion->prepare($consulta);
+
+            // Bind de parámetros
+            $stmt->bindParam(':nuevo_valor', $nuevo_valor, PDO::PARAM_INT);
+            $stmt->bindParam(':tarea_id', $tarea_id, PDO::PARAM_INT);
+            $stmt->bindParam(':alumno_id', $alumno_id, PDO::PARAM_INT);
+
+            // Ejecutar la consulta
+            $resultado = $stmt->execute();
+
+            // Verificar si la actualización fue exitosa
+            if ($resultado) {
+                // La actualización fue exitosa
+                // Devolver el nuevo número de pasos completados como respuesta
+                return $nuevo_valor;
+            } else {
+                // La actualización falló
+                // Manejar el error, por ejemplo, podrías registrar el error o lanzar una excepción
+                // ...
+
+                return false;
+            }
+        }
+
+
+        /****************************************************************************************/
     }
  ?>
 
