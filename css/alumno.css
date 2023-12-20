@@ -24,9 +24,7 @@
     .tareas {
         margin-top: 20px;;
         display: flex;
-        flex-wrap: wrap;
         justify-content: center;
-        gap: 4px;
     }
 
     /* Estilo para todos los h2 del main */
@@ -34,16 +32,15 @@
         display: flex;
         justify-content: center;
         font-weight: bold;
-        letter-spacing: 1.4px;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
-        margin: 30px;
     }
 
     /* Estilo para todos los h3 del main */
     main h3{
         font-weight: bold;
         text-transform: uppercase;
-        letter-spacing: 1.2px;
+        letter-spacing: 0.1em;
         line-height: 1.5;
     }
 
@@ -167,12 +164,6 @@
         cursor: pointer;
     }
 
-    /* Estilo para las imágenes dentro de los botones */
-    .botones-tarea button img {
-        width: 200px;
-        height: 200px;
-        border-radius: 10px; 
-    }
 
     /* Estilo para el footer */
     footer{

@@ -96,7 +96,7 @@
 						<input type="checkbox" name="perfil[]" value="audio">Audio</label>
 
 						<label>
-						<input type="checkbox" name="perfil[]" value="visual">V&iacute;deos</label>
+						<input type="checkbox" name="perfil[]" value="video">V&iacute;deos</label>
 
 						<label>
 						<input type="checkbox" name="perfil[]" value="texto">Texto y Fotos</label>
