@@ -11,11 +11,16 @@
         $pictograma_3 = $_POST['pictograma_3'];
         $aula = $_POST['aula'];
         $ruta_foto = $_POST['ruta_foto'];
+        $tipo_password = $_POST['tipo_password'];
+
+        // Si el tipo de contraseña es pulsadores el primer pictograma será el pictograma pulsadores
+        if($tipo_password == "pulsadores"){
+            $pictograma_1 = $_POST['pictograma_pulsadores'];
+        }
 
         // Convertimos el array de valores del perfil de visualizacion en una cadena separada por comas
         // lo mismo para los valores del tipo de contraseña
         $perfil_visualizacion = implode(', ', $_POST['perfil']);
-        $tipo_password = implode(', ', $_POST['tipo']);
 
         // Con los pictogramas los juntamos todos en un array
         $pictogramas[1] = $pictograma_1;
@@ -23,10 +28,10 @@
         $pictogramas[3] = $pictograma_3;
 
         // Si el tipo de contraseña no es de texto, no alamacenamos nada
-        if(!(strpos($tipo_password, 'texto') || strpos($tipo_password, 'texto') === 0)){
+        if($tipo_password != 'texto'){
             $password = "";
         }
-        else if(!(strpos($tipo_password, 'pictogramas') || strpos($tipo_password, 'pictogramas') === 0)){   // Ídem con pictogramas
+        else if($tipo_password != 'pictogramas' && $tipo_password != 'pulsadores'){   // Ídem con pictogramas y pulsadores
             unset($pictogramas);
             $pictogramas = [];
         }

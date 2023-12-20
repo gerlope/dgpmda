@@ -56,6 +56,18 @@
         height: 706px;
     }
 
+    /* Estilo para los alumnos que sean encargados de las comandas */
+    #encargado-comandas a:hover{
+        text-decoration-color: white;
+    }
+
+    /* Estilo para el div de los alumnos que sean encargados de las comandas */
+    #encargado-comandas div{
+        color: white;
+        border: 2px solid black;
+        background-color: #080163;
+    }
+
     /* Estilo para la seccion que muestra la lista de profesores y la de alumnos */
     .profesores, .alumnos{
         width: 75%;

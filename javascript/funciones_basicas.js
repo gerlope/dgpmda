@@ -61,10 +61,34 @@ function obtenerValoresFieldset(elementoID) {
 
         // Eliminar la última coma y espacio si no hay elementos seleccionados
         if (valoresSeleccionados.length > 0) {
-        valoresSeleccionados = valoresSeleccionados.slice(0, -2);
+            valoresSeleccionados = valoresSeleccionados.slice(0, -2);
         }
 
         return valoresSeleccionados;
+    }
+}
+//**********************************************************//
+
+
+//**********************************************************//
+//**********************************************************//
+function obtenerValorRadio(elementoID) {
+    var elemento = document.getElementById(elementoID);
+
+    // Comprobamos que el elemento existe
+    if (elemento) {
+        // Obtener todos los elementos de entrada dentro del fieldset
+        var elementos = elemento.querySelectorAll('input[type="radio"]');
+
+        // Iterar sobre cada elemento y verificar si está marcado
+        elementos.forEach(function(elemento) {
+            if (elemento.checked) {
+                // Agregar el valor del elemento
+                valorSeleccionado = elemento.value;
+            }
+        });
+
+        return valorSeleccionado;
     }
 }
 //**********************************************************//
@@ -88,6 +112,31 @@ function rellenarFieldset(elementoID, seleccion) {
             // Comprobamos si el valor de la casilla está en el array input
             if (input.includes(checkbox.value)) {
                 checkbox.checked = true;
+            }
+        });
+    }
+}
+//**********************************************************//
+
+
+//**********************************************************//
+//**********************************************************//
+function rellenarRadio(elementoID, seleccion) {
+    var elemento = document.getElementById(elementoID);
+
+    // Comprobamos que el elemento existe
+    if (elemento) {
+        // Convertimos la cadena de seleccion en un array
+        var input = seleccion;
+
+        // Iteramos sobre las casillas de verificación en el fieldset
+        var radios = elemento.querySelectorAll('input[type="radio"]');
+
+        // Recorremos todos los radios
+        radios.forEach(function (radio) {
+            // Comprobamos si el valor de la casilla está en el array input
+            if (input == radio.value) {
+                radio.checked = true;
             }
         });
     }
@@ -127,6 +176,43 @@ function deshabilitarFieldset(elementoID) {
         // Recorremos todos los checkbox
         for (var j = 0; j < checkboxes.length; j++) {
             checkboxes[j].setAttribute('disabled', 'disabled');
+        }
+    }
+}
+//**********************************************************//
+
+//**********************************************************//
+//**********************************************************//
+function habilitarRadio(elementoID) {
+    var fieldset = document.getElementById(elementoID);
+
+    // Comprobamos que el elemento existe
+    if(fieldset){
+        // Iteramos sobre las casillas de verificación en el fieldset
+        var radios = fieldset.querySelectorAll('input[type="radio"]');
+
+        // Recorremos todos los radios
+        for (var j = 0; j < radios.length; j++) {
+            radios[j].removeAttribute('disabled');
+        }
+    }
+}
+//**********************************************************//
+
+
+//**********************************************************//
+//**********************************************************//
+function deshabilitarRadio(elementoID) {
+    var fieldset = document.getElementById(elementoID);
+
+    // Comprobamos que el elemento existe
+    if(fieldset){
+        // Iteramos sobre las casillas de verificación en el fieldset
+        var radios = fieldset.querySelectorAll('input[type="radio"]');
+
+        // Recorremos todos los radios
+        for (var j = 0; j < radios.length; j++) {
+            radios[j].setAttribute('disabled', 'disabled');
         }
     }
 }
@@ -231,10 +317,10 @@ function recuperarElementoPaso(elementoID, numPasosID, estilo="block") {
 //**********************************************************//
 //**********************************************************//
 function habilitarPictogramas(pictogramasID) {
-    var paso = document.getElementById(pictogramasID);
+    var campo = document.getElementById(pictogramasID);
 
-    // Comprobamos que al menos un paso existe
-    if(paso){
+    // Comprobamos que al menos el campo existe
+    if(campo){
         var numPictogramas = 3;
 
         for (var i = 1; i <= numPictogramas; i++) {
@@ -250,16 +336,46 @@ function habilitarPictogramas(pictogramasID) {
 //**********************************************************//
 //**********************************************************//
 function deshabilitarPictogramas(pictogramasID) {
-    var paso = document.getElementById(pictogramasID);
+    var campo = document.getElementById(pictogramasID);
 
-    // Comprobamos que al menos un paso existe
-    if(paso){
+    // Comprobamos que al menos el campo existe
+    if(campo){
         var numPictogramas = 3;
         
         for (var i = 1; i <= numPictogramas; i++) {
             if(document.getElementById("pictograma_" + i)){
                 document.getElementById("pictograma_" + i).setAttribute('disabled', 'disabled');
             }
+        }
+    }
+}
+//**********************************************************//
+
+
+//**********************************************************//
+//**********************************************************//
+function habilitarPulsadores(pulsadoresID) {
+    var campo = document.getElementById(pulsadoresID);
+
+    // Comprobamos que al menos el campo existe
+    if(campo){
+        if(document.getElementById("pictograma_pulsadores")){
+            document.getElementById("pictograma_pulsadores").removeAttribute('disabled');
+        }
+    }
+}
+//**********************************************************//
+
+
+//**********************************************************//
+//**********************************************************//
+function deshabilitarPulsadores(pulsadoresID) {
+    var campo = document.getElementById(pulsadoresID);
+
+    // Comprobamos que al menos el campo existe
+    if(campo){
+        if(document.getElementById("pictograma_pulsadores")){
+            document.getElementById("pictogramapictograma_pulsadores").setAttribute('disabled', 'disabled');
         }
     }
 }

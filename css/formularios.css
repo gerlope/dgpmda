@@ -235,3 +235,10 @@
     #quitar-paso button {
         transform-origin: left bottom;
     }
+
+    /* Estilo para los inputs que almacenan el nombre de los pictogramas */
+    .hidden {
+        display: none;
+        width:0%;
+        height:0%;
+    }

@@ -24,7 +24,10 @@
 					else if (isset($_SESSION['usuario'])) {		// Si hay una sesión activa de usuario redirigimos a la página de profesor
                         header("Location: ../profesor/profesor_alumnos.php");
 					}
-                    else if(isset($_SESSION['id_alumno'])){     // Si hay una sesión activa de alumno redirigimos mostramos su nombre y foto
+                    else if(isset($_SESSION['sesion_alumno']) && $_SESSION['sesion_alumno'] == true){		// Si hay una sesión ya activa de alumnos redirigimos al alumno a la página correspondiente
+                        header('Location: ../alumnos/alumno.php');
+                    }
+                    else if(isset($_SESSION['id_alumno'])){     // Si hay una sesión de inicio de sesión iniciada de alumno mostramos su nombre y foto
                         // Acceder al nombre de alumno almacenado en la variable de sesión
 						$nombre = $_SESSION['nombre_alumno'] . " " . $_SESSION['apellidos_alumno'];
 						$ruta_foto = $_SESSION['ruta_foto_alumno'];
@@ -35,11 +38,6 @@
                         <div id='div-titulo'><h1 id='titulo'>Iniciar Sesi&oacute;n</h1>
                         <img src='../multimedia/imagenes/icono_login.png' width='60' height='60' alt='Icono inicio de sesion'></div>
                         <div></div><div></div><div></div>";
-
-                        // Si hay una sesión ya activa de alumnos redirigimos al alumno a la página correspondiente
-                        if(isset($_SESSION['perfil_visualizacion'])){
-                            header("Location: ../alumnos/alumno.php");
-                        }
                     }
 					else{		// Si no hay ninguna sesión de usuario activa
 						header("Location: ../index.php");
@@ -52,22 +50,55 @@
             <a href="../index.php" class="boton-volver" aria-label="Volver al inicio" role="button">&#129152;</a>
 
             <script>
+                // Creamos un formulario dinámico
+                var form = document.createElement('form');
+                form.method = 'post';
+                form.id = 'formulario';
+                form.action = '../php/login_alumnos_pictos.php';
+
                 function enviarFormulario(pictograma) {
-                    // Creamos un formulario dinámico
-                    var form = document.createElement('form');
-                    form.method = 'post';
-                    form.action = '../php/login_alumnos_pulsadores.php';
+                    // Modificamos el color de fondo del pictograma
+                    pictograma.style.backgroundColor = '#080163';
 
                     // Creamos un campo de entrada oculto y agrega el dato
                     var input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'pictograma';
+                    input.type = 'text';
+                    input.class = 'hidden';
+                    input.id = 'picto1d';
+                    input.name = 'picto1d';
                     input.value = pictograma.value;
+                    form.appendChild(input);
+
+                    // Creamos otros dos campos ocultos vacios
+                    var input = document.createElement('input');
+                    input.type = 'text';
+                    input.class = 'hidden';
+                    input.id = 'picto2d';
+                    input.name = 'picto2d';
+                    input.value = "";
+                    form.appendChild(input);
+
+                    var input = document.createElement('input');
+                    input.type = 'text';
+                    input.class = 'hidden';
+                    input.id = 'picto3d';
+                    input.name = 'picto3d';
+                    input.value = "";
                     form.appendChild(input);
 
                     // Agregamos el formulario al cuerpo del documento y envíalo
                     document.body.appendChild(form);
-                    form.submit();
+                    
+                    // Disparamos manualmente el evento submit del formulario
+                    var submitEvent = new Event('submit', {
+                        bubbles: true,
+                        cancelable: true,
+                    });
+
+                    // Esperar 500 milisegundos (0,5 segundos) antes de ejecutar la función
+                    setTimeout(function() {
+                        form.dispatchEvent(submitEvent);
+                    }, 500);
                 }
             </script>
 
@@ -135,7 +166,6 @@
 			<script>
 				document.addEventListener("DOMContentLoaded", function () {
 					var pictogramas = document.getElementById("pictogramas-pulsadores");
-					const form = document.querySelector(".formulario");
                     const resultDiv = document.getElementById("-login-incorrecto");
 
 					var elementos = pictogramas.children;
@@ -168,7 +198,7 @@
                         event.preventDefault();
 
                         // Realizamos la lógica de autenticación con PHP aquí
-                        const response = await fetch("../php/login_alumnos_pulsadores.php", {
+                        const response = await fetch("../php/login_alumnos_pictos.php", {
                             method: "POST",
                             body: new FormData(form),
                         });

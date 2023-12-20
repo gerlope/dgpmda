@@ -57,6 +57,7 @@ function validarFormularioRegistroAlumno(event, tipo) {
     var nombrePictograma1 = 'pictograma_1' + tipo;
     var nombrePictograma2 = 'pictograma_2' + tipo;
     var nombrePictograma3 = 'pictograma_3' + tipo;
+    var nombrePictogramaPulsadores = 'pictograma_pulsadores' + tipo;
 
 
     // Obtenemos los valores de los campos del formulario
@@ -69,6 +70,7 @@ function validarFormularioRegistroAlumno(event, tipo) {
     var pictograma1 = document.getElementById(nombrePictograma1).value;
     var pictograma2 = document.getElementById(nombrePictograma2).value;
     var pictograma3 = document.getElementById(nombrePictograma3).value;
+    var pictogramaPulsadores = document.getElementById(nombrePictogramaPulsadores).value;
     
 
     // Hacemos estas asignaciones para que se ejecuten enteramente cada funcion validar
@@ -77,14 +79,14 @@ function validarFormularioRegistroAlumno(event, tipo) {
     var aulaValido = validarAula(aula, nombreAula, tipo);		                            // Validamos el aula
     var rutaFotoValido = validarRutaFoto(rutaFoto, nombreRutaFoto, tipo);		            // Validamos la ruta de la imagen
     var fieldsetPerfilValido = validarFieldset(fieldsetPerfil);                             // Validamos el perfil de visualizacion
-    var fieldsetTipoValido = validarFieldset(fieldsetTipo);	                                // Validamos el tipo de contraseña
+    var fieldsetTipoValido = validarRadio(fieldsetTipo);	                                // Validamos el tipo de contraseña
 
     // Manejamos que la contraseña pueda o no seguir los parametros de validacion al tener el alumno
     // una contraseña tipo pictogramas, y viceversa al tener una contraseña tipo texto
-    var valoresPassword = obtenerValoresFieldset(fieldsetTipo);
+    var valorPassword = obtenerValorRadio(fieldsetTipo);
 
     // Si el tipo de contraseña no es texto
-    if(!valoresPassword.includes("texto")){
+    if(valorPassword = "texto"){
         passwordValido = true;
         confirmarPasswordValido = true;
     }
@@ -94,7 +96,7 @@ function validarFormularioRegistroAlumno(event, tipo) {
     }
 
     // Si el tipo de contraseña no es pictogramas
-    if(!valoresPassword.includes("pictogramas")){
+    if(valorPassword == "pictograma"){
         pictograma1Valido = true;
         pictograma2Valido = true;
         pictograma3Valido = true;
@@ -104,11 +106,20 @@ function validarFormularioRegistroAlumno(event, tipo) {
         var pictograma2Valido = validarRutaFoto(pictograma2, nombrePictograma2, tipo);	        // Validamos el segundo pictograma
         var pictograma3Valido = validarRutaFoto(pictograma3, nombrePictograma3, tipo);	        // Validamos el tercer pictograma
     }
+
+    // Si el tipo de contraseña no es pulsadores
+    if(valorPassword == "pulsadores"){
+        pictogramaPulsadoresValido = true;
+    }
+    else{
+        var pictogramaPulsadoresValido = validarRutaFoto(pictogramaPulsadores, nombrePictogramaPulsadores, tipo);	        // Validamos el pictograma para pulsadores
+    }
     
 
     // Comprobamos si es valido todo el formulario, si no lo es no se envían los datos
     if(nombreValido && apellidosValido && rutaFotoValido && aulaValido && passwordValido && confirmarPasswordValido
-                    && fieldsetPerfilValido && fieldsetTipoValido && pictograma1Valido && pictograma2Valido && pictograma3Valido){
+                    && fieldsetPerfilValido && fieldsetTipoValido && pictograma1Valido && pictograma2Valido && pictograma3Valido 
+                    && pictogramaPulsadoresValido){
         return true;
     }
     else{
@@ -427,6 +438,33 @@ function validarFieldset(nombreFieldset) {
 
 //*****************************************************************************************************//
 //*****************************************************************************************************//
+function validarRadio(nombreFieldset) {
+    var fieldset = document.getElementById(nombreFieldset);
+    var radios = fieldset.querySelectorAll('input[type="radio"]');
+
+    // Recorremos todos los radios
+    for (var i = 0; i < radios.length; i++) {
+        // Comprobamos que al menos un checkbox esté seleccionado
+        if (radios[i].checked) {
+            // Cambiamos el color del borde del campo rellenado
+            document.getElementById(nombreFieldset).style.borderColor= "rgba(173, 255, 47, 0.7)";
+            eliminarElemento(nombreFieldset + "-incorrecto");
+            return true;
+        }
+    }
+
+    // Cambiamos el color del borde del campo rellenado
+    document.getElementById(nombreFieldset).style.borderColor = "rgba(255, 0, 0, 0.7)";
+    recuperarElemento(nombreFieldset + "-incorrecto");
+
+    // Ningún radio está seleccionado
+    return false;
+}
+//*****************************************************************************************************//
+
+
+//*****************************************************************************************************//
+//*****************************************************************************************************//
 function validarTexto(texto, nombreTexto, tipo, max=200) {
     // Usamos la expresión regular /^[a-zA-ZáéíóúüÁÉÍÓÚÜ0-9_-]+$/ para verificar que el texto correspondiente
     // solo contenga letras (tildes y dieresis incluida), números, guiones y signos de puntuación.
@@ -578,11 +616,12 @@ function habilitarEdicion() {
 
     // Habilitamos las casillas de verificación dentro de los fieldsets
     habilitarFieldset('fieldset-perfil_visualizacion');
-    habilitarFieldset('fieldset-tipo_password');
+    habilitarRadio('fieldset-tipo_password');
 
     // Habilitamos los pasos
     habilitarPasos('numero_pasos', 'paso');
     habilitarPictogramas('campo-pictogramas');
+    habilitarPulsadores('campo-pulsadores');
 
     // Eliminamos el botón para editar los datos
     eliminarElemento('boton-editar');
@@ -616,11 +655,12 @@ function deshabilitarEdicion() {
 
     // Deshabilitamos las casillas de verificación dentro de los fieldsets
     deshabilitarFieldset('fieldset-perfil_visualizacion');
-    deshabilitarFieldset('fieldset-tipo_password');
+    deshabilitarRadio('fieldset-tipo_password');
 
     // Deshabilitamos los pasos y los pictogramas
     deshabilitarPasos('numero_pasos', 'paso');
     deshabilitarPictogramas('campo-pictogramas');
+    deshabilitarPulsadores('campo-pulsadores');
 
     // Eliminamos el botón para cerrar la edicion, el de añadir pasos
     // y el necesario para enviar los datos

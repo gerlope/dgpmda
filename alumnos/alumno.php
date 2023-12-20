@@ -56,7 +56,7 @@
 				
 				<div id='div-titulo'><img src='../multimedia/imagenes/icono_alumno.png' width='60' height='60' alt='Icono página del alumno'>
 				<h1 id='tituloPrincipal'>Tareas</h1></div>
-				<a id='enlace-header' href='../php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
+				<a id='enlace-header' href='../php/logout.php' style="visibility: hidden;"><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
 			</div>
 		</header>
 
@@ -99,10 +99,12 @@
 								echo "<p>$titulo</p>";
 								echo "</a>";
 								
-							} else {
-								echo "<article class='alumno'><h2>No hay ning&uacute;n alumno registrado</h2></article>";
 							}
 						}
+					}
+					else {
+						echo "<article class='alumno'><h2>Has completado todas las tareas</h2>
+						<img src='../multimedia/imagenes/icono_bien.png' alt='Foto de la tarea'></article>";
 					}
 
 					echo "<div class='botones-pantalla'><button class='boton-pantalla' id='posTareas' aria-label='Mostrar más tareas'>&#129154;</button></div>";

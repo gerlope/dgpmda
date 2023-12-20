@@ -93,9 +93,20 @@
                 $fila3 = $st->fetch();
                 parent::desconectar( $conexion );
 
-                if($fila1['ruta_pictograma'] == $picto1 && $fila2['ruta_pictograma'] == $picto2 && $fila3['ruta_pictograma'] == $picto3){
-                    return true;
+                if(is_array($fila1) && is_array($fila2) && is_array($fila3)){
+                    if($fila1['ruta_pictograma'] == $picto1 && $fila2['ruta_pictograma'] == $picto2 && $fila3['ruta_pictograma'] == $picto3){
+                        return true;
+                    }
                 }
+                else if(is_array($fila1)){
+                    if($fila1['ruta_pictograma'] == $picto1){
+                        return true;
+                    }
+                }
+                else{
+                    return false;
+                }
+                
             } catch ( PDOException $e ) {
                 parent::desconectar( $conexion );
 
@@ -171,6 +182,30 @@
         }
         /****************************************************************************************/
 
+
+        /****************************************************************************************/
+        /****************************************************************************************/
+        /* Funcion que asigna encargado de las comandas el alumno con el id pasado */
+        public static function asignarComandas($id, $comandas) {
+            $conexion = parent::conectar();
+            $sql = "UPDATE " . TABLA_ALUMNOS . " SET comandas = :comandas WHERE id = :id";
+
+            try {
+                $st = $conexion->prepare( $sql );
+                $st->bindValue( ":id", $id, PDO::PARAM_STR );
+                $st->bindValue( ":comandas", $comandas, PDO::PARAM_STR );
+                $st->execute();
+                $filasAfectadas = $st->rowCount();
+                parent::desconectar($conexion);
+
+                return $filasAfectadas > 0; // Devuelve true si se realizaron cambios, false si no se encontró ninguna coincidencia
+            } catch ( PDOException $e ) {
+                parent::desconectar( $conexion );
+                return false;
+            }
+        }
+        /****************************************************************************************/
+
         /****************************************************************************************/
         /****************************************************************************************/
         /* Funcion que inserta en la tabla alumnos un alumno con los datos correspondientes */
@@ -188,7 +223,7 @@
                 $alumnoId = $conexion->lastInsertId(); // Obtener el ID del último registro insertado en "alumnos"
 
                 // Si hay pictogramas que añadir los procesamos
-                if(!empty($pictogramas)){
+                if($tipo_password == "pictogramas"){
                     // Insertar datos en la tabla "password_pictograma"
                     $sql = "INSERT INTO password_pictograma (alumno_id, numero_pictogramas) VALUES (?, ?)";
                     $st = $conexion->prepare($sql);
@@ -201,6 +236,22 @@
             
                     foreach ($pictogramas as $orden => $ruta) {
                         $st->execute([$ruta, $passwordPictogramaId, $orden]);
+                    }
+                }
+                else if($tipo_password == "pulsadores"){
+                    // Insertar datos en la tabla "password_pictograma"
+                    $sql = "INSERT INTO password_pictograma (alumno_id, numero_pictogramas) VALUES (?, ?)";
+                    $st = $conexion->prepare($sql);
+                    $st->execute([$alumnoId, 1]);
+                    $passwordPictogramaId = $conexion->lastInsertId(); // Obtener el ID del último registro insertado en "password_pictograma"
+            
+                    // Insertar datos en la tabla "pictogramas"
+                    $sql = "INSERT INTO pictogramas (ruta_pictograma, password_pictograma_id, orden) VALUES (?, ?, ?)";
+                    $st = $conexion->prepare($sql);
+            
+                    foreach ($pictogramas as $orden => $ruta) {
+                        $st->execute([$ruta, $passwordPictogramaId, $orden]);
+                        break;
                     }
                 }
         
@@ -255,7 +306,7 @@
                 $st->execute();
 
                 // Si hay pictogramas que añadir los procesamos
-                if(!empty($pictogramas)){
+                if($tipo_password == "pictogramas"){
                     // Insertar datos en la tabla "password_pictograma"
                     $sql = "INSERT INTO " . TABLA_CONTRASEÑA_PICTOGRAMA . "  (alumno_id, numero_pictogramas) VALUES (?, ?)";
                     $st = $conexion->prepare($sql);
@@ -268,6 +319,22 @@
 
                     foreach ($pictogramas as $orden => $ruta) {
                         $stPictograma->execute([$ruta, $passwordPictogramaId, $orden]);
+                    }
+                }
+                else if($tipo_password == "pulsadores"){
+                    // Insertar datos en la tabla "password_pictograma"
+                    $sql = "INSERT INTO " . TABLA_CONTRASEÑA_PICTOGRAMA . "  (alumno_id, numero_pictogramas) VALUES (?, ?)";
+                    $st = $conexion->prepare($sql);
+                    $st->execute([$id_alumno, 1]);
+                    $passwordPictogramaId = $conexion->lastInsertId(); // Obtener el ID del último registro insertado en "password_pictograma"
+
+                    // Insertar datos en la tabla "pictogramas"
+                    $sqlPictograma = "INSERT INTO " . TABLA_PICTOGRAMAS . "  (ruta_pictograma, password_pictograma_id, orden) VALUES (?, ?, ?)";
+                    $stPictograma = $conexion->prepare($sqlPictograma);
+
+                    foreach ($pictogramas as $orden => $ruta) {
+                        $stPictograma->execute([$ruta, $passwordPictogramaId, $orden]);
+                        break;
                     }
                 }
 

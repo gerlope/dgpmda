@@ -11,6 +11,7 @@
 		<script src="../javascript/header_responsive.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/header.css">
 		<link rel="stylesheet" type="text/css" href="../css/formularios.css">
+		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	</head>
 	<body>
 		<header>
@@ -89,8 +90,40 @@
 				<article class="botones-alumno">
 					<button type="button" onclick="habilitarEdicion()" id="boton-editar">Editar Perfil</button>
 					<button type="button" onclick="deshabilitarEdicion()" id="boton-cerrarEdicion" style="display: none;">Cerrar &#10008;</button>
-					<button type="button" id="boton-comandas">Asignar Comandas</button>
+
+					<?php 
+						$encargadoComandas = $tmp->esEncargado($_SESSION['id_alumno']);
+
+						if($encargadoComandas){
+							echo '<button type="button" id="boton-comandas">Quitar Comandas</button>';
+						}
+						else{
+							echo '<button type="button" id="boton-comandas">Asignar Comandas</button>';
+						}
+					?>
+					<div id="id_alumno" data-id="<?php echo $_SESSION['id_alumno']?>" style="display: none"></div>
 				</article>
+
+				<script>
+					$(document).ready(function(){
+						// Asignar un evento de clic al botón
+						$("#boton-comandas").click(function(){
+							// Obtener la información de la sesión del elemento HTML
+							var idAlumno = $("#id_alumno").data("id");
+
+							// Realizar una solicitud AJAX al servidor
+							$.ajax({
+								url: "../php/asignar_comandas.php", // Ruta al archivo PHP en el servidor
+								type: "POST", // Método de la solicitud
+								data: { id: idAlumno }, // Datos que puedes enviar al archivo PHP
+								success: function(response){
+									// Manejar la respuesta del servidor
+									window.location.href = "../admin/admin_alumnos.php";
+								}
+							});
+						});
+					});
+				</script>
 
 				<article class="campo">
 					<label for="nombre" class="titulo-campo">Nombre:</label>
@@ -136,10 +169,13 @@
 						<legend class="titulo-campo">Tipo de contrase&ntilde;a:</legend>
 
 						<label>
-						<input type="checkbox" name="tipo[]" id="tipo-texto" value="texto" disabled >Texto</label>
+						<input type="radio" name="tipo_password" id="tipo-texto" value="texto" disabled >Texto</label>
 
 						<label>
-						<input type="checkbox" name="tipo[]" id="tipo-pictogramas" value="pictogramas" disabled >Pictogramas</label>
+						<input type="radio" name="tipo_password" id="tipo-pictogramas" value="pictogramas" disabled >Pictogramas</label>
+
+						<label>
+						<input type="radio" name="tipo_password" id="tipo-pulsadores" value="pulsadores" disabled >Pulsadores</label>
 					</fieldset>
 					<p id="fieldset-tipo_password-incorrecto" style="display:none;">Se debe seleccionar al menos un tipo de contrase&ntilde;a</p>
 				</article>
@@ -169,6 +205,12 @@
 					<input type="text" id="pictograma_3" name="pictograma_3" value="<?php echo $pictogramas[2]?>" placeholder="********" disabled>
 					<p id="pictograma_3-incorrecto" style="display:none;">El pictograma debe corresponder a un archivo v&aacute;lido de imagen</p>
 				</article>
+
+				<article class="campo" id="campo-pulsadores" style="display: none;">
+					<label for="pictograma_pulsadores" class="titulo-campo">Pictograma:</label>
+					<input type="text" id="pictograma_pulsadores" name="pictograma_pulsadores" value="<?php echo $pictogramas[0]?>" placeholder="********" disabled>
+					<p id="pictograma_pulsadores-incorrecto" style="display:none;">El pictograma debe corresponder a un archivo v&aacute;lido de imagen</p>
+				</article>
 				
 				<article class="enviar">
 					<input type="submit" id="boton-enviar" value="Guardar cambios" style="display:none;" disabled>
@@ -177,7 +219,7 @@
 
 			<?php 
 				echo "<script>rellenarFieldset('fieldset-perfil_visualizacion', '$perfil_visualizacion');
-				rellenarFieldset('fieldset-tipo_password', '$tipo_password');</script>";
+				rellenarRadio('fieldset-tipo_password', '$tipo_password');</script>";
 			?>
 
 			<script>
@@ -185,9 +227,11 @@
 				function togglePasswordFields() {
 					var tipoTextoCheckbox = document.getElementById('tipo-texto');
 					var tipoPictogramasCheckbox = document.getElementById('tipo-pictogramas');
+					var tipoPulsadoresCheckbox = document.getElementById('tipo-pulsadores');
 					var campoPassword = document.getElementById('campo-password');
 					var campoPasswordConfirm = document.getElementById('campo-password-confirm');
 					var campoPictogramas = document.getElementById('campo-pictogramas');
+					var campoPulsadores = document.getElementById('campo-pulsadores');
 
 					// Si el tipo de contraseña es con texto
 					if (tipoTextoCheckbox.checked) {
@@ -214,11 +258,23 @@
 							input.removeAttribute('required');
 						});
 					}
+
+					// Si el tipo de contraseña es con pulsadores
+					if (tipoPulsadoresCheckbox.checked) {
+						campoPulsadores.style.display = 'block';
+						input = document.getElementById('pictograma_pulsadores');
+						input.setAttribute('required', 'required');
+					} else {
+						campoPulsadores.style.display = 'none';
+						input = document.getElementById('pictograma_pulsadores');
+						input.removeAttribute('required');
+					}
 				}
 
 				// Asociamos la función al evento de cambio del checkbox
 				document.getElementById('tipo-texto').addEventListener('change', togglePasswordFields);
 				document.getElementById('tipo-pictogramas').addEventListener('change', togglePasswordFields);
+				document.getElementById('tipo-pulsadores').addEventListener('change', togglePasswordFields);
 
 				// Llamada inicial para asegurar que los campos se muestren correctamente al cargar la página
 				togglePasswordFields();

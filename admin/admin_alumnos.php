@@ -105,15 +105,26 @@
 										$_SESSION['alumno'][$i] = serialize($alumno);
 										
 										// Creamos todos los articles de los alumnos
-										echo "
-										<article class='alumno'>
-											<a href='../admin/modificacion_alumnos.php?indice=$i'>
-											<div>
-												<img src='../multimedia/imagenes/" . $alumno['ruta_foto'] . "' width='70' height='70' alt='Foto de perfil del alumno'>
-												<h3 align='center'>{$alumnosNombre[$i]}</h3>
-											</div>
-											</a>
-										</article>";
+										if($tmp->esEncargado($alumno['id'])){
+											echo "<article class='alumno' id='encargado-comandas'>
+												<a href='../admin/modificacion_alumnos.php?indice=$i'>
+												<div>
+													<img src='../multimedia/imagenes/" . $alumno['ruta_foto'] . "' width='70' height='70' alt='Foto de perfil del alumno'>
+													<h3 align='center'>{$alumnosNombre[$i]}</h3>
+												</div>
+												</a>
+											</article>";
+										}
+										else{
+											echo "<article class='alumno'>
+												<a href='../admin/modificacion_alumnos.php?indice=$i'>
+												<div>
+													<img src='../multimedia/imagenes/" . $alumno['ruta_foto'] . "' width='70' height='70' alt='Foto de perfil del alumno'>
+													<h3 align='center'>{$alumnosNombre[$i]}</h3>
+												</div>
+												</a>
+											</article>";
+										}
 									}
 									$i++;
 								}

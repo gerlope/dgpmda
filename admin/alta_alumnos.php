@@ -109,10 +109,13 @@
 						<legend class="titulo-campo">Tipo de contrase&ntilde;a:</legend>
 
 						<label>
-						<input type="checkbox" name="tipo[]" id="tipo-texto" value="texto">Texto</label>
+						<input type="radio" name="tipo_password" id="tipo-texto" value="texto">Texto</label>
 
 						<label>
-						<input type="checkbox" name="tipo[]" id="tipo-pictogramas" value="pictogramas">Pictogramas</label>
+						<input type="radio" name="tipo_password" id="tipo-pictogramas" value="pictogramas">Pictogramas</label>
+
+						<label>
+						<input type="radio" name="tipo_password" id="tipo-pulsadores" value="pulsadores">Pulsadores</label>
 					</fieldset>
 					<p id="fieldset-tipo_password-incorrecto" style="display:none;">Se debe seleccionar al menos un tipo de contrase&ntilde;a</p>
 				</article>
@@ -139,6 +142,11 @@
 					<label for="pictograma_3" class="titulo-campo">Tercer Pictograma:</label>
 					<input type="file" id="pictograma_3" name="pictograma_3" accept="image/*">
 				</article>
+
+				<article class="campo" id="campo-pulsadores" style="display: none;">
+					<label for="pictograma_pulsadores" class="titulo-campo">Pictograma:</label>
+					<input type="file" id="pictograma_pulsadores" name="pictograma_pulsadores" accept="image/*">
+				</article>
 				
 				<article class="enviar">
 					<input type="submit" value="Registrar Alumno">
@@ -150,9 +158,11 @@
 				function togglePasswordFields() {
 					var tipoTextoCheckbox = document.getElementById('tipo-texto');
 					var tipoPictogramasCheckbox = document.getElementById('tipo-pictogramas');
+					var tipoPulsadoresCheckbox = document.getElementById('tipo-pulsadores');
 					var campoPassword = document.getElementById('campo-password');
 					var campoPasswordConfirm = document.getElementById('campo-password-confirm');
 					var campoPictogramas = document.getElementById('campo-pictogramas');
+					var campoPulsadores = document.getElementById('campo-pulsadores');
 
 					// Si el tipo de contraseña es con texto
 					if (tipoTextoCheckbox.checked) {
@@ -179,11 +189,23 @@
 							input.removeAttribute('required');
 						});
 					}
+
+					// Si el tipo de contraseña es con pulsadores
+					if (tipoPulsadoresCheckbox.checked) {
+						campoPulsadores.style.display = 'block';
+						input = document.getElementById('pictograma_pulsadores');
+						input.setAttribute('required', 'required');
+					} else {
+						campoPulsadores.style.display = 'none';
+						input = document.getElementById('pictograma_pulsadores');
+						input.removeAttribute('required');
+					}
 				}
 
 				// Asociamos la función al evento de cambio del checkbox
 				document.getElementById('tipo-texto').addEventListener('change', togglePasswordFields);
 				document.getElementById('tipo-pictogramas').addEventListener('change', togglePasswordFields);
+				document.getElementById('tipo-pulsadores').addEventListener('change', togglePasswordFields);
 
 				// Llamada inicial para asegurar que los campos se muestren correctamente al cargar la página
 				togglePasswordFields();

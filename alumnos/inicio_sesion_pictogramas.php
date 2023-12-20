@@ -24,7 +24,10 @@
 					else if (isset($_SESSION['usuario'])) {		// Si hay una sesión activa de usuario redirigimos a la página de profesor
                         header("Location: ../profesor/profesor_alumnos.php");
 					}
-                    else if(isset($_SESSION['id_alumno'])){     // Si hay una sesión activa de alumno redirigimos mostramos su nombre y foto
+					else if(isset($_SESSION['sesion_alumno']) && $_SESSION['sesion_alumno'] == true){		// Si hay una sesión ya activa de alumnos redirigimos al alumno a la página correspondiente
+                        header('Location: ../alumnos/alumno.php');
+                    }
+                    else if(isset($_SESSION['id_alumno'])){     // Si hay una sesión de inicio de sesión iniciada de alumno mostramos su nombre y foto
                         // Acceder al nombre de alumno almacenado en la variable de sesión
 						$nombre = $_SESSION['nombre_alumno'] . " " . $_SESSION['apellidos_alumno'];
 						$ruta_foto = $_SESSION['ruta_foto_alumno'];
@@ -35,11 +38,6 @@
                         <div id='div-titulo'><h1 id='titulo'>Iniciar Sesi&oacute;n</h1>
                         <img src='../multimedia/imagenes/icono_login.png' width='60' height='60' alt='Icono inicio de sesion'></div>
                         <div></div><div></div><div></div>";
-
-                        // Si hay una sesión ya activa de alumnos redirigimos al alumno a la página correspondiente
-                        if(isset($_SESSION['perfil_visualizacion'])){
-                            header("Location: ../alumnos/alumno.php");
-                        }
                     }
 					else{		// Si no hay ninguna sesión de usuario activa
 						header("Location: ../index.php");

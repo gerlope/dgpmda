@@ -1,3 +1,8 @@
+    /* Estilo para el cuerpo de la página */
+    body {
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
     
     /* Estilo para el contenedor del formulario login */
     #form-container {

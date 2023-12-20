@@ -41,7 +41,9 @@
 					$_SESSION['ruta_foto_alumno'] = $alumno['ruta_foto'];
 
 					// Según el tipo de contraseña del alumno tendrá un inicio de sesión personalizado
-					if(strpos($tipo_password, 'pictogramas') || strpos($tipo_password, 'pictogramas') === 0){
+					if(strpos($tipo_password, 'pulsadores') || strpos($tipo_password, 'pulsadores') === 0){
+						header("Location: inicio_sesion_pulsadores.php");
+					}else if(strpos($tipo_password, 'pictogramas') || strpos($tipo_password, 'pictogramas') === 0){
 						header("Location: inicio_sesion_pictogramas.php");
 					}else{
 						header("Location: inicio_sesion_estandar.php");
