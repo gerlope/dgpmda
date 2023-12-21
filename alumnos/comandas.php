@@ -69,10 +69,11 @@
 					
 
 					$tmp = new Profesores();
-					$profesores = $tmp->obtenerProfesoresOrdenados();
+					$aulas = $tmp->obtenerAulas();
 
-					if($profesores){
-						foreach ($profesores as $profesor) {
+					if($aulas){
+						foreach ($aulas as $aula) {
+								$profesor = $tmp->obtenerProfesorAula($aula);
 							
 								$nombre = $profesor['nombre'];
 								$aula = $profesor['aula'];
@@ -84,8 +85,6 @@
 								echo "<h3>$nombre</h3>";
                                 echo "<p>$aula</p> <img src=\"../multimedia/imagenes/icono_tick.png\" alt=\"Tick\">";
 								echo "</a>";
-								
-							
 						}
 					}
 					else {

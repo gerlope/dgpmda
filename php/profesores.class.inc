@@ -112,21 +112,47 @@
 
         /****************************************************************************************/
         /****************************************************************************************/
-        /* Funcion que devuelve todos los alumnos de la BD */
-        public static function obtenerProfesoresOrdenados( ) {
+        /* Funcion que devuelve todas las aulas de las que están a cargo los profesores */
+        public static function obtenerAulas() {
             $conexion = parent::conectar();
-            $sql = "SELECT * FROM " . TABLA_PROFESORES . " ORDER BY aula, nombre";
+            $sql = "SELECT DISTINCT aula FROM " . TABLA_PROFESORES . " ORDER BY aula ASC";
 
             try {
-                $st = $conexion->prepare( $sql );
+                $st = $conexion->prepare($sql);
                 $st->execute();
-                $filas = $st->fetchAll(PDO::FETCH_ASSOC);
-                parent::desconectar( $conexion );
+                $resultados = $st->fetchAll(PDO::FETCH_ASSOC);
+                parent::desconectar($conexion);
 
-                if ( $filas ) return $filas;
+                // Obtener un array con todas las aulas
+                $aulas = array_column($resultados, 'aula');
+
+                return $aulas;
             } catch ( PDOException $e ) {
                 parent::desconectar( $conexion );
                 die( "Consulta fallada: " . $e->getMessage() );
+            }
+        }
+        /****************************************************************************************/
+
+
+        /****************************************************************************************/
+        /****************************************************************************************/
+        /* Funcion que devuelve todas las aulas de las que están a cargo los profesores */
+        public static function obtenerProfesorAula($aula) {
+            $conexion = parent::conectar();
+            $sql = "SELECT * FROM " . TABLA_PROFESORES . " WHERE aula = :aula LIMIT 1";
+
+            try {
+                $st = $conexion->prepare($sql);
+                $st->bindParam(':aula', $aula, PDO::PARAM_STR);
+                $st->execute();
+                $profesor = $st->fetch(PDO::FETCH_ASSOC);
+                parent::desconectar($conexion);
+
+                return $profesor;
+            } catch (PDOException $e) {
+                parent::desconectar($conexion);
+                die("Consulta fallada: " . $e->getMessage());
             }
         }
         /****************************************************************************************/
