@@ -1,6 +1,7 @@
     /* Estilo para el contenedor de la multimedia */
     #media-container {
         margin: auto;
+        margin-top: 60px;
         max-width: 800px;
         display: flex;
         flex-direction: column;
@@ -27,7 +28,20 @@
     #botones-multimedia form{
         display: flex;
         flex-direction: row;
-        gap: 10px;
+        gap: 20px;
+    }
+
+    /* Estilo para la barra de busqueda en la gestión de multimedia */
+    .barra-busqueda-multimedia{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 60px;
+        width: 80%;
+    }
+
+    /* Estilo para el formulario de la barra de busqueda en la gestión de multimedia */
+    .barra-busqueda-multimedia form{
+        display: flex;
     }
 
     /* Estilo para la sección donde se encuentra la multimedia */
@@ -35,15 +49,15 @@
         display: none;
     }
 
-    /* Estilo para las imagenes de la sección de la multimedia */
-    .media-section img {
+    /* Estilo para las imagenes y los videos de la sección de la multimedia */
+    .media-section img, .media-section video {
         width: 200px;
         height: 200px;
         margin: 30px 10px;
     }
 
-    /* Estilo para los videos y audios de la sección de la multimedia */
-    .media-section video, .media-section audio {
+    /* Estilo para los audios de la sección de la multimedia */
+    .media-section audio {
         max-width: 100%;
         height: auto;
         margin: 30px 10px;

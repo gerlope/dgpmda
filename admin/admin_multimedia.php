@@ -83,8 +83,8 @@
 							return array('mp4', 'webm', 'ogg');
 						case 'audios':
 							return array('mp3', 'wav', 'ogg');
-						case 'documentos':
-							return array('pdf', 'doc', 'docx', 'xls', 'xlsx');
+						case 'pictogramas_password':
+							return array('jpg', 'jpeg', 'png', 'gif');
 						default:
 							return array();
 					}
@@ -110,8 +110,8 @@
 							echo 'Tu navegador no soporta el tag de audio.';
 							echo '</audio>';
 							break;
-						case 'documentos':
-							echo '<a href="' . $ruta_archivo . '" target="_blank">' . $archivo . '</a><br><br>';
+						case 'pictogramas_password':
+							echo '<img src="' . $ruta_archivo . '" alt="' . $archivo . '" title="' . $archivo . '">';
 							break;
 					}
 				}
@@ -146,13 +146,22 @@
 							<button type="submit" onclick="mostrarSeccion('imagenes')" name="section" value="imagenes"><h3>Im&aacute;genes</h3></button>
 							<button type="submit" onclick="mostrarSeccion('videos')" name="section" value="videos"><h3>V&iacute;deos</h3></button>
 							<button type="submit" onclick="mostrarSeccion('audios')" name="section" value="audios"><h3>Audios</h3></button>
-							<button type="submit" onclick="mostrarSeccion('documentos')" name="section" value="documentos"><h3>Documentos</h3></button>
+							<button type="submit" onclick="mostrarSeccion('pictogramas_password')" name="section" value="pictogramas_password"><h3>Pictogramas Contrase&ntilde;as</h3></button>
 						</form>
+					</div>
+
+					<div class="barra-busqueda-multimedia">
+						<form action="admin_profesores.php" method="get">
+							<input type="text" id="filtro" name="filtro" placeholder="Busqueda"><br><br>
+							<input type="submit" id="boton-buscar" value="Buscar">
+						</form>
+						<a><button>A&ntilde;adir</button></a>
+						<a><button>Eliminar</button></a>
 					</div>
 					
 					<?php
 					$base_path = '../multimedia/'; 										// Ruta archivos multimedia
-					$secciones = array('imagenes', 'videos', 'audios', 'documentos');
+					$secciones = array('imagenes', 'videos', 'audios', 'pictogramas_password');
 					$page = isset($_GET['page']) ? $_GET['page'] : 1;
 					$itemsPerPage = 3; 													// Número de elementos por página
 

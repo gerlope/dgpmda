@@ -157,7 +157,7 @@
 						<input type="checkbox" name="perfil[]" value="audio" disabled >Audio</label>
 
 						<label>
-						<input type="checkbox" name="perfil[]" value="visual" disabled >V&iacute;deos</label>
+						<input type="checkbox" name="perfil[]" value="video" disabled >V&iacute;deos</label>
 
 						<label>
 						<input type="checkbox" name="perfil[]" value="texto" disabled>Texto y Fotos</label>

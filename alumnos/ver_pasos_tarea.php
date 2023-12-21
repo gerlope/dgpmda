@@ -43,11 +43,6 @@
 						$alumno_id = $_SESSION['id_alumno'];
 						$perfil_visualizacion = explode(', ', $_SESSION['perfil_visualizacion']);
 
-						
-
-
-						
-
 						// Creamos en html la zona arriba a la derecha de un usuario que ha iniciado sesión
 						echo "<div id='perfil-login'>
 							<a href='../alumnos/alumno.php'>
@@ -149,7 +144,7 @@
 				<?php if (in_array('texto', $perfil_visualizacion)) : ?>
 					<a href='#' class='boton-pantalla' onclick="showMedia('texto')">
 						<button>
-							<img src='../multimedia/imagenes/icono_imagen.jpg' alt='Imagen'>
+							<img src='../multimedia/imagenes/icono_imagen.png' width="50px" height="50px" alt='Imagen'>
 						</button>
 					</a>
 				<?php endif; ?>
@@ -157,7 +152,7 @@
 				<?php if (in_array('video', $perfil_visualizacion)) : ?>
 					<a href='#' class='boton-pantalla' onclick="showMedia('video')">
 						<button>
-							<img src='../multimedia/imagenes/icono_video.png' alt='Video'>
+							<img src='../multimedia/imagenes/icono_video.png' width="50px" height="50px" alt='Video'>
 						</button>
 					</a>
 				<?php endif; ?>
@@ -165,7 +160,7 @@
 				<?php if (in_array('audio', $perfil_visualizacion)) : ?>
 					<a href='#' class='boton-pantalla' onclick="showMedia('audio')">
 						<button>
-							<img src='../multimedia/imagenes/icono_audio.png' alt='Audio'>
+							<img src='../multimedia/imagenes/icono_audio.png' width="50px" height="50px" alt='Audio'>
 						</button>
 					</a>
 				<?php endif; ?>

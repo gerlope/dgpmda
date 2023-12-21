@@ -63,7 +63,7 @@
                     // Creamos un campo de entrada oculto y agrega el dato
                     var input = document.createElement('input');
                     input.type = 'text';
-                    input.class = 'hidden';
+                    input.className = 'hidden';
                     input.id = 'picto1d';
                     input.name = 'picto1d';
                     input.value = pictograma.value;
@@ -72,7 +72,7 @@
                     // Creamos otros dos campos ocultos vacios
                     var input = document.createElement('input');
                     input.type = 'text';
-                    input.class = 'hidden';
+                    input.className = 'hidden';
                     input.id = 'picto2d';
                     input.name = 'picto2d';
                     input.value = "";
@@ -80,7 +80,7 @@
 
                     var input = document.createElement('input');
                     input.type = 'text';
-                    input.class = 'hidden';
+                    input.className = 'hidden';
                     input.id = 'picto3d';
                     input.name = 'picto3d';
                     input.value = "";
