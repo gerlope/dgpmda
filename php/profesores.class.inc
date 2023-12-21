@@ -112,6 +112,27 @@
 
         /****************************************************************************************/
         /****************************************************************************************/
+        /* Funcion que devuelve todos los alumnos de la BD */
+        public static function obtenerProfesoresOrdenados( ) {
+            $conexion = parent::conectar();
+            $sql = "SELECT * FROM " . TABLA_PROFESORES . " ORDER BY aula, nombre";
+
+            try {
+                $st = $conexion->prepare( $sql );
+                $st->execute();
+                $filas = $st->fetchAll(PDO::FETCH_ASSOC);
+                parent::desconectar( $conexion );
+
+                if ( $filas ) return $filas;
+            } catch ( PDOException $e ) {
+                parent::desconectar( $conexion );
+                die( "Consulta fallada: " . $e->getMessage() );
+            }
+        }
+        /****************************************************************************************/
+
+        /****************************************************************************************/
+        /****************************************************************************************/
         /* Funcion boolean que se encarga de comprobar si un profeso con ese nombre de usuario 
         es un administrador o no */
         public static function esAdministrador($usuario) {

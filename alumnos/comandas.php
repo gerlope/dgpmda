@@ -54,8 +54,8 @@
 					$seccion_actual = isset($_GET['section']) ? $_GET['section'] : 'imagenes';
 				?>
 				
-				<div id='div-titulo'><img src='../multimedia/imagenes/icono_alumno.png' width='60' height='60' alt='Icono página del alumno'>
-				<h1 id='tituloPrincipal'>Tareas</h1></div>
+				<div id='div-titulo'><img src='../multimedia/imagenes/icono_comandas1.png' width='60' height='60' alt='Icono página del alumno'>
+				<h1 id='tituloPrincipal'>Comandas</h1></div>
 				<a id='enlace-header' href='../php/logout.php' style="visibility: hidden;"><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
 			</div>
 		</header>
@@ -65,41 +65,27 @@
 				<div class='botones-pantalla'><button class='boton-pantalla' id='prevTareas' aria-label="Ir a tareas anteriores" style='visibility: hidden;'>&#129152;</button></div>
 
 				<?php
-					require_once('../php/alumnos.class.inc');
-					require_once('../php/tareas.class.inc');
+					require_once('../php/profesores.class.inc');
 					
-					$tmp = new Alumnos();
-					$comandas = $tmp->esEncargado($idAlumno);
 
-					if($comandas){
-						echo "<a href='../alumnos/comandas.php' class='tarea' id='boton-comandas'>
-							  	<h3>Comandas</h3>
-							  	<img src='../multimedia/imagenes/icono_comandas.png' alt='Comandas'>
-							  </a>";
-					}
+					$tmp = new Profesores();
+					$profesores = $tmp->obtenerProfesoresOrdenados();
 
-					$tmp = new Tareas();
-					$tareas = $tmp->obtenerTareasAsignadas($idAlumno);
-
-					if($tareas){
-						foreach ($tareas as $tarea) {
-							// Obtener información detallada de la tarea
-							$tarea_id = $tarea['tarea_id'];
-							$tarea_info = Tareas::obtenerTarea($tarea_id);
+					if($profesores){
+						foreach ($profesores as $profesor) {
+							
+								$nombre = $profesor['nombre'];
+								$aula = $profesor['aula'];
+                                $ruta_foto = $profesor['ruta_foto'];
 					
-							// Verificar si se encontró información de la tarea
-							if ($tarea_info) {
-								// Acceder a la información de la tarea
-								$titulo = $tarea_info['titulo'];
-								$ruta_foto = $tarea_info['ruta_icono'];
-					
-								// Mostrar la información de la tarea
-								echo "<a href='ver_pasos_tarea.php?tarea_id=$tarea_id' class='tarea'>";
-								echo "<img src='../multimedia/imagenes/$ruta_foto' alt='Foto de la tarea'>";
-								echo "<p>$titulo</p>";
+								// Mostrar la información de la profesor
+								echo "<a href='ver_menús.php?aula=$aula' class='tarea'>";
+								echo "<img src='../multimedia/imagenes/$ruta_foto' alt='Foto del profesor'>";
+								echo "<h3>$nombre</h3>";
+                                echo "<p>$aula</p> <img src=\"../multimedia/imagenes/icono_tick.png\" alt=\"Tick\">";
 								echo "</a>";
 								
-							}
+							
 						}
 					}
 					else {
@@ -119,7 +105,7 @@
 					var prevButton = document.getElementById("prevTareas");
 
 					// Establece el número máximo de tareas por pantalla
-					var tareasPorPantalla = 2;
+					var tareasPorPantalla = 3;
 
 					// Inicializa el estado de la pantalla
 					var pantallaActual = 0;
@@ -159,14 +145,6 @@
 			</script>
 		</main>
 
-		<footer>
-			<a href='../php/logout.php' class='boton-con-imagen'>
-				<button>
-					<h3>Cerrar Sesi&oacute;n</h3>
-					<img src='../multimedia/imagenes/icono_logout.png' alt='Cerrar sesi&oacute;n'>
-				</button>
-			</a>
 
-    	</footer>
 	</body>
 </html>
