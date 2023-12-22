@@ -11,4 +11,6 @@
     define('TABLA_CONTRASEÑA_PICTOGRAMA', 'password_pictograma');
     define('TABLA_PICTOGRAMAS', 'pictogramas');
     define('TABLA_MENUS', 'menus');
+    define('TABLA_CHATS', 'chats');
+    define('TABLA_MENSAJES', 'mensajes');
 ?>

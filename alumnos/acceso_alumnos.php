@@ -39,6 +39,7 @@
 					$_SESSION['nombre_alumno'] = $alumno['nombre'];
 					$_SESSION['apellidos_alumno'] = $alumno['apellidos'];
 					$_SESSION['ruta_foto_alumno'] = $alumno['ruta_foto'];
+					$_SESSION['tipo_password'] = $alumno['tipo_password'];
 
 					// Según el tipo de contraseña del alumno tendrá un inicio de sesión personalizado
 					if(strpos($tipo_password, 'pulsadores') || strpos($tipo_password, 'pulsadores') === 0){

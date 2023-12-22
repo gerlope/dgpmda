@@ -74,6 +74,8 @@
 						$titulo_tarea = $tarea_info['titulo'];
 						$total_pasos = $tarea_info['numero_pasos'];
 						$ruta_foto_tarea = $tarea_info['ruta_icono'];
+						$id_chat_texto = $tarea_info['chat_text_id'];
+						$id_chat_imagen = $tarea_info['chat_pict_id'];
 					}
 
 					// Obtener el número de pasos completados para el alumno y la tarea actuales
@@ -155,7 +157,18 @@
 					<img src='../multimedia/imagenes/<?php echo $ruta_foto_tarea; ?>' width='60' height='60' alt='Icono página inicial'>
 					<h1 id='tituloPrincipal'>Paso <?= $paso_actual; ?></h1>
 				</div>
-				<a id='enlace-header' href='../php/logout.php'><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
+				<a id="enlace-header" href=<?php
+					include('../php/chats.class.inc');
+					$tmp = new Chats();
+					$_SESSION['chat'][0] = serialize($tmp->obtenerChatconId($id_chat_texto));
+					$_SESSION['chat'][1] = serialize($tmp->obtenerChatconId($id_chat_imagen));
+					if ($_SESSION['tipo_password'] == "texto") {
+						echo'../chat/chat_texto.php?chat=0';
+					} else {
+						echo'../chat/chat_imagen.php?chat=1';
+					}
+				?>
+				><button><h3>Chat</h3><img src="../multimedia/imagenes/chat.png" width=25 heigth=25> </button></a>
 			</div>
 		</header>
 

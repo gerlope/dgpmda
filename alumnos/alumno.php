@@ -56,7 +56,7 @@
 				
 				<div id='div-titulo'><img src='../multimedia/imagenes/icono_alumno.png' width='60' height='60' alt='Icono página del alumno'>
 				<h1 id='tituloPrincipal'>Tareas</h1></div>
-				<a id='enlace-header' href='../php/logout.php' style="visibility: hidden;"><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
+				<a id='enlace-header' href='./chats_profesores.php'><button><h3>Chats</h3><img src="../multimedia/imagenes/chat.png" width=25 heigth=25></a> </button></a>
 			</div>
 		</header>
 

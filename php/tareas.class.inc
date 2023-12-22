@@ -92,11 +92,20 @@
         public static function insertarTarea($titulo, $ruta_icono, $ruta_documento, $numero_pasos, $pasos, $numero_pasos_totales) {
             $conexion = parent::conectar();
 
-            $sql="INSERT INTO " . TABLA_TAREAS . "(titulo, ruta_icono, ruta_documento, numero_pasos) VALUES (?, ?, ?, ?)";
+            $sql="INSERT INTO " . TABLA_CHATS . "(tipo) VALUES (?)";
+            $st = $conexion->prepare($sql);
+            $st->execute([0]);
+            $chat_texto = $conexion->lastInsertId();
+            $sql="INSERT INTO " . TABLA_CHATS . "(tipo) VALUES (?)";
+            $st = $conexion->prepare($sql);
+            $st->execute([1]);
+            $chat_pict = $conexion->lastInsertId();
+            
+            $sql="INSERT INTO " . TABLA_TAREAS . "(titulo, ruta_icono, ruta_documento, numero_pasos, chat_text_id, chat_pict_id) VALUES (?, ?, ?, ?, ?, ?)";
 
             try {
                 $st = $conexion->prepare( $sql );
-                $st->execute([$titulo, $ruta_icono, $ruta_documento, $numero_pasos]);
+                $st->execute([$titulo, $ruta_icono, $ruta_documento, $numero_pasos, $chat_texto, $chat_pict]);
                 $tarea_id = $conexion->lastInsertId();
                 
                 // Iteramos a través de los pasos y datos multimedia
