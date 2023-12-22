@@ -80,6 +80,16 @@
         cursor: pointer;
     }
 
+    button[type="button"]{
+        display: inline-block;
+        padding: 10px 15px;
+        border: 2px solid black;
+        background-color: #080163;
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
     /* Estilo de los campos */
     .campo {
         margin-bottom: 30px;

@@ -62,6 +62,12 @@
 		</header>
 
 		<main>
+
+			<a href='../alumnos/alumno.php' class='boton-pantalla' id='casa' >
+				<button>
+					<img src='../multimedia/imagenes/icono_casa.png' width="50px" height="50px" alt='Casa'>
+				</button>
+			</a>
 			
 			<section class="tareas">
 				
@@ -109,7 +115,7 @@
 					var prevButton = document.getElementById("prevTareas");
 
 					// Establece el número máximo de tareas por pantalla
-					var tareasPorPantalla = 3;
+					var tareasPorPantalla = 2;
 
 					// Inicializa el estado de la pantalla
 					var pantallaActual = 0;

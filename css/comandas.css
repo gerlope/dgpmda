@@ -111,12 +111,31 @@
         cursor: pointer;
     }
 
-    
+    .boton-casa{
+        display: inline-block;
+        padding: 15px 25px;
+        border: 2px solid black;
+        font-size: 40px;
+        background-color: #080163;
+        color: white;
+        border-radius: 100px;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
     /* Estilo para el boton dentro del enlace que cambia la multimedia del paso */
     .boton-pantalla button{
         background-color: #080163;
         border: none;
+    }
+
+    .boton-casa button{
+        background-color: #080163;
+        border: none;
+    }
+
+    .boton-casa button:hover{
+        transform: none;
     }
 
     /* Estilo para el boton dentro del enlace que cambia la multimedia del paso al pasar el raton por encima */
@@ -240,7 +259,6 @@
     
     #casa {
         position: absolute;
-        top: 10em;
         left: 1em;
     }
     

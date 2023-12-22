@@ -108,9 +108,19 @@
         cursor: pointer;
     }
 
+    /* Estilo para los botones dentro de los enlaces */
+    .boton-pantalla button{
+        background-color: #080163;
+        border: none;
+    }
+
     /* Estilo para los botones que muestran más o menos alumnos por pantalla al pasar el ratón por encima */
     .boton-pantalla:hover{
         transform: scale(1.2);
+    }
+
+    #casa{
+        margin: 0px 0px 30px 25px;
     }
 
     /* Estilo para el botón de ver más tareas */

@@ -163,7 +163,7 @@
 								<p id="paso_audio_${i}-incorrecto" style="display:none;">El audio del paso debe corresponder a un archivo de sonido v&aacute;lido</p>
 							</article>
 
-							<article class="enviar">
+							<article class="enviar" id="quitar-paso">
 								<button type="button" id="eliminar_paso_${i}" class="eliminar_paso_${i}" onclick="eliminarPaso(this)" style="display:none;" disabled>Eliminar Paso</button>
 							</article>
 						`;

@@ -21,6 +21,10 @@
         transform: scale(1.1);
     }
 
+    .enlace-chats button{
+        padding: 10px 20px;
+    }
+
     /******************* Estilos específicos para una pantalla ordeandor *****************************/
 	/*************************************************************************************************/
 	@media (min-width: 769px) {

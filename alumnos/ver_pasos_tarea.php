@@ -145,19 +145,13 @@
 						// Termina el script para evitar enviar la página HTML completa
 						exit();
 					}
-
-					
-					
-
-
-
 				?>
 
 				<div id='div-titulo'>
 					<img src='../multimedia/imagenes/<?php echo $ruta_foto_tarea; ?>' width='60' height='60' alt='Icono página inicial'>
 					<h1 id='tituloPrincipal'>Paso <?= $paso_actual; ?></h1>
 				</div>
-				<a id="enlace-header" href=<?php
+				<a id="enlace-header"  class="enlace-chats" href=<?php
 					include('../php/chats.class.inc');
 					$tmp = new Chats();
 					$_SESSION['chat'][0] = serialize($tmp->obtenerChatconId($id_chat_texto));
@@ -168,7 +162,7 @@
 						echo'../chat/chat_imagen.php?chat=1';
 					}
 				?>
-				><button><h3>Chat</h3><img src="../multimedia/imagenes/chat.png" width=25 heigth=25> </button></a>
+				><button><img src="../multimedia/imagenes/chat.png" width="60"></button></a>
 			</div>
 		</header>
 
