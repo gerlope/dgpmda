@@ -371,6 +371,31 @@
         }
         /****************************************************************************************/
 
+        /****************************************************************************************/
+        /****************************************************************************************/
+        /* Funcion que elimina al alumno de la base de datos que ha terminado
+        la tarea correspondiente */
+        public static function DesasignarAlumnosTarea($id_alumno, $id_tarea) {
+            $conexion = parent::conectar();
+
+                $sql = "DELETE FROM " . TABLA_TAREA_ALUMNO . " WHERE alumno_id = :id_alumno AND tarea_id = :id_tarea";
+    
+                try {
+                    $st = $conexion->prepare($sql);
+                    $st->bindValue( ":id_alumno", $id_alumno, PDO::PARAM_INT );
+                    $st->bindValue( ":id_tarea", $id_tarea, PDO::PARAM_INT );
+                    $st->execute();
+                    parent::desconectar($conexion);
+        
+                    return true;
+                } catch (PDOException $e) {
+                    parent::desconectar($conexion);
+                    return false;
+                }
+            
+        }
+        /****************************************************************************************/
+
 
         /****************************************************************************************/
         /****************************************************************************************/

@@ -123,9 +123,30 @@
 						// Devuelve el nuevo número de pasos completados como respuesta a la solicitud AJAX
 						echo $numero_pasos_completados;
 
+						// Verificar si todos los pasos están completados
+						if ($numero_pasos_completados == $total_pasos) {
+							// Desasignar al alumno de la tarea
+							$resultado_desasignacion = Tareas::DesasignarAlumnosTarea($alumno_id, $tarea_id);
+
+							// Verificar el resultado de la desasignación
+							if ($resultado_desasignacion) {
+								// Redirigir a la página de alumnos.php
+								header("Location: ../alumnos/alumnos.php");
+								exit;
+							} else {
+								// Manejar el caso en que la desasignación falla
+								echo "Error al desasignar la tarea del alumno.";
+								exit;
+							}
+						}
+
 						// Termina el script para evitar enviar la página HTML completa
 						exit();
 					}
+
+					
+					
+
 
 
 				?>
@@ -140,6 +161,12 @@
 
 		<main>
 			<div class="botones">
+
+					<a href='../alumnos/alumno.php' class='boton-pantalla' id='casa' >
+						<button>
+							<img src='../multimedia/imagenes/icono_casa.png' width="50px" height="50px" alt='Casa'>
+						</button>
+					</a>
 
 				<?php if (in_array('texto', $perfil_visualizacion)) : ?>
 					<a href='#' class='boton-pantalla' onclick="showMedia('texto')">
@@ -242,7 +269,13 @@
 
 					// Aquí puedes realizar cualquier acción necesaria con el nuevo número de pasos completados
 					console.log('Nuevo número de pasos completados:', nuevoNumeroPasosCompletados);
-					// ...
+					
+					// Verificar si todos los pasos están completados después de la ejecución actual
+					if (nuevoNumeroPasosCompletados == $totalPasos) {
+						// Redirigir a la página de alumnos.php (lado del cliente)
+						window.location.href = '../alumnos/alumnos.php';
+						return; // Terminar la función para evitar ejecutar el código restante
+					}
 
 				} else {
 					// Hubo un error en la solicitud, muestra el mensaje de error

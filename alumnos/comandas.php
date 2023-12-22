@@ -58,11 +58,15 @@
 				<h1 id='tituloPrincipal'>Comandas</h1></div>
 				<a id='enlace-header' href='../php/logout.php' style="visibility: hidden;"><button><h3>Cerrar Sesi&oacute;n &#10008;</h3></button></a>
 			</div>
+			
 		</header>
 
 		<main>
+			
 			<section class="tareas">
+				
 				<div class='botones-pantalla'><button class='boton-pantalla' id='prevTareas' aria-label="Ir a tareas anteriores" style='visibility: hidden;'>&#129152;</button></div>
+				
 
 				<?php
 					require_once('../php/profesores.class.inc');
@@ -80,10 +84,11 @@
                                 $ruta_foto = $profesor['ruta_foto'];
 					
 								// Mostrar la información de la profesor
-								echo "<a href='ver_menús.php?aula=$aula' class='tarea'>";
+								echo "<a href='ver_menus.php?aula=$aula' class='tarea'>";
 								echo "<img src='../multimedia/imagenes/$ruta_foto' alt='Foto del profesor'>";
 								echo "<h3>$nombre</h3>";
-                                echo "<p>$aula</p> <img src=\"../multimedia/imagenes/icono_tick.png\" alt=\"Tick\">";
+                                echo "<p>$aula</p>";
+								//echo "<img src='../multimedia/imagenes/icono_tick.png' alt='Foto del profesor'>";
 								echo "</a>";
 						}
 					}
