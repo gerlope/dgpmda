@@ -82,7 +82,13 @@
 		</header>
 
 		<main>
-            <a href="../alumnos/alumno.php" class="boton-volver" aria-label="Volver a la página anterior" role="button">🢀</a>
+			<a href="javascript:void(0);" onclick="volverPaginaAnterior()" class="boton-volver" aria-label="Volver a la página anterior" role="button">&#129152;</a>
+
+			<script>
+				function volverPaginaAnterior() {
+					window.history.length > 1 ? window.history.go(-1) : window.location.href = document.referrer;
+				}
+			</script>
             <div id='chat-enclosure'>
                 
                 <div id='chat'>
