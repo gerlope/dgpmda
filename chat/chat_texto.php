@@ -123,7 +123,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script>
             var id = document.querySelector("#input_chat_id").value;
-            setInterval(refreshMessages, 1000);
+            setInterval(refreshMessages, 100);
             function refreshMessages() {
                 $.ajax({
                 type: "POST",

@@ -116,60 +116,40 @@
         <div id='message-div'>
         <div class='botones-pantalla'><button onClick='anteriorPag()' class='boton-pantalla' id='prevPictos' aria-label="Ir a pictogramas anteriores" style='visibility: hidden;'>&#129152;</button></div>
         <form action='../php/mandar_mensaje.php' method='POST'>
-                <?php
-					$directorio = "../multimedia/imagenes";
-					$page = isset($_GET['page']) ? $_GET['page'] : 1;
-					$itemsPerPage = 8; 					// Número de elementos por página
+                <div id='pictogramas'>
+				<?php
+				    $directorio = "../multimedia/imagenes";
+				    $page = 1;
+				    $itemsPerPage = 10; 					// Número de elementos por página           
 
-					function verificarMasElementos($directorio, $currentPage, $itemsPerPage) {
-
-						if (is_dir($directorio)) {
-							$archivos = scandir($directorio);
-							$extensiones_permitidas = array('jpg', 'jpeg', 'png', 'gif');
-
-							$archivos_filtrados = array_filter($archivos, function ($archivo) use ($extensiones_permitidas) {
-								$extension = pathinfo($archivo, PATHINFO_EXTENSION);
-								return in_array(strtolower($extension), $extensiones_permitidas);
-							});
-
-							// Calculamos la cantidad total de elementos y verifica si hay más allá de la página actual
-							$totalItems = count($archivos_filtrados);
-							$startIndex = ($currentPage - 1) * $itemsPerPage;
-							$endIndex = $startIndex + $itemsPerPage;
-
-							return $endIndex < $totalItems;
-						}
-
-						return false;
-					}                    
-
-                    // Verificamos que la carpeta exista
-                    if (is_dir($directorio)) {
-                        // Obtenemos la lista de archivos en la carpeta
-						$archivos = scandir($directorio);
-                        $extensiones_permitidas = array('jpg', 'jpeg', 'png', 'gif');
-
-                        $archivos_filtrados = array_filter($archivos, function ($archivo) use ($extensiones_permitidas) {
-                            $extension = pathinfo($archivo, PATHINFO_EXTENSION);
-                            return in_array(strtolower($extension), $extensiones_permitidas);
-                        });
-
-                        // Mostramos los archivos de la página actual
-                        $start = ($page - 1) * $itemsPerPage;
-                        $end = $start + $itemsPerPage - 1;
-
-                        $count = 0;
-
-                        foreach ($archivos_filtrados as $archivo) {
-							$archivostr = '"'.$archivo.'"';
-							if ($count >= $start && $count <= $end) {
-                                echo "<button class='pictograma' name='input_mensaje' onClick='select(\"$archivo\")' value='" . $archivo . "'>
-                                <img src='" . $directorio . "/" . $archivo . "' alt='" . $archivo . "' title='" . $archivo . " style='width:50px'></button>";
-                            }
-                            $count++;
-                        }
-                    }
-                ?>
+				    // Verificamos que la carpeta exista
+				    if (is_dir($directorio)) {
+				        // Obtenemos la lista de archivos en la carpeta
+				        $archivos = scandir($directorio);
+				        $extensiones_permitidas = array('jpg', 'jpeg', 'png', 'gif');
+					
+				        $archivos_filtrados = array_filter($archivos, function ($archivo) use ($extensiones_permitidas) {
+				            $extension = pathinfo($archivo, PATHINFO_EXTENSION);
+				            return in_array(strtolower($extension), $extensiones_permitidas);
+				        });
+					
+				        // Mostramos los archivos de la página actual
+				        $start = ($page - 1) * $itemsPerPage;
+				        $end = $start + $itemsPerPage - 1;
+					
+				        $count = 0;
+					
+				        foreach ($archivos_filtrados as $archivo) {
+				            $archivostr = '"'.$archivo.'"';
+				            if ($count >= $start && $count <= $end) {
+				                echo "<button class='pictograma' name='input_mensaje' onClick='select(\"$archivo\")' value='" . $archivo . "'>
+				                <img src='" . $directorio . "/" . $archivo . "' alt='" . $archivo . "' title='" . $archivo . " style='width:50px'></button>";
+				            }
+				            $count++;
+				        }
+				    }
+				?>
+				</div>
                 <input class='hidden' id="input_chat_id" name="input_chat_id" type="text" value='<?php echo $chat['id'];?>'>
                 <input class='hidden' id="input_sender" name="input_sender" type="text" value='<?php echo $username;?>'>
                 <input class='hidden' id="input_senderimg" name="input_senderimg" type="text" value='<?php echo $ruta_foto;?>'>
@@ -179,7 +159,49 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script>
             var id = document.querySelector("#input_chat_id").value;
-            setInterval(refreshMessages, 1000);
+			var page = 1;
+			var imgs = document.querySelector("#pictogramas");
+			var prevPictos = document.querySelector("#prevPictos");
+			var posPictos = document.querySelector("#posPictos");
+
+			function siguientePag() {
+				page+=1;
+				if (page > 1) {
+					prevPictos.style.visibility='visible';
+				}
+				if (page > "<?php echo '$archivos_filtrados/$itemsPerPage';?>") {
+					prevPictos.style.visibility='hidden';
+				}		
+				$.ajax({
+                type: "POST",
+                url: 'seleccion_imagen.php',
+                data: {"page": page},
+                success: function(data){
+                    imgs.innerHTML = data;
+                }
+                });
+			}
+
+			function anteriorPag() {
+				page-=1;
+				if (page < 2) {
+					prevPictos.style.visibility='hidden';
+				}
+				if (page < "<?php echo '$archivos_filtrados/$itemsPerPage';?>") {
+					posPictos.style.visibility='visble';
+				}
+
+				$.ajax({
+                type: "POST",
+                url: 'seleccion_imagen.php',
+                data: {"page": page},
+                success: function(data){
+                    imgs.innerHTML = data;
+                }
+                });
+			}
+
+            setInterval(refreshMessages, 100);
             function refreshMessages() {
                 $.ajax({
                 type: "POST",
