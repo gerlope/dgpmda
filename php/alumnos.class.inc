@@ -254,6 +254,25 @@
                         break;
                     }
                 }
+
+                if ($tipo_password == "texto") {
+                    $tipo_chat = false;
+                } else {
+                    $tipo_chat = true;
+                }
+
+                $sql = "SELECT * FROM " . TABLA_PROFESORES;
+
+                $st = $conexion->prepare( $sql );
+                $st->execute();
+                $profesores = $st->fetchAll(PDO::FETCH_ASSOC);
+                if ( $profesores ){
+                     foreach ($profesores as $profesor) {
+                        $sql="INSERT INTO " . TABLA_CHATS . "(tipo, alumno_id, profesor_id) VALUES (?, ?, ?)";
+                        $st = $conexion->prepare($sql);
+                        $st->execute([$tipo_chat, $alumnoId, $profesor['id']]);
+                     }
+                }
         
                 // Confirmamos la transacción
                 $conexion->commit(); 

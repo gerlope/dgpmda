@@ -24,6 +24,7 @@
             $_SESSION['ruta_foto'] = $profesorActivo['ruta_foto'];
             $_SESSION['usuario'] = $profesorActivo['usuario'];
             $_SESSION['password'] = $profesorActivo['password'];
+            $_SESSION['id_prof'] = $profesorActivo['id'];
 
             // Comprueba si las credenciales son válidas para el administrador
             if ($profesores->esAdministrador($usuario) === true) {

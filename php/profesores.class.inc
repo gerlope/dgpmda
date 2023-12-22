@@ -202,8 +202,28 @@
                 try {
                     $st = $conexion->prepare( $sql );
                     $st->execute([$nombre, $apellidos, $usuario, $password, false, $aula, $ruta_foto]);
+                    $profesorId = $conexion->lastInsertId();
                     $fila = $st->fetch();
                     parent::desconectar( $conexion );
+
+                    $sql = "SELECT * FROM " . TABLA_ALUMNOS;
+
+                    $st = $conexion->prepare( $sql );
+                    $st->execute();
+                    $alumnos = $st->fetchAll(PDO::FETCH_ASSOC);
+                    if ( $alumnos ){
+                         foreach ($alumnos as $alumno) {
+                            if ($alumno['tipo_password'] == "texto") {
+                                $tipo_chat = false;
+                            } else {
+                                $tipo_chat = true;
+                            }
+                            
+                            $sql="INSERT INTO " . TABLA_CHATS . "(tipo, alumno_id, profesor_id) VALUES (?, ?, ?)";
+                            $st = $conexion->prepare($sql);
+                            $st->execute([$tipo_chat, $alumno['id'], $profesorId]);
+                         }
+                    }
 
                     header('Location: ../admin/admin_tareas.php');
                 } catch ( PDOException $e ) {

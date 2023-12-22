@@ -80,8 +80,10 @@
 					<div class="lista-personal">
 						<?php
 							require_once('../php/alumnos.class.inc');
+							require_once('../php/chats.class.inc');
 
 							$tmp = new Alumnos();
+							$tmp2 = new Chats();
 							$alumnos = $tmp->obtenerAlumnos();		//$_GET["filtro"]
 							$_SESSION['alumno'] = array(); 			// Inicializa $_SESSION['alumno'] como una matriz vacía
 							$i = 0;
@@ -103,14 +105,22 @@
 
 										// Guardamos en una variable de sesion el alumno correspondiente
 										$_SESSION['alumno'][$i] = serialize($alumno);
+										$_SESSION['chat'][$i] = serialize($tmp2->obtenerChat($alumno['id'],$_SESSION['id_prof']));
 										
 										// Creamos todos los articles de los alumnos
 										echo "
 										<article class='alumno'>
-											<div>
+											<a style='text-align:center' href='";
+											if($alumno['tipo_password'] == "texto") {
+												echo "../chat/chat_texto.php?chat=$i'";
+											} else {
+												echo "../chat/chat_imagen.php?chat=$i'";
+											}
+											echo "><div>
 												<img src='../multimedia/imagenes/" . $alumno['ruta_foto'] . "' width='70' height='70' alt='Foto de perfil del alumno'>
 												<h3 align='center'>{$alumnosNombre[$i]}</h3>
 											</div>
+											</a>
 										</article>";
 									}
 									$i++;

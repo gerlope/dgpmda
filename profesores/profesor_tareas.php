@@ -80,12 +80,16 @@
 					<table>
 						<tbody>
 							<tr>
-								<th><b>NOMBRE</b></th>
+							<th><b>NOMBRE</b></th>
+							<th style='width:10%'><b>CHAT TEXTO</b></th>
+							<th style='width:10%'><b>CHAT IMAGENES</b></th>
 							</tr>
 							<?php
 								require_once('../php/tareas.class.inc');
+								require_once('../php/chats.class.inc');
 
 								$tmp = new Tareas();
+								$tmp2 = new Chats();
 								$tareas = $tmp->obtenerTareas();
 								$_SESSION['tarea'] = array(); 			// Inicializa $_SESSION['tarea'] como una matriz vacía
 								$i = 0;
@@ -108,11 +112,15 @@
 
 											// Guardamos en una variable de sesion de la tarea correspondiente
 											$_SESSION['tarea'][$i] = serialize($tarea);
+											$_SESSION['chat'][$i*2] = serialize($tmp2->obtenerChatconId($tarea['chat_text_id']));
+											$_SESSION['chat'][$i*2+1] = serialize($tmp2->obtenerChatconId($tarea['chat_pict_id']));
 											
 											// Creamos todos los articles de las tareas
 											echo "<tr>
 												<td id='enlace-profesores'><h3>{$tareasTitulo[$i]}</h3>
 												<img src='../multimedia/imagenes/{$tareasIcono[$i]}' width='60' height='60' alt='Icono tarea'></td>
+												<td><a href='../chat/chat_texto.php?chat=" . $i*2 . "'><button>Chat texto</button></td>
+												<td><a href='../chat/chat_imagen.php?chat=" . $i*2+1 . "'><button>Chat imagenes</button></td>
 											</tr>";
 										}
 										$i++;
