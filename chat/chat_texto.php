@@ -117,7 +117,7 @@
                 <input class='hidden' id="input_sender" name="input_sender" type="text" value='<?php echo $username;?>'>
                 <input class='hidden' id="input_senderimg" name="input_senderimg" type="text" value='<?php echo $ruta_foto;?>'>
                 <input id="input_mensaje" name="input_mensaje" type="text" name="Campo de mensaje">
-				<button id="Enviar" type="submit"><img src='../multimedia/imagenes/enviar.png' width='100' height='100' alt='Enviar'></button>
+				<button id="Enviar" type="submit"><img src='../multimedia/imagenes/mandar.png' width='80' height='80' alt='Enviar'></button>
         </form>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

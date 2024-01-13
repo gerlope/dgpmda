@@ -12,6 +12,11 @@
 		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/header.css">
 		<link rel="stylesheet" type="text/css" href="../css/tarea.css">
+		<style>
+			body {
+				zoom: 0.95;
+			}
+		</style>
 	</head>
 
 	<body class="pagina-tareas">
@@ -387,8 +392,6 @@ if (numeroPasosCompletados > 0 && numeroPasosCompletados < totalPasos) {
 		var selectedMedia = document.querySelector('.' + type);
 		if (selectedMedia) {
 			selectedMedia.style.display = 'block';
-			console.log('hola');
-
 
 			// Iniciar la reproducción automáticamente desde el principio si es un elemento de audio o video
 			if (type === 'audio' || type === 'video') {

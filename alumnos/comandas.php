@@ -91,7 +91,7 @@
 					
 								// Mostrar la información de la profesor
 								echo "<a href='ver_menus.php?aula=$aula' class='tarea'>";
-								echo "<img src='../multimedia/imagenes/$ruta_foto' alt='Foto del profesor'>";
+								echo "<img id='imagen-profesor-comanda' src='../multimedia/imagenes/$ruta_foto' alt='Foto del profesor'>";
 								echo "<h3>$nombre</h3>";
                                 echo "<p>$aula</p>";
 								//echo "<img src='../multimedia/imagenes/icono_tick.png' alt='Foto del profesor'>";

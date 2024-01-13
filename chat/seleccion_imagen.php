@@ -1,7 +1,7 @@
 <?php
     if(isset($_POST['page']))
     {
-        $directorio = "../multimedia/imagenes";
+        $directorio = "../multimedia/imagenes_chat";
         $page = $_POST['page'];
         $itemsPerPage = 10; 					// Número de elementos por página           
 

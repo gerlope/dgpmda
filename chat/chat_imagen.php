@@ -118,7 +118,7 @@
         <form action='../php/mandar_mensaje.php' method='POST'>
                 <div id='pictogramas'>
 				<?php
-				    $directorio = "../multimedia/imagenes";
+				    $directorio = "../multimedia/imagenes_chat";
 				    $page = 1;
 				    $itemsPerPage = 10; 					// Número de elementos por página           
 

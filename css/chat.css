@@ -1,3 +1,8 @@
+/* Estilo para todo el cuerpo de las paginas de chats */
+body {
+  zoom: 0.8; /* Establecer el zoom al 80% */
+}
+
 /* Estilo para el botón de volver a la página principal */
 .boton-volver {
   display: inline-block;
@@ -25,6 +30,10 @@ main {
   height: 500px;
 }
 
+main a:hover{
+  text-decoration: none;
+}
+
 #chat-enclosure{
   width: 78%;
   background-color: #e9cfd9;;
@@ -40,6 +49,10 @@ main {
   overflow: hidden;
 }
 
+#chat-enclosure img{
+  border-radius: 50%;
+}
+
 #chat{
   overflow-y: scroll;
   width: 100%;
@@ -48,7 +61,6 @@ main {
 #scroll-buttons {
   display:flex;
   flex-direction: column;
-  width: 8%;
   justify-content: space-between;
 }
 
@@ -56,7 +68,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px 25px;
+  padding: 15px 15px;
   border: 2px solid black; 
   margin: 0px 0px 30px 5px;
   font-size: 30px;
@@ -102,9 +114,16 @@ main {
 }
 
 #Enviar{
-  box-shadow: 0px 0px 10px #ccc;
-  border-radius: 5px;
   display: flex;
+  padding: 15px 25px;
+  border: 2px solid black;
+  background-color: #080163;
+  color: white;
+  border-radius: 40px;
+}
+
+#Enviar:hover {
+  transform: scale(1.2);
 }
 
 #input_chat_id, #input_sender, #input_senderimg, #input_hidden{

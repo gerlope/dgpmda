@@ -231,3 +231,7 @@
         max-height: 80%;
         margin-bottom: 10px; /* Ajusta el margen según sea necesario */
     }
+
+    #imagen-profesor-comanda{
+        border-radius: 50%;
+    }

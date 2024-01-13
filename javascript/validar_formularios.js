@@ -86,7 +86,7 @@ function validarFormularioRegistroAlumno(event, tipo) {
     var valorPassword = obtenerValorRadio(fieldsetTipo);
 
     // Si el tipo de contraseña no es texto
-    if(valorPassword = "texto"){
+    if(valorPassword != "texto"){
         passwordValido = true;
         confirmarPasswordValido = true;
     }
@@ -96,7 +96,7 @@ function validarFormularioRegistroAlumno(event, tipo) {
     }
 
     // Si el tipo de contraseña no es pictogramas
-    if(valorPassword == "pictograma"){
+    if(valorPassword != "pictograma"){
         pictograma1Valido = true;
         pictograma2Valido = true;
         pictograma3Valido = true;
@@ -108,7 +108,7 @@ function validarFormularioRegistroAlumno(event, tipo) {
     }
 
     // Si el tipo de contraseña no es pulsadores
-    if(valorPassword == "pulsadores"){
+    if(valorPassword != "pulsadores"){
         pictogramaPulsadoresValido = true;
     }
     else{

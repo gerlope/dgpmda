@@ -133,6 +133,10 @@
         align-items: center;
     }
 
+    #perfil-login div img, #perfil-login a img{
+        border-radius: 50%;
+    }
+
     /* Estilo para el título principal de todas las pantallas */
     header h1 {
         font-family: "Verdana", sans-serif;
